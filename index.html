@@ -372,7 +372,7 @@
             
             // Collect Data
             const order_id = "WCE_" + Math.random().toString(36).substring(2, 8).toUpperCase();
-            const hw_summary = `Boards: ${document.getElementById('hw_boards').value || 'None'} | Sensors: ${document.getElementById('hw_sensors').value || 'None'} | Power: ${document.getElementById('hw_motors').value || 'None'} | Misc: ${document.getElementById('hw_misc').value || 'None'}`;
+            const hw_summary = `Boards: ${document.getElementById('hw_boards').value || 'None'}\nSensors: ${document.getElementById('hw_sensors').value || 'None'}\nPower: ${document.getElementById('hw_power').value || 'None'}\nMotors: ${document.getElementById('hw_motors').value || 'None'}\nDisplays: ${document.getElementById('hw_displays').value || 'None'}\nMisc: ${document.getElementById('hw_misc').value || 'None'}`;
             
             registrationData = {
                 order_id: order_id,
