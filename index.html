@@ -138,7 +138,7 @@
         
         <!-- ================= TAB NAVIGATION MENU ================= -->
         <div class="tab-menu" id="tab-container">
-            <button onclick="switchTab('home')" id="btn-home" class="tab-pill active">Home / Discovery</button>
+            <button onclick="switchTab('home')" id="btn-home" class="tab-pill active">Home</button>
             <button onclick="switchTab('ps')" id="btn-ps" class="tab-pill">Problem Statements</button>
             <button onclick="switchTab('rules')" id="btn-rules" class="tab-pill">Rules & Guidelines</button>
             <button onclick="switchTab('faqs')" id="btn-faqs" class="tab-pill">FAQs</button>
@@ -209,7 +209,7 @@
                 </div>
             </div>
 
-            <!-- Problem Statements Grid -->
+            <!-- Problem Statements Grid Container -->
             <div id="ps-container" class="grid grid-cols-1 gap-5">
                 <!-- Cards Injected via Javascript -->
             </div>
@@ -256,7 +256,10 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs text-gray-400 mb-1 uppercase tracking-widest">Select Track *</label>
-                                <select id="assigned_ps" required></select>
+                                <select id="assigned_ps" required>
+                                    <option value="" disabled selected>-- Select a Problem Statement --</option>
+                                    <!-- Options injected via JS -->
+                                </select>
                             </div>
                             <div>
                                 <label class="block text-xs text-gray-400 mb-1 uppercase tracking-widest">Team Name *</label>
@@ -353,14 +356,7 @@
             retina_detect: true
         });
 
-        // 2. Safe Document Loading
-        document.addEventListener('DOMContentLoaded', () => {
-            const gitHubFileRawUrl = "https://github.com/Aditya-9600/hackathon-portal/raw/main/Problem_Statements_Updated.docx";
-            const iframe = document.getElementById('doc-iframe');
-            if (iframe) iframe.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(gitHubFileRawUrl);
-        });
-
-        // 3. Tab Switching Logic
+        // 2. Tab Switching Logic
         function switchTab(tabId) {
             // Update Tab Pills Active State
             document.querySelectorAll('.tab-pill').forEach(btn => btn.classList.remove('active'));
@@ -377,25 +373,36 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 4. Accordion Logic
+        // 3. Accordion Logic
         let activeAccordion = null;
         function toggleAccordion(id) {
             if (activeAccordion && activeAccordion !== id) {
                 const prevContent = document.getElementById(`content-${activeAccordion}`);
                 const prevIcon = document.getElementById(`icon-${activeAccordion}`);
-                if (prevContent) { prevContent.style.maxHeight = null; prevContent.classList.remove('open'); prevIcon.style.transform = 'rotate(0deg)'; }
+                if (prevContent) { 
+                    prevContent.style.maxHeight = null; 
+                    prevContent.classList.remove('open'); 
+                    prevIcon.style.transform = 'rotate(0deg)'; 
+                }
             }
             const content = document.getElementById(`content-${id}`);
             const icon = document.getElementById(`icon-${id}`);
             
             if (content.style.maxHeight) {
-                content.style.maxHeight = null; content.classList.remove('open'); icon.style.transform = 'rotate(0deg)'; activeAccordion = null;
+                content.style.maxHeight = null; 
+                content.classList.remove('open'); 
+                icon.style.transform = 'rotate(0deg)'; 
+                activeAccordion = null;
             } else {
-                content.style.maxHeight = content.scrollHeight + 500 + "px"; content.classList.add('open'); icon.style.transform = 'rotate(180deg)'; activeAccordion = id;
+                // Dynamically calculates the exact height required for the content so nothing is cut off
+                content.style.maxHeight = content.scrollHeight + 40 + "px"; 
+                content.classList.add('open'); 
+                icon.style.transform = 'rotate(180deg)'; 
+                activeAccordion = id;
             }
         }
 
-        // 5. Database (Complete 69 PS with Domains, Hardware/Software types, Descriptions, and Hardware tables)
+        // 4. Database (Complete 69 PS with Domains, Hardware/Software types, Descriptions, and Hardware tables)
         const db = [
             {id: 1, d: "Smart Cities & Urbanization", t: "Smart Street Environment & Noise Monitoring", c: "HARDWARE", desc: "Develop an IoT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Acoustic Sensor", "MAX9814 Electret Microphone", 1, "₹220"], ["Motion Sensing", "HC-SR501 PIR Motion Sensor", 1, "₹65"], ["Light Sensing", "LDR Photoresistor Module", 1, "₹45"], ["Lighting Actuator", "12V 5W High-Power LED Module", 1, "₹120"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 3A SMPS Enclosed", 1, "₹380"], ["Voltage Regulator", "LM2596 DC-DC Buck", 1, "₹95"], ["Discrete ICs", "IRF520 MOSFET Driver", 1, "₹40"], ["Base/Wiring", "Breadboard, Caps, Jumpers", 1, "₹205"]
@@ -622,8 +629,8 @@
         ];
 
         // 6. Render Data
-        window.onload = () => {
-            initReveal();
+        window.addEventListener('DOMContentLoaded', () => {
+            
             const selectEl = document.getElementById("assigned_ps");
             const psContainer = document.getElementById('ps-container');
             const rulesContainer = document.getElementById('rules-container');
@@ -700,7 +707,7 @@
                     </div>
                 `;
             });
-        };
+        });
 
         // 7. Form Logic (Updated URLs)
         const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby0LHCO6xjqZyXBVOB2uJbtBkAuaMwERUPtNjNqU-IqdLVcryf4kRjm5mUiMBpkUje1/exec";
