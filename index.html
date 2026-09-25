@@ -387,20 +387,492 @@
         const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxbWrJmLBm5CIN73fBu8zFai-9FcQna18w0SwGpPJ6tzlJZYLJEw4WGubcFbnpB6eUZ/exec";
         const KONFHUB_URL = "https://events.konfhub.com/YOUR_EVENT_LINK_HERE"; // Replace when ready
 
-        const db = [
-            {id: 1, domain: "Smart Cities & Urbanization", title: "Smart Street Environment & Noise Monitoring", cat: "HARDWARE", desc: "Develop an IoT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels."},
-            {id: 2, domain: "Smart Cities & Urbanization", title: "Urban Flood Monitoring & Early Warning", cat: "HARDWARE", desc: "Develop a waterproof monitoring system that detects rapidly rising water levels in urban drains and underpasses and provides early warnings."},
-            {id: 7, domain: "Smart Cities & Urbanization", title: "AI-Powered Traffic Flow Optimization", cat: "SOFTWARE", desc: "Develop a centralized software platform that ingests real-time transit and ride-sharing GPS data to dynamically adjust traffic light timings."},
-            {id: 9, domain: "Healthcare & Medical Technology", title: "Elderly Care & Assistive Technology", cat: "HARDWARE", desc: "Develop a wearable system that detects accidental falls in elderly individuals, provides medication reminders, and sends SOS alerts with GPS location."},
-            {id: 15, domain: "Healthcare & Medical Technology", title: "Digital Healthcare & Organ Transplant Management", cat: "SOFTWARE", desc: "Develop a secure platform that enables hospitals to efficiently match organ donors with eligible recipients based on compatibility factors."},
-            {id: 17, domain: "Electric Vehicles (EV) & Mobility", title: "EV Battery Safety & Thermal Runaway", cat: "HARDWARE", desc: "Develop a low-cost battery monitoring system that detects early signs of thermal runaway at the cell level and isolates the affected module."},
-            {id: 25, domain: "Education & Academic Learning", title: "Multilingual Academic Learning Support", cat: "SOFTWARE", desc: "Develop a multilingual academic platform that accepts questions in Marathi, Hindi, or English and provides clear explanations suited to student levels."},
-            {id: 32, domain: "Renewable Energy & Power Systems", title: "Solar Energy & Battery Management", cat: "HARDWARE", desc: "Develop an energy-management controller that monitors solar generation and load demand, intelligently scheduling battery cycles."},
-            {id: 44, domain: "Aerospace, Aviation & Space Tech", title: "UAV Safety & Autonomous Landing", cat: "HARDWARE", desc: "Develop an autonomous emergency landing unit for drones that detects in-flight propulsion failure and guides descent to a safe landing zone."},
-            {id: 53, domain: "Cybersecurity & Digital Forensics", title: "Wireless Network Security", cat: "HARDWARE", desc: "Develop an edge intrusion monitor that detects 802.11 deauthentication attacks, rogue Wi-Fi clones, and maintains an offline alert log."},
-            {id: 61, domain: "Agriculture & Aquaculture", title: "Water Management & Smart Irrigation", cat: "HARDWARE", desc: "Develop an autonomous irrigation controller that evaluates localized soil moisture and temperature to govern multi-valve water delivery."}
-            // Add the rest of the 69 statements back in as needed for brevity here
-        ];
+        const db = 
+           [
+  {
+    "id": 1,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Smart Street Environment & Noise Monitoring",
+    "cat": "HARDWARE",
+    "desc": "Develop an loT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels and identifying abnormal noise events and recurring hotspots.[span_0](start_span)[span_0](end_span)"
+  },
+  {
+    "id": 2,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Urban Flood Monitoring & Early Warning",
+    "cat": "HARDWARE",
+    "desc": "Develop a waterproof monitoring system that detects rapidly rising water levels in urban drains and underpasses and provides early warnings before flooding affects roads and citizens.[span_1](start_span)[span_1](end_span)"
+  },
+  {
+    "id": 3,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Urban Underground Water Leak",
+    "cat": "HARDWARE",
+    "desc": "Develop a system that detects and helps locate underground water-pipe leaks using flow, pressure, and acoustic sensing without requiring excavation.[span_2](start_span)[span_2](end_span)"
+  },
+  {
+    "id": 4,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Underground Sewage Gas Safety",
+    "cat": "HARDWARE",
+    "desc": "Develop a low-power system that continuously monitors toxic and combustible gases in underground sewage systems and provides warnings when gas concentrations reach dangerous levels.[span_3](start_span)[span_3](end_span)"
+  },
+  {
+    "id": 5,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Dynamic Digital Traffic Signage",
+    "cat": "HARDWARE",
+    "desc": "Develop a connected digital signage system that receives real-time traffic or road-condition data and automatically displays alternative routes or detour instructions before congested or blocked areas.[span_4](start_span)[span_4](end_span)"
+  },
+  {
+    "id": 6,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Smart Waste Management",
+    "cat": "HARDWARE",
+    "desc": "Develop an IoT-based waste management system that monitors garbage-bin fill levels, detects overflow conditions, and sends alerts for timely collection.[span_5](start_span)[span_5](end_span)"
+  },
+  {
+    "id": 7,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Al-Powered Traffic Flow Optimization",
+    "cat": "SOFTWARE",
+    "desc": "Develop a centralized software platform that ingests real-time public transit and ride-sharing GPS data to dynamically adjust traffic light timings and predict congestion zones.[span_6](start_span)[span_6](end_span)"
+  },
+  {
+    "id": 8,
+    "domain": "Smart Cities & Urbanization",
+    "title": "Civic Issue Crowdsourcing & Triage",
+    "cat": "SOFTWARE",
+    "desc": "Develop a web and mobile application that allows citizens to report civic issues with geotagged photos, using Al to automatically route the issue to the correct municipal department based on image classification.[span_7](start_span)[span_7](end_span)"
+  },
+  {
+    "id": 9,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Elderly Care & Assistive Technology",
+    "cat": "HARDWARE",
+    "desc": "Develop a wearable system that detects accidental falls in elderly individuals, differentiates falls from normal movements, provides medication reminders, and automatically sends an SOS alert with the user's location to emergency contacts when a fall is detected.[span_8](start_span)[span_8](end_span)"
+  },
+  {
+    "id": 10,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Hospital Patient Safety & Monitoring",
+    "cat": "HARDWARE",
+    "desc": "Develop a smart monitoring system that continuously detects the remaining level of an IV fluid bag and automatically alerts nursing staff when the fluid level becomes critically low, reducing the risk of unnoticed depletion and blood backflow.[span_9](start_span)[span_9](end_span)"
+  },
+  {
+    "id": 11,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Blood Bank & Medical Inventory Management",
+    "cat": "HARDWARE",
+    "desc": "Develop an loT-based system that continuously monitors blood storage temperature, tracks blood bag inventory and expiry information, and generates alerts when unsafe temperature conditions or approaching expiry dates are detected.[span_10](start_span)[span_10](end_span)"
+  },
+  {
+    "id": 12,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Neonatal & Maternal Healthcare",
+    "cat": "HARDWARE",
+    "desc": "Develop a smart incubator monitoring and control system that maintains stable temperature and humidity for premature babies, detects sensor or equipment failures, and provides local and remote alerts during unsafe environmental conditions.[span_11](start_span)[span_11](end_span)"
+  },
+  {
+    "id": 13,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Preventive Healthcare & Wellness",
+    "cat": "HARDWARE",
+    "desc": "Develop a smart bottle that automatically measures a user's water intake, monitors daily hydration patterns, and provides personalized reminders when the user needs to drink water according to predefined hydration requirements.[span_12](start_span)[span_12](end_span)"
+  },
+  {
+    "id": 14,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Al-Based Disease Detection & Medical Diagnostics",
+    "cat": "HARDWARE",
+    "desc": "Develop a low-cost digital microscopy system that captures blood-smear images and uses computer vision or Al to identify and highlight cells containing malaria or dengue-related abnormalities, assisting technicians in faster preliminary screening.[span_13](start_span)[span_13](end_span)"
+  },
+  {
+    "id": 15,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Digital Healthcare & Organ Transplant Management",
+    "cat": "SOFTWARE",
+    "desc": "Develop a secure digital platform that enables hospitals to efficiently match organ donors with eligible recipients based on medically relevant compatibility factors while protecting patient identities and maintaining a transparent, tamper-resistant record of the matching process.[span_14](start_span)[span_14](end_span)"
+  },
+  {
+    "id": 16,
+    "domain": "Healthcare & Medical Technology",
+    "title": "Predictive Hospital Bed Management",
+    "cat": "SOFTWARE",
+    "desc": "Develop a software solution that integrates with Electronic Health Records (EHR) to forecast patient admission rates and discharge times using machine learning, optimizing bed allocation and reducing wait times.[span_15](start_span)[span_15](end_span)"
+  },
+  {
+    "id": 17,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "EV Battery Safety & Thermal",
+    "cat": "HARDWARE",
+    "desc": "Develop a low-cost battery monitoring and protection system that detects early signs of thermal runaway at the cell or module level and isolates the affected section while allowing the remaining battery pack to continue operating safely.[span_16](start_span)[span_16](end_span)"
+  },
+  {
+    "id": 18,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "EV Motor Fault Detection & Predictive",
+    "cat": "HARDWARE",
+    "desc": "Develop a sensorless motor-monitoring system that analyzes three-phase current signals to detect developing inter-turn winding faults while distinguishing genuine fault signatures from normal motor imbalance and load variations.[span_17](start_span)[span_17](end_span)"
+  },
+  {
+    "id": 19,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "EV Charging Infrastructure Monitoring",
+    "cat": "HARDWARE",
+    "desc": "Develop a retrofit device that independently verifies whether an EV charging station is actually delivering electrical power, records genuine charging events, and identifies discrepancies between reported station status and observed power delivery.[span_18](start_span)[span_18](end_span)"
+  },
+  {
+    "id": 20,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "Regenerative Braking & Energy Recovery",
+    "cat": "HARDWARE",
+    "desc": "Develop an intelligent regenerative-braking controller that dynamically determines the appropriate level of regenerative braking based on motor conditions, battery state, temperature, and braking requirements while maximizing energy recovery and maintaining safe operation.[span_19](start_span)[span_19](end_span)"
+  },
+  {
+    "id": 21,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "EV Traction Control & Vehicle",
+    "cat": "HARDWARE",
+    "desc": "Develop an intelligent traction-control system that detects excessive wheel slip during EV acceleration and dynamically adjusts motor torque to improve traction, vehicle stability, and energy efficiency on low-grip surfaces.[span_20](start_span)[span_20](end_span)"
+  },
+  {
+    "id": 22,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "EV Structural Health & Predictive Maintenance",
+    "cat": "HARDWARE",
+    "desc": "Develop an accelerometer-based system for detecting structural fatigue in an EV battery mounting system by identifying changes in the mount's resonant-frequency characteristics while distinguishing actual structural degradation from normal variations in road vibration.[span_21](start_span)[span_21](end_span)"
+  },
+  {
+    "id": 23,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "Smart EV Fleet Routing & Charging",
+    "cat": "SOFTWARE",
+    "desc": "Develop a cloud-based software platform for commercial EV fleets that calculates optimal delivery routes while factoring in real-time vehicle state of charge, payload, and public/private charging station availability.[span_22](start_span)[span_22](end_span)"
+  },
+  {
+    "id": 24,
+    "domain": "Electric Vehicles (EV) & Mobility",
+    "title": "EV Battery Degradation Analytics",
+    "cat": "SOFTWARE",
+    "desc": "Develop a machine learning application that analyzes historical charging and usage data from electric vehicles to predict long-term battery health and recommend charging habits that extend battery lifespan.[span_23](start_span)[span_23](end_span)"
+  },
+  {
+    "id": 25,
+    "domain": "Education & Academic Learning",
+    "title": "Multilingual Academic Learning",
+    "cat": "SOFTWARE",
+    "desc": "Develop a multilingual academic support system that accepts questions in Marathi, Hindi, or English and provides clear, simple explanations suited to different levels of student understanding while preserving the original meaning.[span_24](start_span)[span_24](end_span)"
+  },
+  {
+    "id": 26,
+    "domain": "Education & Academic Learning",
+    "title": "Personalized Educational Resource Recommendation",
+    "cat": "SOFTWARE",
+    "desc": "Develop a system that analyzes student interactions such as quiz response time, retry behavior, and preferred content formats to identify learning preferences and recommend educational resources suited to each student.[span_25](start_span)[span_25](end_span)"
+  },
+  {
+    "id": 27,
+    "domain": "Education & Academic Learning",
+    "title": "Interactive Al-Powered Quantum Learning",
+    "cat": "SOFTWARE",
+    "desc": "Develop an Al-powered interactive platform that enables users to learn quantum computing, design and simulate quantum circuits, visualize quantum states and measurement outcomes, and receive Al-based explanations, error detection, optimization suggestions, and personalized learning guidance.[span_26](start_span)[span_26](end_span)"
+  },
+  {
+    "id": 28,
+    "domain": "Education & Academic Learning",
+    "title": "Academic-Industry Collaboration Platform",
+    "cat": "SOFTWARE",
+    "desc": "Develop a platform that enables universities and industries to discover suitable partners, showcase their requirements and capabilities, and initiate or manage industrial visits, projects, internships, workshops, research initiatives, and other academic-industry collaborations.[span_27](start_span)[span_27](end_span)"
+  },
+  {
+    "id": 29,
+    "domain": "Education & Academic Learning",
+    "title": "Smart Handwriting Posture & Grip",
+    "cat": "HARDWARE",
+    "desc": "Develop a smart pen, wearable, or similar device that detects incorrect writing posture or pencil grip in real time and provides gentle, child-friendly feedback to help students develop proper handwriting habits.[span_28](start_span)[span_28](end_span)"
+  },
+  {
+    "id": 30,
+    "domain": "Education & Academic Learning",
+    "title": "Visual Pronunciation Learning",
+    "cat": "HARDWARE",
+    "desc": "Develop a device that uses microphone input and a small display to provide visual mouth-shape guidance, helping language learners or speech-therapy students practice and improve pronunciation.[span_29](start_span)[span_29](end_span)"
+  },
+  {
+    "id": 31,
+    "domain": "Education & Academic Learning",
+    "title": "Al-Driven Academic Integrity Detector",
+    "cat": "SOFTWARE",
+    "desc": "Develop a natural language processing software tool for academic institutions that analyzes student submissions to differentiate between original human writing, plagiarized text, and Al-generated content.[span_30](start_span)[span_30](end_span)"
+  },
+  {
+    "id": 32,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Solar Energy & Battery Management",
+    "cat": "HARDWARE",
+    "desc": "Develop an energy-management controller that monitors solar generation and load demand and intelligently schedules battery charging and discharging to reduce peak grid demand without unnecessarily exhausting the battery.[span_31](start_span)[span_31](end_span)"
+  },
+  {
+    "id": 33,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Power Quality & Harmonic Management",
+    "cat": "HARDWARE",
+    "desc": "Develop a real-time power-quality monitoring system that detects and analyzes harmonic components, evaluates their impact on the electrical system, and demonstrates how active compensation can improve power quality.[span_32](start_span)[span_32](end_span)"
+  },
+  {
+    "id": 34,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Solar Microgrid & Black-Start",
+    "cat": "HARDWARE",
+    "desc": "Develop a black-start controller that can safely restore a local renewable-energy microgrid after a complete power outage by establishing the local bus, connecting available generation and storage, and progressively restoring loads.[span_33](start_span)[span_33](end_span)"
+  },
+  {
+    "id": 35,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Electric Vehicles & Vehicle-to-Grid Technology",
+    "cat": "HARDWARE",
+    "desc": "Develop a smart V2G controller that coordinates EV charging and discharging according to grid demand, battery state of charge, and user requirements while maintaining EV battery availability.[span_34](start_span)[span_34](end_span)"
+  },
+  {
+    "id": 36,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Urban Renewable Energy",
+    "cat": "HARDWARE",
+    "desc": "Develop a small-scale energy-harvesting system that captures low-level wind or mechanical energy from urban activities such as traffic, footfall, or turbulent airflow and converts it into useful electrical energy for low-power applications.[span_35](start_span)[span_35](end_span)"
+  },
+  {
+    "id": 37,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Railway Energy Harvesting",
+    "cat": "HARDWARE",
+    "desc": "Develop a vibration-energy harvesting system that captures mechanical vibrations produced by railway operations and converts them into electrical energy for low-power railway monitoring applications.[span_36](start_span)[span_36](end_span)"
+  },
+  {
+    "id": 38,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Community Microgrid & Energy Sharing",
+    "cat": "HARDWARE",
+    "desc": "Develop an intelligent microgrid controller that detects grid failure, manages locally generated renewable energy and storage, prioritizes critical loads, and safely manages the transition between grid-connected and islanded operation.[span_37](start_span)[span_37](end_span)"
+  },
+  {
+    "id": 39,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Wind Energy & Predictive Maintenance",
+    "cat": "HARDWARE",
+    "desc": "Develop a wind-turbine condition-monitoring system that analyzes vibration, temperature, rotational speed, voltage, and current data to identify abnormal operating conditions before major equipment failure occurs.[span_38](start_span)[span_38](end_span)"
+  },
+  {
+    "id": 40,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Regenerative Energy Recovery",
+    "cat": "HARDWARE",
+    "desc": "Develop a scaled regenerative-braking system that captures mechanical energy generated during the braking of an elevator or escalator, stores the recovered energy, and measures the amount of energy recovered.[span_39](start_span)[span_39](end_span)"
+  },
+  {
+    "id": 41,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Solar PV Predictive Maintenance & Soiling",
+    "cat": "HARDWARE",
+    "desc": "Develop a low-cost solar-PV monitoring system that compares expected solar irradiance with actual power output to distinguish temporary reductions caused by clouds or shading from persistent problems such as dust accumulation or module degradation.[span_40](start_span)[span_40](end_span)"
+  },
+  {
+    "id": 42,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Solar Farm Yield Forecasting",
+    "cat": "SOFTWARE",
+    "desc": "Develop a software application that integrates meteorological data and historical power output to predict daily energy generation for solar farms, enabling grid operators to balance energy loads more efficiently.[span_41](start_span)[span_41](end_span)"
+  },
+  {
+    "id": 43,
+    "domain": "Renewable Energy & Power Systems",
+    "title": "Microgrid Load Balancing Algorithm",
+    "cat": "SOFTWARE",
+    "desc": "Develop a software-based control system that dynamically monitors consumer energy demand within a community microgrid and autonomously redistributes available renewable energy resources to prevent localized blackouts.[span_42](start_span)[span_42](end_span)"
+  },
+  {
+    "id": 44,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "UAV Safety & Autonomous Landing",
+    "cat": "HARDWARE",
+    "desc": "Develop an autonomous emergency-landing system that monitors UAV health, detects critical failures, identifies a suitable landing zone, and guides the UAV toward a safe landing procedure.[span_43](start_span)[span_43](end_span)"
+  },
+  {
+    "id": 45,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "Autonomous Navigation & Collision",
+    "cat": "HARDWARE",
+    "desc": "Develop an autonomous obstacle-detection and path-planning system that enables a UAV to detect obstacles in real time and modify its trajectory to maintain safe, stable, and collision-free flight.[span_44](start_span)[span_44](end_span)"
+  },
+  {
+    "id": 46,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "Energy-Efficient UAV Operations",
+    "cat": "HARDWARE",
+    "desc": "Develop an energy-aware UAV mission-planning system that monitors battery status, distance, payload, and estimated energy consumption to optimize flight routes and automatically modify the mission when available energy becomes insufficient.[span_45](start_span)[span_45](end_span)"
+  },
+  {
+    "id": 47,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "Aircraft Electrical Systems & Fault",
+    "cat": "HARDWARE",
+    "desc": "Develop an aircraft electrical fault-management system that monitors voltage, current, and load conditions, detects abnormal behavior, isolates faulty sections, and maintains power to critical loads through automatic network reconfiguration.[span_46](start_span)[span_46](end_span)"
+  },
+  {
+    "id": 48,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "Autonomous Search & Rescue",
+    "cat": "HARDWARE",
+    "desc": "Develop an autonomous search-and-rescue drone system capable of systematically scanning a designated area, detecting potential survivors or targets, determining their location, and transmitting alerts to a rescue team.[span_47](start_span)[span_47](end_span)"
+  },
+  {
+    "id": 49,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "Spacecraft Power Management",
+    "cat": "HARDWARE",
+    "desc": "Develop an intelligent satellite power-management system that monitors power generation, battery status, and load demand, and dynamically prioritizes or disconnects non-critical loads to maintain essential spacecraft operations.[span_48](start_span)[span_48](end_span)"
+  },
+  {
+    "id": 50,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "Space Safety & Debris Collision",
+    "cat": "SOFTWARE",
+    "desc": "Develop a system that tracks simulated space-debris trajectories, predicts potential intersections with a satellite's path, calculates collision risk, and determines an appropriate avoidance maneuver while minimizing energy.[span_49](start_span)[span_49](end_span)"
+  },
+  {
+    "id": 51,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "UAV Fleet Traffic Management (UTM)",
+    "cat": "SOFTWARE",
+    "desc": "Develop a centralized software platform that coordinates flight paths for multiple commercial delivery drones in urban airspace, ensuring adherence to no-fly zones and preventing mid-air collisions.[span_50](start_span)[span_50](end_span)"
+  },
+  {
+    "id": 52,
+    "domain": "Aerospace, Aviation & Space Tech",
+    "title": "Satellite Telemetry Anomaly Detection",
+    "cat": "SOFTWARE",
+    "desc": "Develop a machine learning software tool that continuously processes massive streams of satellite telemetry data to detect subtle anomalies in subsystem performance that human operators might miss.[span_51](start_span)[span_51](end_span)"
+  },
+  {
+    "id": 53,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "Wireless Network Security",
+    "cat": "HARDWARE",
+    "desc": "Develop a low-cost Wi-Fi security system that detects abnormal deauthentication/disassociation activity and identifies potential rogue or duplicate access points, providing real-time alerts and maintaining a log of security events.[span_52](start_span)[span_52](end_span)"
+  },
+  {
+    "id": 54,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "USB Security & Hardware-Based Cybersecurity",
+    "cat": "HARDWARE",
+    "desc": "Develop an inline USB security device that identifies potentially malicious or unauthorized USB devices, prevents suspicious device types from accessing the host system, provides immediate alerts, and maintains a log of USB connection events for security auditing.[span_53](start_span)[span_53](end_span)"
+  },
+  {
+    "id": 55,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "Digital Forensics & Evidence Analysis",
+    "cat": "SOFTWARE",
+    "desc": "Develop an automated forensic software tool that extracts file metadata, system artefacts, and timestamps from digital evidence, reconstructs a chronological activity timeline, generates SHA-256 hashes for evidence integrity, and produces structured investigation reports.[span_54](start_span)[span_54](end_span)"
+  },
+  {
+    "id": 56,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "Forensic Evidence Protection",
+    "cat": "HARDWARE",
+    "desc": "Develop a low-cost hardware write-blocking device that prevents write operations to digital storage media during forensic acquisition while allowing investigators to read and analyze the evidence, with session status and activity logging for evidence integrity verification.[span_55](start_span)[span_55](end_span)"
+  },
+  {
+    "id": 57,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "Cyber Incident Response & Digital Evidence",
+    "cat": "SOFTWARE",
+    "desc": "Develop a tamper-evident security and evidence management system that links cybersecurity alerts with collected digital evidence, maintains an immutable chain-of-custody record using cryptographic hashing, detects unauthorized modifications, and provides role-based access to investigators.[span_56](start_span)[span_56](end_span)"
+  },
+  {
+    "id": 58,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "Secure Digital Forensics & Field Investigation",
+    "cat": "HARDWARE",
+    "desc": "Develop a portable, access-controlled forensic evidence acquisition system that allows only authorized investigators to operate the equipment, protects digital storage from modification during acquisition, records all access attempts, and detects physical tampering with the device.[span_57](start_span)[span_57](end_span)"
+  },
+  {
+    "id": 59,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "Ransomware Behavior Isolation System",
+    "cat": "SOFTWARE",
+    "desc": "Develop endpoint security software that monitors file system activity for rapid, unauthorized encryption patterns and automatically isolates the infected machine from the corporate network before ransomware spreads.[span_58](start_span)[span_58](end_span)"
+  },
+  {
+    "id": 60,
+    "domain": "Cybersecurity & Digital Forensics",
+    "title": "Automated Phishing Threat Intelligence",
+    "cat": "SOFTWARE",
+    "desc": "Develop a software application that aggregates employee-reported suspicious emails, using domain analysis and natural language processing to verify phishing attempts and automatically update email firewall rules.[span_59](start_span)[span_59](end_span)"
+  },
+  {
+    "id": 61,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Water Management & Smart Irrigation",
+    "cat": "HARDWARE",
+    "desc": "Over-irrigation causes water wastage and root rot, while under-irrigation reduces crop yield. Develop a smart irrigation system that monitors field conditions and controls water supply accordingly.[span_60](start_span)[span_60](end_span)"
+  },
+  {
+    "id": 62,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Precision Agriculture - Crop Health Monitoring",
+    "cat": "HARDWARE",
+    "desc": "Early detection of crop stress, nutrient deficiency, and disease across large fields is difficult and manual inspection is slow. Develop a UAV-based system using imaging and Al to monitor crop health and identify affected areas.[span_61](start_span)[span_61](end_span)"
+  },
+  {
+    "id": 63,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Energy Management & Predictive Maintenance",
+    "cat": "HARDWARE",
+    "desc": "Agricultural pumps can consume excess energy and develop faults due to overheating, overloading, abnormal current, or mechanical problems. Develop a system that monitors pump health and optimizes energy consumption.[span_62](start_span)[span_62](end_span)"
+  },
+  {
+    "id": 64,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Climate Resilience & Crop Protection",
+    "cat": "HARDWARE",
+    "desc": "Sudden frost events can damage or destroy crops if protective action is not taken in time. Develop a system that predicts frost conditions and automatically activates crop-protection mechanisms.[span_63](start_span)[span_63](end_span)"
+  },
+  {
+    "id": 65,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Soil Health Monitoring (Edge Al)",
+    "cat": "HARDWARE",
+    "desc": "Monitoring soil degradation over seasons requires complex analysis, while rural areas may have limited internet connectivity. Develop an edge-Al system that analyzes soil parameters locally and provides soil-health information.[span_64](start_span)[span_64](end_span)"
+  },
+  {
+    "id": 66,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Aquaculture & Water Quality Management",
+    "cat": "HARDWARE",
+    "desc": "Fish and shrimp farming require continuous monitoring of water quality, as sudden changes can cause significant losses. Develop an automated system that monitors water parameters and controls appropriate equipment when unsafe conditions occur.[span_65](start_span)[span_65](end_span)"
+  },
+  {
+    "id": 67,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Smart Greenhouse & Environmental Monitoring",
+    "cat": "HARDWARE",
+    "desc": "Manual monitoring of greenhouse temperature, humidity, soil conditions, and light is inefficient and can negatively affect crop growth. Develop an loT-based system for real-time monitoring and automated environmental control.[span_66](start_span)[span_66](end_span)"
+  },
+  {
+    "id": 68,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Crop Yield & Market Analytics Platform",
+    "cat": "SOFTWARE",
+    "desc": "Develop data analytics software that combines satellite imagery, local weather forecasts, and historical crop data to predict harvest yields and advise farmers on optimal selling times based on commodity market trends.[span_67](start_span)[span_67](end_span)"
+  },
+  {
+    "id": 69,
+    "domain": "Agriculture & Aquaculture",
+    "title": "Aquaculture Feeding Optimization",
+    "cat": "SOFTWARE",
+    "desc": "Develop a software algorithm that analyzes water temperature, oxygen levels, and aquatic growth stages to calculate and schedule exact feed requirements, minimizing feed waste and preventing water pollution.[span_68](start_span)[span_68](end_span)"
+  }
+]
 
         const faqs = [
             { q: "Is there a registration deadline?", a: "Registrations remain open until all slots are filled or until the organizers officially close registrations. Watch the announcements for updates." },
