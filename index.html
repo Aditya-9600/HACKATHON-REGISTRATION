@@ -1,267 +1,285 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aarambh WCE Hackathon 2026</title>
+    <title>Aarambh 2026 | WCE Hackathon</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Google Fonts (Inter for that clean Oxford/Aayodhyam academic look) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- ETH Oxford Style Fonts: Space Grotesk (Headings), Inter (Body), JetBrains Mono (Accents) -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa; /* Light gray background matching reference */
-            color: #1f2937;
+            background-color: #050505;
+            color: #e5e5e5;
             margin: 0;
             scroll-behavior: smooth;
         }
-        
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ETH Oxford Signature Grid Background */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-attachment: fixed;
+        }
+
         /* Scroll Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Clean White Cards (Matching Oxford/Aayodhyam Reference) */
-        .clean-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #f3f4f6;
+        /* Sleek Brutalist Cards */
+        .web3-card {
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 12px;
-            transition: box-shadow 0.2s ease;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
         }
-        .clean-card:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+        .web3-card:hover {
+            border-color: rgba(139, 92, 246, 0.5); /* Purple glow border */
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
         }
 
         /* Accordion Styling */
         .accordion-header {
-            padding: 1.25rem 1.5rem;
-            font-weight: 600;
-            color: #111827;
+            padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            background: #ffffff;
         }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-in-out, padding 0.3s ease;
-            background: #f8f9fa;
-            color: #4b5563;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease;
+            background: rgba(0, 0, 0, 0.3);
             font-size: 0.95rem;
+            color: #a3a3a3;
         }
         .accordion-content.open {
-            padding: 1.25rem 1.5rem;
-            border-top: 1px solid #f3f4f6;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 1rem;
+            padding-top: 1.5rem;
         }
 
-        /* Signature Floating Button */
-        .floating-cta {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #f5b324; /* Mustard Yellow */
-            color: #0a192f; /* Navy text */
-            padding: 14px 28px;
-            border-radius: 9999px;
-            font-weight: 700;
-            font-size: 1rem;
-            box-shadow: 0 8px 20px rgba(245, 179, 36, 0.4);
-            z-index: 50;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        /* ETH Vibrant Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .floating-cta:hover {
-            transform: translateX(-50%) scale(1.05);
-            box-shadow: 0 10px 25px rgba(245, 179, 36, 0.5);
+        .bg-gradient-btn {
+            background: linear-gradient(135deg, #4f46e5 0%, #c084fc 100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .bg-gradient-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
 
         /* Form Inputs */
         input, select {
-            background: #ffffff !important;
-            border: 1px solid #d1d5db !important;
-            color: #111827 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            background: rgba(0, 0, 0, 0.5) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            color: #ffffff !important;
+            border-radius: 6px;
         }
         input:focus, select:focus {
-            border-color: #2563eb !important;
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.1) !important;
+            border-color: #c084fc !important;
+            box-shadow: 0 0 0 1px #c084fc !important;
             outline: none;
         }
+        option { background-color: #050505; color: white; }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
+<body class="bg-grid antialiased min-h-screen flex flex-col relative">
 
-    <!-- White Navigation Bar -->
-    <nav class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 h-16 flex justify-between items-center">
+    <!-- ETH Oxford Style Navbar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-lg">A</div>
-                <span class="font-bold text-lg text-gray-900 tracking-tight">AARAMBH 2026</span>
+                <span class="font-display font-bold text-2xl tracking-tighter text-white">AARAMBH<span class="text-gradient">.2026</span></span>
             </div>
-            <div>
-                <!-- Hamburger menu icon (Visual only, to match reference) -->
-                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <div class="hidden md:flex gap-6 text-sm font-mono text-gray-400 uppercase tracking-widest">
+                <a href="#rules" class="hover:text-white transition">Rules</a>
+                <a href="#tracks" class="hover:text-white transition">Tracks</a>
+                <a href="#faqs" class="hover:text-white transition">FAQs</a>
             </div>
+            <button onclick="startRegistration(null, null)" class="bg-gradient-btn text-white font-display font-semibold px-6 py-2.5 rounded text-sm tracking-wide shadow-[0_0_15px_rgba(192,132,252,0.3)]">
+                Register Team
+            </button>
         </div>
     </nav>
 
-    <!-- Global Floating Action Button (Visible on Home View) -->
-    <button id="global-reg-btn" onclick="startRegistration(null, null)" class="floating-cta">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-        Register Your Team
-    </button>
-
     <!-- Main Content -->
-    <main class="flex-grow w-full max-w-3xl mx-auto px-4 py-10 z-10" id="main-container">
+    <main class="flex-grow w-full max-w-4xl mx-auto px-6 pt-32 pb-24 z-10" id="main-container">
         
         <!-- ================= VIEW 1: HOME / DISCOVERY ================= -->
-        <div id="view-home" class="space-y-12 pb-24">
+        <div id="view-home" class="space-y-20">
             
             <!-- Hero Section -->
-            <div class="text-center space-y-4 py-8 reveal">
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
-                    Innovate The <br><span class="text-blue-700">Future of Tech.</span>
+            <div class="text-center space-y-6 py-12 reveal">
+                <div class="inline-flex items-center gap-2 border border-white/10 bg-white/5 rounded-full px-4 py-1.5 mb-4">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    <span class="text-xs font-mono text-gray-300 uppercase tracking-widest">Registrations Open</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-display font-bold tracking-tighter leading-tight">
+                    Innovate The <br><span class="text-gradient">Future of Tech.</span>
                 </h1>
-                <p class="text-gray-500 max-w-xl mx-auto text-base">
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
                     India's premier national technical hackathon, hosted by the Department of Electrical Engineering, Walchand College of Engineering, Sangli.
                 </p>
             </div>
 
             <!-- Expandable Document Preview -->
             <div class="reveal">
-                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Official Compendium</h3>
-                <div class="clean-card">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-sm font-mono text-gray-500 uppercase tracking-widest">01 //</span>
+                    <h2 class="text-2xl font-display font-bold">Official Compendium</h2>
+                </div>
+                <div class="web3-card">
                     <div class="accordion-header" onclick="toggleDoc()">
-                        <span class="flex items-center gap-2">📄 Problem Statements Document</span>
-                        <span id="doc-btn-icon" class="text-gray-400 text-lg transition-transform">▼</span>
+                        <span class="font-display font-semibold text-lg">📄 View Problem Statements Document</span>
+                        <span id="doc-btn-icon" class="text-gray-500 font-mono text-xl transition-transform">+</span>
                     </div>
                     <div id="doc-container" class="accordion-content">
-                        <div class="mb-4">
-                            <a href="Problem_Statements_Updated.docx" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium text-sm transition">
-                                ⬇️ Download Original .docx
+                        <div class="mb-6 flex gap-4">
+                            <a href="Problem_Statements_Updated.docx" target="_blank" class="bg-white text-black hover:bg-gray-200 font-semibold px-6 py-2 rounded text-sm transition flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                Download .docx
                             </a>
                         </div>
-                        <div class="relative w-full rounded border border-gray-200 bg-white overflow-hidden">
-                            <iframe id="doc-iframe" src="" width="100%" height="500px" frameborder="0"></iframe>
+                        <div class="relative w-full rounded border border-white/10 bg-white overflow-hidden">
+                            <iframe id="doc-iframe" src="" width="100%" height="600px" frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Dynamic Sections (Rules, PS, FAQs) -->
-            <div id="dynamic-sections"></div>
+            <div id="dynamic-sections" class="space-y-20"></div>
 
         </div>
 
         <!-- ================= VIEW 2: REGISTRATION FORM ================= -->
-        <div id="view-register" class="hidden pb-24 reveal active">
-            <button onclick="switchView('home')" class="mb-6 text-blue-600 font-medium hover:text-blue-800 flex items-center gap-2 transition">
-                <span>←</span> Back to Information
+        <div id="view-register" class="hidden pb-24 reveal active pt-8">
+            <button onclick="switchView('home')" class="mb-8 text-gray-500 font-mono text-sm hover:text-white transition flex items-center gap-2">
+                ← Return to Base
             </button>
 
-            <div class="bg-white border border-gray-200 p-6 md:p-8 rounded-2xl shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">Team Registration</h2>
-                <p class="text-gray-500 mb-8 pb-4 border-b border-gray-100 text-sm">Secure your spot. Registration Fee: <span class="text-green-600 font-bold">₹350 per team</span></p>
+            <div class="web3-card p-8 md:p-10 border border-white/20 relative overflow-hidden">
+                <!-- Abstract Glow inside card -->
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
-                <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-8">
+                <h2 class="text-3xl font-display font-bold mb-2 text-white">Team Registration</h2>
+                <p class="font-mono text-gray-400 mb-10 pb-6 border-b border-white/10 text-sm flex items-center gap-2">
+                    <span class="text-green-400">●</span> Registration Fee: ₹350 per team
+                </p>
+
+                <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-10 relative z-10">
+                    
                     <!-- Team Info -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold text-gray-800">1. Team Profile</h3>
-                        <div class="grid grid-cols-1 gap-4">
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-mono text-purple-400 border border-purple-400/30 px-2 py-1 rounded bg-purple-400/10">STEP 1</span>
+                            <h3 class="text-xl font-display font-semibold">Team Profile</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Team Name *</label>
-                                <input type="text" id="teamName" required class="w-full rounded-lg px-4 py-3">
+                                <label class="block text-xs font-mono text-gray-400 mb-2 uppercase">Team Name *</label>
+                                <input type="text" id="teamName" required class="w-full px-4 py-3">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Select Problem Statement *</label>
-                                <select id="assigned_ps" required class="w-full rounded-lg px-4 py-3 text-sm"></select>
+                                <label class="block text-xs font-mono text-gray-400 mb-2 uppercase">Problem Statement *</label>
+                                <select id="assigned_ps" required class="w-full px-4 py-3 text-sm"></select>
                             </div>
                         </div>
                     </div>
 
                     <!-- Members Info -->
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-semibold text-gray-800">2. Core Members</h3>
-                        <p class="text-xs text-red-500 font-medium mb-2">* Exactly 5 members required. At least 1 girl and 1 boy compulsory.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-mono text-blue-400 border border-blue-400/30 px-2 py-1 rounded bg-blue-400/10">STEP 2</span>
+                            <h3 class="text-xl font-display font-semibold">Core Members</h3>
+                        </div>
+                        <p class="text-xs font-mono text-gray-500 mb-2">> Exactly 5 members required. At least 1 girl and 1 boy compulsory.</p>
                         
                         <!-- Member 1 -->
-                        <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 space-y-3">
-                            <p class="font-bold text-xs text-blue-700 uppercase tracking-wider">Member 1 (Team Leader)</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <input type="text" id="l_name" placeholder="Full Name *" required class="w-full rounded-lg px-3 py-2 text-sm">
-                                <input type="email" id="l_email" placeholder="Email Address *" required class="w-full rounded-lg px-3 py-2 text-sm">
-                                <input type="tel" id="l_phone" placeholder="Phone Number *" required class="w-full rounded-lg px-3 py-2 text-sm md:col-span-2">
+                        <div class="p-5 rounded border border-white/10 bg-black/40 space-y-4">
+                            <p class="font-bold text-xs font-mono text-white tracking-widest">01 // TEAM LEADER</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" id="l_name" placeholder="Full Name *" required class="w-full px-4 py-3 text-sm">
+                                <input type="email" id="l_email" placeholder="Email Address *" required class="w-full px-4 py-3 text-sm">
+                                <input type="tel" id="l_phone" placeholder="Phone Number *" required class="w-full px-4 py-3 text-sm md:col-span-2">
                             </div>
                         </div>
 
                         <!-- Member 2 -->
-                        <div class="p-4 rounded-xl bg-gray-50 border border-gray-200 space-y-3">
-                            <p class="font-bold text-xs text-gray-500 uppercase tracking-wider">Member 2</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <input type="text" id="m2_name" placeholder="Full Name *" required class="w-full rounded-lg px-3 py-2 text-sm">
-                                <input type="tel" id="m2_phone" placeholder="Alternate Phone Number *" required class="w-full rounded-lg px-3 py-2 text-sm">
+                        <div class="p-5 rounded border border-white/10 bg-black/20 space-y-4">
+                            <p class="font-bold text-xs font-mono text-gray-500 tracking-widest">02 // MEMBER</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" id="m2_name" placeholder="Full Name *" required class="w-full px-4 py-3 text-sm">
+                                <input type="tel" id="m2_phone" placeholder="Alternate Phone Number *" required class="w-full px-4 py-3 text-sm">
                             </div>
                         </div>
 
                         <!-- Members 3, 4, 5 -->
-                        <div class="space-y-3 pt-2">
-                            <input type="text" id="m3_name" placeholder="Member 3 Full Name *" required class="w-full rounded-lg px-4 py-3 text-sm">
-                            <input type="text" id="m4_name" placeholder="Member 4 Full Name *" required class="w-full rounded-lg px-4 py-3 text-sm">
-                            <input type="text" id="m5_name" placeholder="Member 5 Full Name *" required class="w-full rounded-lg px-4 py-3 text-sm">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                            <input type="text" id="m3_name" placeholder="M3 Full Name *" required class="w-full px-4 py-3 text-sm">
+                            <input type="text" id="m4_name" placeholder="M4 Full Name *" required class="w-full px-4 py-3 text-sm">
+                            <input type="text" id="m5_name" placeholder="M5 Full Name *" required class="w-full px-4 py-3 text-sm">
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-[#0a192f] hover:bg-blue-900 text-white font-bold text-lg py-4 rounded-xl shadow-md transition-colors mt-4">
-                        Proceed to Payment (₹350)
+                    <button type="submit" class="bg-white text-black hover:bg-gray-200 w-full font-display font-bold tracking-wide text-lg py-4 rounded transition-colors mt-8">
+                        Proceed to Payment Checkout
                     </button>
                 </form>
             </div>
         </div>
     </main>
 
-    <!-- Dark Navy Footer (Matching Image 15) -->
-    <footer class="bg-[#0a192f] text-white py-12 mt-auto border-t-4 border-yellow-500">
-        <div class="max-w-3xl mx-auto px-6">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-8 h-8 bg-yellow-500 text-[#0a192f] rounded-full flex items-center justify-center font-bold text-lg">A</div>
-                <h2 class="text-xl font-bold tracking-wide">AARAMBH 2026 Hackathon</h2>
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-16 pb-8 mt-auto relative z-10">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
+                <div>
+                    <h2 class="text-2xl font-display font-bold tracking-tighter text-white mb-2">AARAMBH<span class="text-gradient">.2026</span></h2>
+                    <p class="text-gray-500 text-sm max-w-sm">
+                        India's premier national technical hackathon, hosted by the Department of Electrical Engineering, Walchand College of Engineering, Sangli.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-2 text-sm font-mono text-gray-400">
+                    <p class="hover:text-white transition cursor-pointer">📞 +91 91560 71788</p>
+                    <p class="hover:text-white transition cursor-pointer">📞 +91 74986 85760</p>
+                    <p class="hover:text-white transition cursor-pointer">✉️ arambh.hackathon@gmail.com</p>
+                </div>
             </div>
-            
-            <p class="text-gray-300 text-sm leading-relaxed mb-8 max-w-md">
-                India's premier national technical hackathon, hosted by the Department of Electrical Engineering, Walchand College of Engineering, Sangli.
-            </p>
-
-            <div class="space-y-4 text-sm text-gray-400">
-                <div class="flex items-start gap-3">
-                    <span class="text-yellow-500">📍</span>
-                    <p>Department of Electrical Engineering,<br>Walchand College of Engineering, Sangli,<br>Maharashtra 416415</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span class="text-yellow-500">📞</span>
-                    <p>+91 91560 71788 | +91 74986 85760</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span class="text-yellow-500">✉️</span>
-                    <p>arambh.hackathon@gmail.com</p>
-                </div>
+            <div class="border-t border-white/10 pt-8 flex justify-between text-xs font-mono text-gray-600 uppercase">
+                <p>© 2026 WCE SANGLI.</p>
+                <p>INNOVATE THE FUTURE.</p>
             </div>
         </div>
     </footer>
@@ -284,7 +302,7 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        // Single Accordion Toggle Logic (Matches Oxford/Aayodhyam style)
+        // Single Accordion Toggle Logic
         let activeId = null;
         function toggleAccordion(id) {
             if(activeId && activeId !== id) {
@@ -292,7 +310,7 @@
                 if (prevContent) {
                     prevContent.style.maxHeight = null;
                     prevContent.classList.remove('open');
-                    document.getElementById(`btn-icon-${activeId}`).style.transform = 'rotate(0deg)';
+                    document.getElementById(`btn-icon-${activeId}`).innerText = "+";
                 }
             }
             const content = document.getElementById(`content-${id}`);
@@ -301,44 +319,47 @@
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
                 content.classList.remove('open');
-                btn.style.transform = 'rotate(0deg)';
+                btn.innerText = "+";
                 activeId = null;
             } else {
-                content.style.maxHeight = content.scrollHeight + "px";
+                content.style.maxHeight = content.scrollHeight + 80 + "px"; // buffer for padding
                 content.classList.add('open');
-                btn.style.transform = 'rotate(180deg)';
+                btn.innerText = "—";
                 activeId = id;
             }
         }
 
-        // Document Toggle
         function toggleDoc() {
             const content = document.getElementById(`doc-container`);
             const btn = document.getElementById(`doc-btn-icon`);
             if (content.classList.contains('open')) {
                 content.style.maxHeight = null;
                 content.classList.remove('open');
-                btn.style.transform = 'rotate(0deg)';
+                btn.innerText = "+";
             } else {
-                content.style.maxHeight = "650px";
+                content.style.maxHeight = "750px";
                 content.classList.add('open');
-                btn.style.transform = 'rotate(180deg)';
+                btn.innerText = "—";
             }
         }
 
-        // Content Data Arrays
+        // Content Data Arrays (Rules, Tracks, FAQs)
         const contentData = [
             {
-                category: "TEAM & ELIGIBILITY",
+                id: "rules",
+                category: "TEAM & POLICIES",
+                index: "02",
                 items: [
-                    { id: "r1", q: "What is the team composition requirement?", a: "Each team must comprise exactly 5 students. Each team must consist of at least 1 girl. (Teams containing 5 girls are not allowed; at least 1 boy is compulsory)." },
-                    { id: "r2", q: "Can students from different colleges form a team?", a: "No. All team members must be enrolled at the same institution, though they can be from different branches. Cross-college teams are not permitted." },
-                    { id: "r3", q: "Who is eligible to participate?", a: "B.Tech students (2nd and 3rd year) from any engineering college, including WCE Sangli, are eligible. PhD research scholars and non-student professionals are NOT eligible." },
-                    { id: "faq2", q: "Can a student be part of multiple teams?", a: "No. Each student may register in only one team for Aarambh 2026." }
+                    { id: "r1", q: "Team Composition Requirements", a: "Each team must comprise exactly 5 students. Each team must consist of at least 1 girl (Teams containing 5 girls are not allowed; at least 1 boy is compulsory)." },
+                    { id: "r2", q: "Institutional Eligibility", a: "All team members must be enrolled at the same institution (cross-college teams are not permitted). B.Tech students (2nd and 3rd year) are eligible. PhD scholars and professionals are NOT eligible." },
+                    { id: "r3", q: "Problem Statement Selection", a: "Each team must select exactly one problem statement. Once confirmed after payment verification, task assignment is final and cannot be changed." },
+                    { id: "r6", q: "Payment & Refund Policy", a: "No refunds will be provided once registration is confirmed, even for voluntary withdrawal, failure to attend, or event rescheduling." }
                 ]
             },
             {
-                category: "PROBLEM STATEMENTS",
+                id: "tracks",
+                category: "HACKATHON TRACKS",
+                index: "03",
                 items: [
                     { id: "ps1", isPS: true, title: "Smart Street Environment & Noise Monitoring", cat: "HARDWARE", desc: "Develop an IoT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels." },
                     { id: "ps2", isPS: true, title: "Urban Flood Monitoring & Early Warning", cat: "HARDWARE", desc: "Develop a waterproof monitoring system that detects rapidly rising water levels in urban drains and underpasses and provides early warnings." },
@@ -348,21 +369,15 @@
                 ]
             },
             {
-                category: "REGISTRATION & POLICIES",
+                id: "faqs",
+                category: "FREQUENTLY ASKED",
+                index: "04",
                 items: [
-                    { id: "r4", q: "How does the registration process work?", a: "Registration requires a valid UTR/transaction ID from a UPI payment. Confirmation is issued only after organizer payment verification. Partial or fraudulent entries lead to disqualification." },
-                    { id: "r5", q: "Can I change my problem statement after registering?", a: "No. Once your payment is verified and your slot is confirmed, the task assignment is final and cannot be changed." },
-                    { id: "r6", q: "What is the refund policy?", a: "No refunds will be provided once registration is confirmed, even for voluntary withdrawal or failure to attend. If the event is rescheduled, fees remain non-refundable." },
-                    { id: "faq1", q: "Is there a registration deadline?", a: "Registrations remain open until all slots are filled or until the organizers officially close registrations. Please register early." }
-                ]
-            },
-            {
-                category: "EVALUATION & PORTAL",
-                items: [
-                    { id: "r7", q: "How is evaluation done?", a: "A jury panel evaluates each team on: experimental accuracy, methodology, report quality, and viva responses. All members must be present. The jury's decision is final." },
+                    { id: "faq1", q: "Is there a registration deadline?", a: "Registrations remain open until all slots are filled. We recommend registering as early as possible." },
+                    { id: "faq2", q: "Can a student be part of multiple teams?", a: "No. Each student may register in only one team for Aarambh 2026." },
                     { id: "faq4", q: "Will certificates be given to all participants?", a: "Yes. Participation certificates will be issued to all registered and participating teams. Merit certificates are issued to winners." },
-                    { id: "faq5", q: "What payment methods are accepted?", a: "UPI is the accepted payment method. You will be redirected to a secure KonfHub checkout page to complete the transaction." },
-                    { id: "faq6", q: "What if I face a technical issue with the portal?", a: "Email arambh.hackathon@gmail.com with a description of the issue and screenshots if possible. We will respond within 24 hours." }
+                    { id: "faq5", q: "What payment methods are accepted?", a: "UPI is the accepted payment method. You will be securely redirected to KonfHub for checkout." },
+                    { id: "faq7", q: "How is evaluation done?", a: "A jury evaluates each team on experimental accuracy, methodology, report quality, and viva responses. The jury's decision is final." }
                 ]
             }
         ];
@@ -373,8 +388,11 @@
             const selectEl = document.getElementById("assigned_ps");
             
             contentData.forEach(section => {
-                let html = `<div class="reveal mt-10">
-                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">${section.category}</h3>`;
+                let html = `<div id="${section.id}" class="reveal scroll-mt-24">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="text-sm font-mono text-gray-500 uppercase tracking-widest">${section.index} //</span>
+                        <h2 class="text-2xl font-display font-bold text-white">${section.category}</h2>
+                    </div>`;
                 
                 section.items.forEach(item => {
                     if (item.isPS) {
@@ -385,33 +403,36 @@
                         selectEl.appendChild(opt);
 
                         // Render PS Card
-                        const badgeColor = item.cat === 'HARDWARE' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700';
+                        const badgeStyle = item.cat === 'HARDWARE' ? 'border-emerald-500/50 text-emerald-400 bg-emerald-500/10' : 'border-blue-500/50 text-blue-400 bg-blue-500/10';
                         html += `
-                        <div class="clean-card">
+                        <div class="web3-card group">
                             <div class="accordion-header" onclick="toggleAccordion('${item.id}')">
-                                <div class="flex flex-col gap-1 pr-4">
-                                    <span class="text-sm font-semibold">PS #${item.id.replace('ps', '').padStart(2, '0')}: ${item.title}</span>
-                                    <span class="inline-block w-max px-2 py-0.5 rounded text-xs font-bold tracking-wider ${badgeColor}">${item.cat}</span>
+                                <div class="flex flex-col gap-2 pr-4">
+                                    <div class="flex items-center gap-3">
+                                        <span class="font-mono text-xs text-gray-500">PS #${item.id.replace('ps', '').padStart(2, '0')}</span>
+                                        <span class="border px-2 py-0.5 rounded text-[10px] font-mono tracking-widest ${badgeStyle}">${item.cat}</span>
+                                    </div>
+                                    <span class="font-display font-semibold text-lg text-white group-hover:text-purple-300 transition-colors">${item.title}</span>
                                 </div>
-                                <span id="btn-icon-${item.id}" class="text-gray-400 transform transition-transform shrink-0">▼</span>
+                                <span id="btn-icon-${item.id}" class="text-gray-500 font-mono text-xl transition-transform">+</span>
                             </div>
                             <div id="content-${item.id}" class="accordion-content">
-                                <p class="mb-4">${item.desc}</p>
-                                <button onclick="startRegistration('${item.id.replace('ps', '')}', '${item.title.replace(/'/g, "\\'")}')" class="bg-blue-50 text-blue-700 font-semibold border border-blue-200 px-4 py-2 rounded text-sm hover:bg-blue-100 transition">
-                                    Select this task
+                                <p class="mb-6 leading-relaxed">${item.desc}</p>
+                                <button onclick="startRegistration('${item.id.replace('ps', '')}', '${item.title.replace(/'/g, "\\'")}')" class="bg-white/10 hover:bg-white text-white hover:text-black font-display font-semibold px-5 py-2 rounded text-sm transition-colors">
+                                    Select Task & Register ->
                                 </button>
                             </div>
                         </div>`;
                     } else {
                         // Render FAQ/Rule Card
                         html += `
-                        <div class="clean-card">
+                        <div class="web3-card group">
                             <div class="accordion-header" onclick="toggleAccordion('${item.id}')">
-                                <span class="pr-4 text-sm">${item.q}</span>
-                                <span id="btn-icon-${item.id}" class="text-gray-400 transform transition-transform shrink-0">▼</span>
+                                <span class="font-display font-semibold text-white group-hover:text-purple-300 transition-colors pr-4">${item.q}</span>
+                                <span id="btn-icon-${item.id}" class="text-gray-500 font-mono text-xl transition-transform">+</span>
                             </div>
                             <div id="content-${item.id}" class="accordion-content">
-                                <p>${item.a}</p>
+                                <p class="leading-relaxed">${item.a}</p>
                             </div>
                         </div>`;
                     }
@@ -430,9 +451,6 @@
             document.getElementById('view-home').classList.add('hidden');
             document.getElementById('view-register').classList.add('hidden');
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
-            
-            // Toggle floating button visibility
-            document.getElementById('global-reg-btn').style.display = viewId === 'home' ? 'flex' : 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -452,9 +470,10 @@
             e.preventDefault();
             
             Swal.fire({ 
-                title: 'Saving Team Details...', 
-                html: 'Please wait...', 
+                title: 'Securing Slot...', 
+                html: '<span class="font-mono text-sm">Syncing data to ledger</span>', 
                 allowOutsideClick: false, 
+                background: '#050505', color: '#fff',
                 didOpen: () => { Swal.showLoading() }
             });
 
@@ -484,15 +503,16 @@
             }).then(() => {
                 Swal.fire({
                     icon: 'success', 
-                    title: 'Details Verified!',
-                    text: 'You will now be redirected to KonfHub to pay the ₹350 fee.',
-                    confirmButtonColor: '#f5b324',
-                    confirmButtonText: '<span style="color:#0a192f;font-weight:bold;">Proceed to Payment 💳</span>'
+                    title: 'Profile Synced',
+                    text: 'Routing to payment gateway...',
+                    background: '#050505', color: '#fff',
+                    confirmButtonColor: '#4f46e5',
+                    confirmButtonText: '<span class="font-display font-bold">Checkout -></span>'
                 }).then(() => {
                     window.location.href = KONFHUB_URL;
                 });
             }).catch(error => {
-                Swal.fire({ icon: 'error', title: 'Error', text: 'Network connection failed.' });
+                Swal.fire({ icon: 'error', title: 'Network Error', background: '#050505', color: '#fff' });
             });
         }
     </script>
