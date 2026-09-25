@@ -19,7 +19,6 @@
             --card-bg: #0a0514;
             --text-main: #e2e8f0;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
@@ -31,14 +30,11 @@
             linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-
         .font-cyber { font-family: 'Orbitron', sans-serif; }
         .font-term { font-family: 'JetBrains Mono', monospace; }
-
         .text-neon { color: var(--neon-purple); text-shadow: 0 0 10px var(--neon-purple); }
         .border-neon { border-color: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple-dim); }
         .bg-neon { background-color: var(--neon-purple); color: white; box-shadow: 0 0 15px var(--neon-purple); }
-
         /* Hacker Cards */
         .cyber-card {
             background-color: var(--card-bg);
@@ -51,7 +47,6 @@
             box-shadow: 0 0 15px var(--neon-purple-dim);
             transform: translateY(-2px);
         }
-
         /* Tabs (Mindspark Style) */
         .tab-btn {
             background: transparent;
@@ -69,7 +64,6 @@
             color: black;
             box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
-
         /* Accordion */
         .accordion-header {
             padding: 1.25rem;
@@ -86,12 +80,10 @@
             background: rgba(0,0,0,0.3);
         }
         .accordion-content.open { padding-bottom: 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); }
-
         /* Hardware Table */
         .hw-table th { background: var(--neon-purple-dim); color: var(--neon-purple); font-weight: 600; padding: 0.75rem; text-align: left; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 1px;}
         .hw-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;}
         .hw-table tr:hover td { background: rgba(255,255,255,0.02); }
-
         /* Inputs */
         .cyber-input {
             width: 100%;
@@ -105,7 +97,6 @@
         }
         .cyber-input:focus { outline: none; border-color: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple-dim); }
         select.cyber-input option { background-color: var(--bg-color); color: white; }
-
         /* Mobile Menu */
         #nav-menu {
             position: fixed; top: 0; right: -100%;
@@ -116,26 +107,64 @@
             display: flex; flex-direction: column; padding: 2rem;
         }
         #nav-menu.open { right: 0; }
-
         /* Section Visibility */
         .view-section { display: none; animation: fadeIn 0.5s ease-out; }
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ASCII Art Animation */
-        .ascii-art {
-            font-size: 0.45rem;
-            line-height: 1.1;
-            color: var(--neon-purple);
-            text-shadow: 0 0 5px var(--neon-purple);
-            animation: pulse 4s infinite alternate;
+        /* =========================================
+           3D CSS ROTATING ASCII LAPTOP ANIMATION 
+           ========================================= */
+        .laptop-wrapper {
+            perspective: 800px;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
         }
-        @media (min-width: 768px) { .ascii-art { font-size: 0.65rem; } }
-        @keyframes pulse { 0% { opacity: 0.8; } 100% { opacity: 1; text-shadow: 0 0 15px var(--neon-purple); } }
+        .laptop-3d {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: floatLaptop 8s ease-in-out infinite alternate;
+        }
+        .laptop-screen {
+            position: absolute;
+            bottom: 0;
+            left: -160px; /* Centers the ASCII text */
+            transform-origin: bottom center;
+            transform: rotateX(0deg);
+        }
+        .laptop-base {
+            position: absolute;
+            top: 0;
+            left: -160px; /* Centers the ASCII text */
+            transform-origin: top center;
+            transform: rotateX(75deg); /* Opens the laptop base backwards */
+        }
+        .ascii-panel {
+            white-space: pre;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            line-height: 1.3;
+            color: var(--neon-purple);
+            text-shadow: 0 0 8px var(--neon-purple);
+            background: rgba(5, 2, 12, 0.8);
+            border: 1px solid rgba(181, 36, 255, 0.4);
+            padding: 8px 12px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 15px rgba(181, 36, 255, 0.1);
+        }
+        
+        /* Smooth swaying and rotating animation */
+        @keyframes floatLaptop {
+            0% { transform: rotateX(-5deg) rotateY(-25deg) translateY(10px); }
+            100% { transform: rotateX(-15deg) rotateY(25deg) translateY(-10px); }
+        }
+        @media (min-width: 768px) { .ascii-panel { font-size: 0.75rem; left: -190px;} .laptop-screen { left: -190px;} .laptop-base { left: -190px;} }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
-
     <!-- Top Navigation -->
     <header class="flex justify-between items-center p-4 md:px-8 md:py-6 sticky top-0 bg-[#030008]/90 backdrop-blur-md z-40 border-b border-white/10">
         <div class="flex items-center gap-4 cursor-pointer" onclick="switchTab('ps')">
@@ -147,7 +176,6 @@
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
     </header>
-
     <!-- Fullscreen Menu Overlay -->
     <div id="nav-menu">
         <div class="flex justify-end mb-8">
@@ -165,10 +193,8 @@
             > INITIATING_SYSTEM... <br> > WELCOME TO AARAMBH_26
         </div>
     </div>
-
     <!-- MAIN CONTENT AREA -->
     <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-8 relative">
-
         <!-- HERO SECTION (Visible Globally) -->
         <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 mb-12">
             <div class="flex-1 space-y-6">
@@ -203,7 +229,6 @@
                         <p class="font-bold text-sm md:text-base">₹350</p>
                     </div>
                 </div>
-
                 <!-- Registration Alert -->
                 <div class="bg-[#1a0b2e] border border-[#b524ff]/50 rounded-lg p-4 flex gap-4 items-start shadow-[0_0_15px_rgba(181,36,255,0.2)]">
                     <div class="mt-1"><span class="flex h-3 w-3"><span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-[#b524ff] opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-[#b524ff]"></span></span></div>
@@ -214,33 +239,56 @@
                 </div>
             </div>
             
-            <!-- ASCII Terminal Box -->
-            <div class="flex-1 w-full bg-[#05020a] border border-white/10 rounded-lg overflow-hidden shadow-2xl hidden md:block">
-                <div class="bg-black border-b border-white/10 px-4 py-2 flex justify-between items-center">
-                    <span class="font-term text-xs text-gray-500">~/aarambh-26 > hackathon.sh</span>
+            <!-- 3D CSS ROTATING ASCII LAPTOP -->
+            <div class="flex-1 w-full bg-[#05020a] border border-white/10 rounded-lg overflow-hidden shadow-2xl hidden md:block relative">
+                <div class="bg-black border-b border-white/10 px-4 py-2 flex justify-between items-center absolute top-0 w-full z-10">
+                    <span class="font-term text-xs text-gray-500">~/aarambh-26 > render-3d-laptop.sh</span>
                     <div class="flex gap-1">
                         <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
                         <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
                         <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
                     </div>
                 </div>
-                <div class="p-6 overflow-hidden flex justify-center items-center">
-                    <pre class="ascii-art font-term text-center">
-      .o+`
-    `ooo/
-   `+oooo:
-  `+oooooo:
-  -+oooooo+:
-  `/:-:++o+:
-   `/++++++:
-    `/+++++:
-      `-//+/
-         .-`
-                    </pre>
+                
+                <!-- Rotating 3D Object -->
+                <div class="laptop-wrapper">
+                    <div class="laptop-3d">
+                        
+                        <!-- Laptop Screen -->
+                        <div class="laptop-screen ascii-panel">
+.-------------------------------------------------.
+|                                                 |
+|  > AARAMBH 2026 INITIALIZED                     |
+|  > LOADING PROTOCOLS... OK                      |
+|  > BYPASSING MAINFRAME... OK                    |
+
+| > ESTABLISHING SECURE CONNECTION |
+| :--- |
+| [ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ] 100% |
+| :--- |
+| SYSTEM READY. WAITING FOR USER INPUT_ |
+| :--- |
+
+'-------------------------------------------------'</div>
+                        
+                        <!-- Laptop Keyboard / Base -->
+                        <div class="laptop-base ascii-panel">
+.-------------------------------------------------.
+| [ESC] [F1] [F2] [F3] [F4] [F5] [F6] [F7] [F8]   |
+| [~] [1] [2] [3] [4] [5] [6] [7] [8] [9] [0] [-] |
+| [TAB] [Q] [W] [E] [R] [T] [Y] [U] [I] [O] [P]   |
+| [CAPS] [A] [S] [D] [F] [G] [H] [J] [K] [L] [RET]|
+| [SHIFT] [Z] [X] [C] [V] [B] [N] [M] [,] [.] [/] |
+
+| [CTRL] [WIN] [ALT] [     SPACE     ] [ALT] [CTRL |
+| :--- |
+| [ TRACKPAD ] |
+
+'-------------------------------------------------'</div>
+                    </div>
                 </div>
             </div>
         </div>
-
         <!-- TAB NAVIGATION (Pill Style) -->
         <div class="flex gap-2 overflow-x-auto pb-4 mb-8 border-b border-white/10 scrollbar-hide" id="tab-container">
             <button onclick="switchTab('ps')" id="btn-ps" class="tab-btn active whitespace-nowrap">Problem Statements</button>
@@ -248,8 +296,6 @@
             <button onclick="switchTab('faqs')" id="btn-faqs" class="tab-btn whitespace-nowrap">FAQs</button>
             <button onclick="switchTab('register')" id="btn-register" class="tab-btn whitespace-nowrap text-neon border-neon border bg-black hover:bg-neon hover:text-white">Register Now ➔</button>
         </div>
-
-
         <!-- ================= PROBLEM STATEMENTS TAB ================= -->
         <section id="tab-ps" class="view-section active">
             
@@ -270,12 +316,9 @@
                     </div>
                 </div>
             </div>
-
             <!-- Inject PS Here -->
             <div id="ps-container" class="space-y-4"></div>
         </section>
-
-
         <!-- ================= RULES TAB ================= -->
         <section id="tab-rules" class="view-section">
             <div class="mb-8">
@@ -291,8 +334,6 @@
                 <!-- Rules Injected via JS -->
             </div>
         </section>
-
-
         <!-- ================= FAQ TAB ================= -->
         <section id="tab-faqs" class="view-section">
             <h2 class="font-cyber text-2xl font-bold mb-6">FAQS:</h2>
@@ -300,8 +341,6 @@
                 <!-- FAQs Injected via JS -->
             </div>
         </section>
-
-
         <!-- ================= REGISTER TAB ================= -->
         <section id="tab-register" class="view-section">
             
@@ -324,7 +363,6 @@
                                 <input type="text" id="teamName" required class="cyber-input" placeholder="e.g. Cyber Squad">
                             </div>
                         </div>
-
                         <div class="pt-6 border-t border-white/10 space-y-6">
                             <div>
                                 <label class="font-cyber text-sm text-neon font-bold block mb-1">CORE MEMBERS</label>
@@ -349,7 +387,6 @@
                                     <input type="tel" id="m2_phone" required class="cyber-input" placeholder="Alternate phone number">
                                 </div>
                             </div>
-
                             <!-- Members 3,4,5 -->
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div class="bg-black/50 p-4 rounded border border-white/5">
@@ -366,7 +403,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="pt-6">
                             <button type="submit" class="w-full bg-neon font-cyber font-bold text-lg py-4 rounded transition hover:scale-[1.02]">
                                 PROCEED TO CHECKOUT (₹350)
@@ -374,8 +410,7 @@
                         </div>
                     </form>
                 </div>
-
-                <!-- Info Sidebar (Matching 00:20 in Video) -->
+                <!-- Info Sidebar -->
                 <div class="w-full lg:w-80 space-y-6">
                     <div class="cyber-card p-6">
                         <h3 class="font-cyber font-bold text-lg border-b border-white/10 pb-3 mb-4">TEAM & REGISTRATION</h3>
@@ -402,7 +437,6 @@
             </div>
         </section>
     </main>
-
     <!-- Footer -->
     <footer class="border-t border-white/10 bg-[#020005] mt-12 py-10 text-center font-term text-xs text-gray-500 space-y-2">
         <p class="font-cyber text-white text-base tracking-widest mb-4">AARAMBH 2026</p>
@@ -413,7 +447,6 @@
         </div>
         <p class="pt-6">© 2026 WCE SANGLI. ALL RIGHTS RESERVED.</p>
     </footer>
-
     <!-- Database & Logic Script -->
     <script>
         // 1. Safe Document Loading
@@ -422,20 +455,16 @@
             const iframe = document.getElementById('doc-iframe');
             if (iframe) iframe.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(gitHubFileRawUrl);
         });
-
         // 2. Navigation Logic (Tabs)
         function toggleMenu() { document.getElementById('nav-menu').classList.toggle('open'); }
         
         function switchTab(tabId) {
-            // Update Buttons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${tabId}`).classList.add('active');
             
-            // Update Views
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(`tab-${tabId}`).classList.add('active');
         }
-
         // 3. Accordion Logic
         let activeAccordion = null;
         function toggleAccordion(id) {
@@ -453,7 +482,6 @@
                 content.style.maxHeight = content.scrollHeight + 150 + "px"; content.classList.add('open'); icon.innerText = "−"; activeAccordion = id;
             }
         }
-
         // 4. Complete 69 PS Database with Hardware Components
         const db = [
             {id: 1, t: "Smart Street Environment & Noise Monitoring", c: "HARDWARE", hw: [
@@ -620,7 +648,6 @@
             {id: 68, t: "Crop Yield & Market Analytics Platform", c: "SOFTWARE", hw: []},
             {id: 69, t: "Aquaculture Feeding Optimization", c: "SOFTWARE", hw: []}
         ];
-
         const rules = [
             "Rule 1: Team Composition. Each team must comprise exactly 5 students, containing at least 1 girl. Mixed teams from different colleges are not permitted.",
             "Rule 2: Eligibility. Participants must be undergraduate B.Tech students (2nd and 3rd year). PhD scholars and non-students are not eligible.",
@@ -629,7 +656,6 @@
             "Rule 5: Evaluation & Jury. All team members must be present for the jury evaluation. The jury's decision is final and binding. No appeals will be entertained.",
             "Rule 6: Refunds. No refunds will be provided once registration has been confirmed, even for voluntary withdrawal or failure to attend."
         ];
-
         const faqs = [
             { q: "Is there a registration deadline?", a: "Registrations remain open until all slots are filled. Watch the announcements ticker for updates." },
             { q: "Can a student be part of multiple teams?", a: "No. Each student may register in only one team for Aarambh WCE Hackathon 2026." },
@@ -637,14 +663,12 @@
             { q: "What payment methods are accepted?", a: "UPI is the accepted payment method. You will be redirected to KonfHub for checkout." },
             { q: "What if my preferred task is already full?", a: "You'll need to select a different task. We recommend registering early to secure your preferred problem statement." }
         ];
-
         // 5. Render Content
         window.onload = () => {
             const selectEl = document.getElementById("assigned_ps");
             const psContainer = document.getElementById('ps-container');
             const rulesContainer = document.getElementById('rules-container');
             const faqContainer = document.getElementById('faq-container');
-
             // Render Tracks & Hardware
             db.forEach(ps => {
                 selectEl.innerHTML += `<option value="PS #${String(ps.id).padStart(2, '0')}: ${ps.t}">PS #${String(ps.id).padStart(2, '0')}: ${ps.t}</option>`;
@@ -663,7 +687,6 @@
                 } else {
                     hardwareHTML = `<div class="mt-4 inline-block bg-[#b524ff]/10 border border-[#b524ff]/50 text-[#b524ff] px-3 py-1.5 rounded font-term text-xs tracking-widest">> TYPE: SOFTWARE_ONLY_NO_HARDWARE</div>`;
                 }
-
                 psContainer.innerHTML += `
                     <div class="cyber-card">
                         <div class="accordion-header" onclick="toggleAccordion('ps-${ps.id}')">
@@ -679,7 +702,6 @@
                     </div>
                 `;
             });
-
             // Render Rules as Grid Cards
             rules.forEach((rule, idx) => {
                 rulesContainer.innerHTML += `
@@ -689,7 +711,6 @@
                     </div>
                 `;
             });
-
             // Render FAQs as Accordions
             faqs.forEach((faq, idx) => {
                 faqContainer.innerHTML += `
@@ -705,11 +726,9 @@
                 `;
             });
         };
-
         // 6. Form Submission Logic
         const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxbWrJmLBm5CIN73fBu8zFai-9FcQna18w0SwGpPJ6tzlJZYLJEw4WGubcFbnpB6eUZ/exec";
         const KONFHUB_URL = "https://events.konfhub.com/YOUR_EVENT_LINK_HERE"; // Replace with your real KonfHub link
-
         function handleRegistration(e) {
             e.preventDefault();
             Swal.fire({ title: 'INITIALIZING SUBMISSION...', allowOutsideClick: false, background: '#0a0514', color: '#b524ff', didOpen: () => { Swal.showLoading() } });
@@ -723,7 +742,6 @@
                 m4_name: document.getElementById('m4_name').value, m5_name: document.getElementById('m5_name').value,
                 custom_components: "Not Applicable", amount: 350.00, utr: "Pending Gateway Checkout", timestamp: new Date().toISOString()
             };
-
             fetch(WEBHOOK_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(registrationData) })
             .then(() => {
                 Swal.fire({
