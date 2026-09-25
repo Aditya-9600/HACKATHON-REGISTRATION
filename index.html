@@ -41,6 +41,8 @@
             border-radius: 9999px;
             transition: all 0.3s;
             font-weight: 500;
+            display: inline-block;
+            text-align: center;
         }
         .btn-outline:hover {
             border-color: var(--gold-accent);
@@ -53,16 +55,19 @@
             border-radius: 9999px;
             transition: all 0.3s;
             font-weight: 500;
+            display: inline-block;
+            text-align: center;
         }
         .btn-solid:hover {
             background-color: var(--gold-accent);
         }
 
-        /* Bordered Cards & Accordions matching the video */
+        /* Bordered Cards & Accordions */
         .oxford-card {
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 1rem;
             transition: border-color 0.3s;
+            background: rgba(255, 255, 255, 0.02);
         }
         .oxford-card:hover {
             border-color: var(--gold-accent);
@@ -77,7 +82,7 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
+            transition: max-height 0.4s ease-out;
             padding: 0 1.25rem;
         }
         .accordion-content.open {
@@ -95,8 +100,8 @@
         /* Form Inputs */
         .oxford-input {
             width: 100%;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             padding: 0.75rem 1rem;
             margin-top: 0.5rem;
@@ -179,8 +184,10 @@
         <!-- ================= HOME TAB ================= -->
         <section id="tab-home" class="view-section active space-y-10">
             <!-- Hero Video/Image Placeholder -->
-            <div class="w-full h-64 md:h-80 bg-gray-800 relative overflow-hidden rounded-md border border-white/20">
-                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80" alt="Hackathon" class="w-full h-full object-cover opacity-60">
+            <div class="w-full h-64 md:h-80 bg-gray-900 relative overflow-hidden rounded-md border border-white/20 flex items-center justify-center">
+                <div class="absolute inset-0 bg-blue-900/20 mix-blend-overlay"></div>
+                <!-- You can replace this img with an actual video or GIF -->
+                <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="Hackathon" class="w-full h-full object-cover opacity-50">
             </div>
 
             <div class="text-center space-y-4">
@@ -201,13 +208,13 @@
                 </div>
                 <div class="flex items-center justify-center gap-4">
                     <span class="gold-triangle">▶</span>
-                    <span class="text-gold">Fully Equipped</span>
+                    <span class="text-gold">Fully Equipped Labs</span>
                 </div>
                 <div class="flex items-center justify-center gap-4">
                     <span class="gold-triangle">▶</span>
                     <span>Hosted by EE Dept, WCE</span>
                 </div>
-                <p class="text-center text-sm font-sans text-gray-400 pt-4">
+                <p class="text-center text-sm font-sans text-gray-400 pt-4 border-t border-white/10 mt-6">
                     Hosted by the Department of Electrical Engineering, Walchand College of Engineering, Sangli.
                 </p>
             </div>
@@ -218,14 +225,28 @@
         <section id="tab-tracks" class="view-section">
             <h2 class="text-3xl font-serif text-gold text-center mb-8 border-b border-white/20 pb-4">Problem Statements ⏳</h2>
             
-            <div class="mb-6 flex gap-4">
-                <a href="Problem_Statements_Updated.docx" target="_blank" class="w-full text-center oxford-input hover:border-gold transition font-serif">
-                    ⬇️ Download Official Compendium (.docx)
-                </a>
+            <!-- Document Preview Card (Fixed) -->
+            <div class="oxford-card mb-8">
+                <div class="accordion-header bg-white/5" onclick="toggleAccordion('doc-preview')">
+                    <span class="font-serif text-lg text-gold">📄 View Official Problem Statements Document</span>
+                    <span id="icon-doc-preview" class="gold-triangle">▼</span>
+                </div>
+                <div id="content-doc-preview" class="accordion-content">
+                    <div class="pt-4 pb-4 flex flex-col sm:flex-row gap-4 justify-between items-center">
+                        <p class="text-sm text-gray-300">Preview the official compendium below.</p>
+                        <a href="Problem_Statements_Updated.docx" target="_blank" class="btn-outline text-sm whitespace-nowrap">
+                            ⬇️ Download .docx
+                        </a>
+                    </div>
+                    <!-- The iframe ID is here, which prevents the JS crash -->
+                    <div class="relative w-full rounded border border-white/20 bg-white overflow-hidden mb-4">
+                        <iframe id="doc-iframe" src="" width="100%" height="550px" frameborder="0"></iframe>
+                    </div>
+                </div>
             </div>
 
             <div id="ps-container" class="space-y-4">
-                <!-- Injected via JS -->
+                <!-- Problem Statements Injected via JS -->
             </div>
         </section>
 
@@ -234,7 +255,7 @@
         <section id="tab-rules" class="view-section">
             <h2 class="text-3xl font-serif text-gold text-center mb-8 border-b border-white/20 pb-4">Rules & Guidelines ⚖️</h2>
             <div id="rules-container" class="space-y-4">
-                <!-- Injected via JS -->
+                <!-- Rules Injected via JS -->
             </div>
         </section>
 
@@ -243,7 +264,7 @@
         <section id="tab-faq" class="view-section">
             <h2 class="text-3xl font-serif text-gold text-center mb-8 border-b border-white/20 pb-4">FAQ</h2>
             <div id="faq-container" class="space-y-4">
-                <!-- Injected via JS -->
+                <!-- FAQs Injected via JS -->
             </div>
         </section>
 
@@ -269,35 +290,35 @@
 
                 <div class="pt-4 border-t border-white/20">
                     <label class="font-serif text-gold text-lg block mb-4">Core Members (5 Required)</label>
-                    <p class="text-xs text-gray-400 mb-4">* At least 1 girl and 1 boy compulsory.</p>
+                    <p class="text-xs text-red-400 mb-4">* At least 1 girl and 1 boy compulsory.</p>
                     
                     <!-- Leader -->
-                    <div class="mb-4">
-                        <label class="font-serif text-sm">Member 1 (Team Leader)</label>
+                    <div class="mb-4 bg-white/5 p-4 rounded border border-white/10">
+                        <label class="font-serif text-sm text-gold">Member 1 (Team Leader)</label>
                         <input type="text" id="l_name" required class="oxford-input" placeholder="Full name...">
                         <input type="email" id="l_email" required class="oxford-input" placeholder="Email address...">
                         <input type="tel" id="l_phone" required class="oxford-input" placeholder="Phone number...">
                     </div>
 
                     <!-- Member 2 -->
-                    <div class="mb-4">
-                        <label class="font-serif text-sm">Member 2</label>
+                    <div class="mb-4 bg-white/5 p-4 rounded border border-white/10">
+                        <label class="font-serif text-sm text-gold">Member 2</label>
                         <input type="text" id="m2_name" required class="oxford-input" placeholder="Full name...">
                         <input type="tel" id="m2_phone" required class="oxford-input" placeholder="Alternate phone number...">
                     </div>
 
                     <!-- Members 3, 4, 5 -->
-                    <div class="space-y-4">
+                    <div class="space-y-4 bg-white/5 p-4 rounded border border-white/10">
                         <div>
-                            <label class="font-serif text-sm">Member 3</label>
+                            <label class="font-serif text-sm text-gold">Member 3</label>
                             <input type="text" id="m3_name" required class="oxford-input" placeholder="Full name...">
                         </div>
                         <div>
-                            <label class="font-serif text-sm">Member 4</label>
+                            <label class="font-serif text-sm text-gold">Member 4</label>
                             <input type="text" id="m4_name" required class="oxford-input" placeholder="Full name...">
                         </div>
                         <div>
-                            <label class="font-serif text-sm">Member 5</label>
+                            <label class="font-serif text-sm text-gold">Member 5</label>
                             <input type="text" id="m5_name" required class="oxford-input" placeholder="Full name...">
                         </div>
                     </div>
@@ -318,13 +339,23 @@
         <p class="font-serif text-gold text-lg mb-4">Venue:</p>
         <p><strong>Hackathon:</strong> Department of Electrical Engineering,<br>Walchand College of Engineering, Sangli.</p>
         <div class="flex justify-center gap-6 pt-4 text-white">
-            <a href="tel:+919156071788" class="hover:text-gold">📞 +91 91560 71788</a>
-            <a href="mailto:arambh.hackathon@gmail.com" class="hover:text-gold">✉️ arambh.hackathon@gmail.com</a>
+            <a href="tel:+919156071788" class="hover:text-gold transition">📞 +91 91560 71788</a>
+            <a href="mailto:arambh.hackathon@gmail.com" class="hover:text-gold transition">✉️ arambh.hackathon@gmail.com</a>
         </div>
+        <p class="pt-6 text-xs text-gray-500 uppercase tracking-widest">Innovate The Future of Tech.</p>
     </footer>
 
     <script>
-        // 1. Navigation Logic
+        // 1. Safe Document Loading
+        document.addEventListener('DOMContentLoaded', () => {
+            const gitHubFileRawUrl = "https://github.com/Aditya-9600/hackathon-portal/raw/main/Problem_Statements_Updated.docx";
+            const iframe = document.getElementById('doc-iframe');
+            if (iframe) {
+                iframe.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(gitHubFileRawUrl);
+            }
+        });
+
+        // 2. Navigation Logic
         function toggleMenu() {
             const menu = document.getElementById('nav-menu');
             menu.classList.toggle('open');
@@ -336,7 +367,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. Accordion Logic (Matching ETH Oxford Video)
+        // 3. Accordion Logic (Matching ETH Oxford Video)
         let activeAccordion = null;
         function toggleAccordion(id) {
             if (activeAccordion && activeAccordion !== id) {
@@ -358,20 +389,26 @@
                 icon.classList.remove('open');
                 activeAccordion = null;
             } else {
-                content.style.maxHeight = content.scrollHeight + 40 + "px";
+                content.style.maxHeight = content.scrollHeight + 60 + "px"; // added buffer for padding
                 content.classList.add('open');
                 icon.classList.add('open');
                 activeAccordion = id;
             }
         }
 
-        // 3. Database
+        // 4. Database (Add the rest of your 69 statements to this array)
         const db = [
             {id: 1, title: "Smart Street Environment & Noise Monitoring", cat: "HARDWARE", desc: "Develop an IoT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels."},
             {id: 2, title: "Urban Flood Monitoring & Early Warning", cat: "HARDWARE", desc: "Develop a waterproof monitoring system that detects rapidly rising water levels in urban drains and underpasses and provides early warnings."},
             {id: 7, title: "AI-Powered Traffic Flow Optimization", cat: "SOFTWARE", desc: "Develop a centralized software platform that ingests real-time transit and ride-sharing GPS data to dynamically adjust traffic light timings."},
             {id: 9, title: "Elderly Care & Assistive Technology", cat: "HARDWARE", desc: "Develop a wearable system that detects accidental falls in elderly individuals, provides medication reminders, and sends SOS alerts with GPS location."},
-            {id: 17, title: "EV Battery Safety & Thermal Runaway", cat: "HARDWARE", desc: "Develop a low-cost battery monitoring system that detects early signs of thermal runaway at the cell level and isolates the affected module."}
+            {id: 15, title: "Digital Healthcare & Organ Transplant Management", cat: "SOFTWARE", desc: "Develop a secure platform that enables hospitals to efficiently match organ donors with eligible recipients based on compatibility factors."},
+            {id: 17, title: "EV Battery Safety & Thermal Runaway", cat: "HARDWARE", desc: "Develop a low-cost battery monitoring system that detects early signs of thermal runaway at the cell level and isolates the affected module."},
+            {id: 25, title: "Multilingual Academic Learning Support", cat: "SOFTWARE", desc: "Develop a multilingual academic platform that accepts questions in Marathi, Hindi, or English and provides clear explanations suited to student levels."},
+            {id: 32, title: "Solar Energy & Battery Management", cat: "HARDWARE", desc: "Develop an energy-management controller that monitors solar generation and load demand, intelligently scheduling battery cycles."},
+            {id: 44, title: "UAV Safety & Autonomous Landing", cat: "HARDWARE", desc: "Develop an autonomous emergency landing unit for drones that detects in-flight propulsion failure and guides descent to a safe landing zone."},
+            {id: 53, title: "Wireless Network Security", cat: "HARDWARE", desc: "Develop an edge intrusion monitor that detects 802.11 deauthentication attacks, rogue Wi-Fi clones, and maintains an offline alert log."},
+            {id: 61, title: "Water Management & Smart Irrigation", cat: "HARDWARE", desc: "Develop an autonomous irrigation controller that evaluates localized soil moisture and temperature to govern multi-valve water delivery."}
         ];
 
         const rules = [
@@ -389,7 +426,7 @@
             { q: "What is the refund policy?", a: "No refunds will be provided once registration is confirmed, even for voluntary withdrawal or if the event is rescheduled." }
         ];
 
-        // 4. Render Content
+        // 5. Render Content
         window.onload = () => {
             // Render Select Options
             const selectEl = document.getElementById("assigned_ps");
@@ -450,9 +487,9 @@
             });
         };
 
-        // 5. Hybrid Form Submission Logic
+        // 6. Hybrid Form Submission Logic
         const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxbWrJmLBm5CIN73fBu8zFai-9FcQna18w0SwGpPJ6tzlJZYLJEw4WGubcFbnpB6eUZ/exec";
-        const KONFHUB_URL = "https://events.konfhub.com/YOUR_EVENT_LINK_HERE"; // Replace with real link
+        const KONFHUB_URL = "https://events.konfhub.com/YOUR_EVENT_LINK_HERE"; // Replace with your real KonfHub link
 
         function handleRegistration(e) {
             e.preventDefault();
