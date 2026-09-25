@@ -147,7 +147,6 @@
 
         <!-- ================= VIEW 1: HOME ================= -->
         <section id="view-home" class="view-section active space-y-16">
-            <!-- Hero Section -->
             <div class="text-center space-y-6 py-12">
                 <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(59,130,246,0.1)]">
                     Registrations Now Open
@@ -222,12 +221,13 @@
             <h2 class="text-3xl font-bold mb-6 text-gradient flex items-center gap-3">
                 <span class="bg-blue-500/20 p-2 rounded-lg">⚖️</span> Rules & Guidelines
             </h2>
-            <div class="bg-blue-900/20 border border-blue-500/30 rounded-xl p-4 mb-6 flex gap-4 items-start">
+            <div class="bg-blue-900/20 border border-blue-500/30 rounded-xl p-4 mb-8 flex gap-4 items-start shadow-lg">
                 <span class="text-2xl">⚠️</span>
                 <p class="text-sm text-gray-300">Violating any of the rules below will result in immediate disqualification of the entire team. Decisions made by the organizing committee are final.</p>
             </div>
-            <div id="rules-container" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <!-- Rules Injected via JS -->
+            
+            <div id="rules-container" class="space-y-6">
+                <!-- Segregated Rules Injected via JS -->
             </div>
         </section>
 
@@ -391,184 +391,226 @@
             if (content.style.maxHeight) {
                 content.style.maxHeight = null; content.classList.remove('open'); icon.style.transform = 'rotate(0deg)'; activeAccordion = null;
             } else {
-                content.style.maxHeight = content.scrollHeight + 350 + "px"; content.classList.add('open'); icon.style.transform = 'rotate(180deg)'; activeAccordion = id;
+                content.style.maxHeight = content.scrollHeight + 500 + "px"; content.classList.add('open'); icon.style.transform = 'rotate(180deg)'; activeAccordion = id;
             }
         }
 
-        // 5. Complete Database (With Descriptions and Hardware)
+        // 5. Database (Complete 69 PS with Domains, Hardware/Software types, Descriptions, and Hardware tables)
         const db = [
-            {id: 1, t: "Smart Street Environment & Noise Monitoring", c: "HARDWARE", desc: "Develop an IoT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels.", hw: [
+            {id: 1, d: "Smart Cities & Urbanization", t: "Smart Street Environment & Noise Monitoring", c: "HARDWARE", desc: "Develop an IoT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Acoustic Sensor", "MAX9814 Electret Microphone", 1, "₹220"], ["Motion Sensing", "HC-SR501 PIR Motion Sensor", 1, "₹65"], ["Light Sensing", "LDR Photoresistor Module", 1, "₹45"], ["Lighting Actuator", "12V 5W High-Power LED Module", 1, "₹120"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 3A SMPS Enclosed", 1, "₹380"], ["Voltage Regulator", "LM2596 DC-DC Buck", 1, "₹95"], ["Discrete ICs", "IRF520 MOSFET Driver", 1, "₹40"], ["Base/Wiring", "Breadboard, Caps, Jumpers", 1, "₹205"]
             ]},
-            {id: 2, t: "Urban Flood Monitoring & Early Warning", c: "HARDWARE", desc: "Develop a waterproof monitoring system that detects rapidly rising water levels in urban drains and underpasses and provides early warnings to municipal authorities.", hw: [
+            {id: 2, d: "Smart Cities & Urbanization", t: "Urban Flood Monitoring & Early Warning", c: "HARDWARE", desc: "Develop a waterproof monitoring system that detects rapidly rising water levels in urban drains and underpasses and provides early warnings to municipal authorities.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32U", 1, "₹480"], ["Water Level", "JSN-SR04T Ultrasonic", 1, "₹420"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Alert System", "High-Decibel 12V Siren", 1, "₹180"], ["Power Supply", "12V 3A Weatherproof SMPS", 1, "₹420"], ["Voltage Regulator", "LM2596 Buck Module", 1, "₹95"], ["Discrete ICs", "PC817 Optocoupler & TIP122 Transistor", 1, "₹28"], ["Base/Wiring", "Breadboard & Jumpers", 1, "₹500"]
             ]},
-            {id: 3, t: "Urban Underground Water Leak", c: "HARDWARE", desc: "Build an acoustic and flow-sensing IoT array to identify and triangulate the exact location of underground pipeline leaks in smart city infrastructure.", hw: [
+            {id: 3, d: "Smart Cities & Urbanization", t: "Urban Underground Water Leak", c: "HARDWARE", desc: "Build an acoustic and flow-sensing IoT array to identify and triangulate the exact location of underground pipeline leaks in smart city infrastructure.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Acoustic Sensing", "Piezo Acoustic + LM358", 1, "₹240"], ["Flow Sensing", "YF-S201 Water Flow Sensor", 2, "₹160"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power/Regulator", "12V 2A SMPS + LM2596", 1, "₹415"], ["Discrete ICs", "74HC14 Schmitt Trigger", 1, "₹25"], ["Base/Wiring", "Breadboard & Passives", 1, "₹200"]
             ]},
-            {id: 4, t: "Underground Sewage Gas Safety", c: "HARDWARE", desc: "Create an automated venting and alert system that detects deadly accumulations of Methane and H2S gases to protect sanitation workers before manhole entry.", hw: [
+            {id: 4, d: "Smart Cities & Urbanization", t: "Underground Sewage Gas Safety", c: "HARDWARE", desc: "Create an automated venting and alert system that detects deadly accumulations of Methane and H2S gases to protect sanitation workers before manhole entry.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Toxic Gas", "MQ-136 H2S Sensor", 1, "₹480"], ["Combustible Gas", "MQ-4 Methane Sensor", 1, "₹190"], ["Ventilation", "12V 1A Exhaust Fan + Relay", 1, "₹280"], ["Power Supply", "12V 5A Metal SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Optocoupler, Jumpers", 1, "₹248"]
             ]},
-            {id: 5, t: "Dynamic Digital Traffic Signage", c: "HARDWARE", desc: "Design a connected digital signage platform using dot matrix displays to stream real-time detour instructions and emergency vehicle approaching alerts.", hw: [
+            {id: 5, d: "Smart Cities & Urbanization", t: "Dynamic Digital Traffic Signage", c: "HARDWARE", desc: "Design a connected digital signage platform using dot matrix displays to stream real-time detour instructions and emergency vehicle approaching alerts.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Matrix Display", "MAX7219 Dot Matrix Module", 2, "₹280"], ["Timekeeping", "DS3231 RTC Module", 1, "₹140"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "5V 4A SMPS Enclosed", 1, "₹380"], ["Base/Wiring", "Shift Register, Breadboard, Jumpers", 1, "₹270"]
             ]},
-            {id: 6, t: "Smart Waste Management", c: "HARDWARE", desc: "Develop an automated, tilt-sensing, and capacity-tracking smart bin prototype that optimizes collection routes and prevents overflow.", hw: [
+            {id: 6, d: "Smart Cities & Urbanization", t: "Smart Waste Management", c: "HARDWARE", desc: "Develop an automated, tilt-sensing, and capacity-tracking smart bin prototype that optimizes collection routes and prevents overflow.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Fill Level Sensor", "HC-SR04 Ultrasonic", 2, "₹75"], ["Tamper/Tilt", "SW-520D Tilt Sensor", 1, "₹45"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Actuator", "SG90 Micro Servo", 1, "₹120"], ["Power Supply", "5V 2A SMPS", 1, "₹200"], ["Base/Wiring", "LDO IC, Breadboard, Jumpers", 1, "₹180"]
             ]},
-            {id: 7, t: "AI-Powered Traffic Flow Optimization", c: "SOFTWARE", desc: "Develop a centralized software platform that ingests real-time transit and ride-sharing GPS data to dynamically adjust traffic light timings.", hw: []},
-            {id: 8, t: "Civic Issue Crowdsourcing & Triage", c: "SOFTWARE", desc: "Create a mobile app for citizens to log infrastructure issues (potholes, broken lights) that auto-triages reports using image recognition.", hw: []},
-            {id: 9, t: "Elderly Care & Assistive Technology", c: "HARDWARE", desc: "Develop a wearable system that detects accidental falls in elderly individuals, provides medication reminders, and sends SOS alerts with GPS location.", hw: [
+            {id: 7, d: "Smart Cities & Urbanization", t: "AI-Powered Traffic Flow Optimization", c: "SOFTWARE", desc: "Develop a centralized software platform that ingests real-time transit and ride-sharing GPS data to dynamically adjust traffic light timings.", hw: []},
+            {id: 8, d: "Smart Cities & Urbanization", t: "Civic Issue Crowdsourcing & Triage", c: "SOFTWARE", desc: "Create a mobile app for citizens to log infrastructure issues (potholes, broken lights) that auto-triages reports using image recognition.", hw: []},
+            {id: 9, d: "Healthcare & Medical Technology", t: "Elderly Care & Assistive Technology", c: "HARDWARE", desc: "Develop a wearable system that detects accidental falls in elderly individuals, provides medication reminders, and sends SOS alerts with GPS location.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Motion Sensing", "MPU-6050 Accelerometer", 1, "₹170"], ["Location Tracking", "NEO-6M GPS Module", 1, "₹480"], ["Cellular Comms", "SIM800L GPRS/GSM Module", 1, "₹490"], ["Real-Time Clock", "DS3231 RTC Module", 1, "₹140"], ["Haptic Alert", "3V Coin Vibration Motor", 1, "₹35"], ["Power Subsystem", "TP4056 + 1200mAh Li-Po + SMPS", 1, "₹470"], ["Base/Wiring", "Breadboard, ICs, Jumpers", 1, "₹166"]
             ]},
-            {id: 10, t: "Hospital Patient Safety & Monitoring", c: "HARDWARE", desc: "Create a bed-integrated weight sensing and alert system that detects unassisted patient exits to prevent hospital falls.", hw: [
+            {id: 10, d: "Healthcare & Medical Technology", t: "Hospital Patient Safety & Monitoring", c: "HARDWARE", desc: "Create a bed-integrated weight sensing and alert system that detects unassisted patient exits to prevent hospital falls.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Weight Sensing", "1kg Load Cell + HX711", 1, "₹310"], ["Display", "16x2 I2C LCD", 1, "₹220"], ["Alert Subsystem", "5V Buzzer + LED", 1, "₹30"], ["Power Supply", "12V 2A SMPS + Buck Module", 1, "₹415"], ["Base/Wiring", "Breadboard, Optocouplers, Passives", 1, "₹272"]
             ]},
-            {id: 11, t: "Blood Bank & Medical Inventory Management", c: "HARDWARE", desc: "Build an RFID-tagged inventory fridge with strict multi-zone temperature monitoring to prevent the spoilage of critical blood supplies.", hw: [
+            {id: 11, d: "Healthcare & Medical Technology", t: "Blood Bank & Medical Inventory Management", c: "HARDWARE", desc: "Build an RFID-tagged inventory fridge with strict multi-zone temperature monitoring to prevent the spoilage of critical blood supplies.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["RFID Subsystem", "RC522 Module + 10x Transponders", 1, "₹330"], ["Temp Sensor", "DS18B20 Waterproof Probe", 2, "₹160"], ["Display", "20x4 I2C LCD", 1, "₹360"], ["Power Supply", "12V 3A SMPS + LM2596", 1, "₹475"], ["Base/Wiring", "Breadboard, Buffer IC, Passives", 1, "₹296"]
             ]},
-            {id: 12, t: "Neonatal & Maternal Healthcare", c: "HARDWARE", desc: "Design a low-cost, tightly regulated neonatal incubator control system featuring ceramic heating and ultrasonic mist generation.", hw: [
+            {id: 12, d: "Healthcare & Medical Technology", t: "Neonatal & Maternal Healthcare", c: "HARDWARE", desc: "Design a low-cost, tightly regulated neonatal incubator control system featuring ceramic heating and ultrasonic mist generation.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Climate Sensing", "SHT31 Temp & Humidity Sensor", 1, "₹350"], ["Surface Sensor", "DS18B20 Skin Probe", 1, "₹160"], ["Heating Actuator", "12V 50W PTC Ceramic Heater", 1, "₹380"], ["Air/Humidity", "12V Blower + 5V Mist Maker", 1, "₹310"], ["Power Supply", "12V 10A SMPS + Buck Regulators", 1, "₹1040"], ["Base/Wiring", "Breadboard, Drivers, Optocouplers", 1, "₹518"]
             ]},
-            {id: 13, t: "Preventive Healthcare & Wellness", c: "HARDWARE", desc: "Build a smart hydration and wellness tracking device utilizing capacitive liquid level sensing and OLED biometric feedback.", hw: [
+            {id: 13, d: "Healthcare & Medical Technology", t: "Preventive Healthcare & Wellness", c: "HARDWARE", desc: "Build a smart hydration and wellness tracking device utilizing capacitive liquid level sensing and OLED biometric feedback.", hw: [
                 ["Microcontroller", "ESP32-C3 SuperMini RISC-V", 1, "₹289"], ["Water Level Sensor", "Capacitive Liquid Level", 1, "₹280"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display / UI", "0.42-inch OLED I2C", 1, "₹190"], ["Power Subsystem", "5V 2A SMPS + TP4056 + LiPo", 1, "₹440"], ["Base/Wiring", "Breadboard, LDO, Vibrator, Passives", 1, "₹175"]
             ]},
-            {id: 14, t: "Al-Based Disease Detection & Medical Diagnostics", c: "HARDWARE", desc: "Construct an automated, AI-driven microscopy stage that uses stepper motors and a 5MP camera to assist in edge-computed sample analysis.", hw: [
+            {id: 14, d: "Healthcare & Medical Technology", t: "Al-Based Disease Detection & Medical Diagnostics", c: "HARDWARE", desc: "Construct an automated, AI-driven microscopy stage that uses stepper motors and a 5MP camera to assist in edge-computed sample analysis.", hw: [
                 ["Microcontroller", "ESP32-S3-WROOM-1 + OV2640 Cam", 1, "₹750"], ["Optics", "OV5640 5MP Camera + Lens", 1, "₹380"], ["Illumination", "Adjustable LED Spotlight", 1, "₹140"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Focus Actuator", "NEMA 17 Stepper Motor", 1, "₹320"], ["Power Supply", "12V 3A SMPS + Buck Module", 1, "₹475"], ["Base/Wiring", "Breadboard, A4988 Driver, LDO", 1, "₹380"]
             ]},
-            {id: 15, t: "Digital Healthcare & Organ Transplant Management", c: "SOFTWARE", desc: "Develop a secure platform that enables hospitals to efficiently match organ donors with eligible recipients based on compatibility factors.", hw: []},
-            {id: 16, t: "Predictive Hospital Bed Management", c: "SOFTWARE", desc: "Create an ML-based software dashboard to predict hospital bed availability utilizing historical discharge rates and admission spikes.", hw: []},
-            {id: 17, t: "EV Battery Safety & Thermal Runaway", c: "HARDWARE", desc: "Develop a low-cost battery monitoring system that detects early signs of thermal runaway at the cell level and isolates the affected module.", hw: [
+            {id: 15, d: "Healthcare & Medical Technology", t: "Digital Healthcare & Organ Transplant Management", c: "SOFTWARE", desc: "Develop a secure platform that enables hospitals to efficiently match organ donors with eligible recipients based on compatibility factors.", hw: []},
+            {id: 16, d: "Healthcare & Medical Technology", t: "Predictive Hospital Bed Management", c: "SOFTWARE", desc: "Create an ML-based software dashboard to predict hospital bed availability utilizing historical discharge rates and admission spikes.", hw: []},
+            {id: 17, d: "Electric Vehicles (EV) & Mobility", t: "EV Battery Safety & Thermal Runaway", c: "HARDWARE", desc: "Develop a low-cost battery monitoring system that detects early signs of thermal runaway at the cell level and isolates the affected module.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Thermal Probes", "NTC 10k Thermistors (5x)", 1, "₹120"], ["Gas Detection", "MQ-2 Smoke Sensor", 1, "₹150"], ["Fault Isolation", "4-Ch 5V Relay Module", 1, "₹260"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A 120W SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Comparator, Siren", 1, "₹390"]
             ]},
-            {id: 18, t: "EV Motor Fault Detection & Predictive", c: "HARDWARE", desc: "Build a real-time current signature analysis tool for 3-phase BLDC motors to predict bearing wear and stator faults before failure.", hw: [
+            {id: 18, d: "Electric Vehicles (EV) & Mobility", t: "EV Motor Fault Detection & Predictive", c: "HARDWARE", desc: "Build a real-time current signature analysis tool for 3-phase BLDC motors to predict bearing wear and stator faults before failure.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Phase Monitoring", "ACS712 30A Current Sensor", 3, "₹90"], ["Signal Clamping", "LM358 Op-Amp", 2, "₹25"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display / UI", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹645"], ["Simulation Load", "BLDC Motor + ESC", 1, "₹450"], ["Base/Wiring", "Breadboard, Wire, Jumpers", 1, "₹230"]
             ]},
-            {id: 19, t: "EV Charging Infrastructure Monitoring", c: "HARDWARE", desc: "Design a smart auditing station that logs real-time AC grid draw at EV charging nodes to detect cable degradation and energy theft.", hw: [
+            {id: 19, d: "Electric Vehicles (EV) & Mobility", t: "EV Charging Infrastructure Monitoring", c: "HARDWARE", desc: "Design a smart auditing station that logs real-time AC grid draw at EV charging nodes to detect cable degradation and energy theft.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Power Audit", "PZEM-004T AC Energy Meter", 1, "₹680"], ["Current Clamp", "SCT-013-000 100A Clamp", 1, "₹380"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display / UI", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 2A SMPS + Buck Module", 1, "₹415"], ["Simulation Load", "5V 2A USB Dummy Load", 1, "₹80"], ["Base/Wiring", "Breadboard, Terminals, Wire", 1, "₹290"]
             ]},
-            {id: 20, t: "Regenerative Braking & Energy Recovery", c: "HARDWARE", desc: "Prototype a high-speed MOSFET switching circuit that effectively manages back-EMF current flows during regenerative braking simulations.", hw: [
+            {id: 20, d: "Electric Vehicles (EV) & Mobility", t: "Regenerative Braking & Energy Recovery", c: "HARDWARE", desc: "Prototype a high-speed MOSFET switching circuit that effectively manages back-EMF current flows during regenerative braking simulations.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Current Sensing", "ACS712 30A Sensor", 1, "₹160"], ["Power Switching", "IRFB3077 N-MOSFET", 2, "₹85"], ["Gate Driver", "TC4427 Gate Driver IC", 1, "₹55"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Optocoupler, Resistors", 1, "₹446"]
             ]},
-            {id: 21, t: "EV Traction Control & Vehicle Dynamics", c: "HARDWARE", desc: "Develop an electronic differential system using dual optical encoders and independent motor drivers to maintain vehicle stability during slip.", hw: [
+            {id: 21, d: "Electric Vehicles (EV) & Mobility", t: "EV Traction Control & Vehicle Dynamics", c: "HARDWARE", desc: "Develop an electronic differential system using dual optical encoders and independent motor drivers to maintain vehicle stability during slip.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Speed Sensors", "LM393 Optical Encoders", 2, "₹70"], ["Motor Driver", "L298N Dual H-Bridge", 1, "₹190"], ["Actuators", "Dual TT DC Motors", 2, "₹150"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Trigger IC, Wiring", 1, "₹235"]
             ]},
-            {id: 22, t: "EV Structural Health & Predictive Maintenance", c: "HARDWARE", desc: "Construct a continuous vibration monitoring rig that attaches to EV battery trays to detect dangerous mechanical fatigue over time.", hw: [
+            {id: 22, d: "Electric Vehicles (EV) & Mobility", t: "EV Structural Health & Predictive Maintenance", c: "HARDWARE", desc: "Construct a continuous vibration monitoring rig that attaches to EV battery trays to detect dangerous mechanical fatigue over time.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Vibration Sensing", "ADXL345 Accelerometer", 1, "₹180"], ["Shock Sensing", "SW-420 Vibration Sensor", 1, "₹75"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Base/Wiring", "Breadboard, Comparator, LEDs", 1, "₹220"]
             ]},
-            {id: 23, t: "Smart EV Fleet Routing & Charging", c: "SOFTWARE", desc: "Build an algorithmic dashboard that dispatches commercial EV fleets while factoring in live battery states and charging station queues.", hw: []},
-            {id: 24, t: "EV Battery Degradation Analytics", c: "SOFTWARE", desc: "Create a machine learning model that parses historical charge-cycle telemetry data to predict the remaining useful life of Li-Ion packs.", hw: []},
-            {id: 25, t: "Multilingual Academic Learning", c: "SOFTWARE", desc: "Develop an AI-assisted translation platform tailored specifically for complex engineering terminology across Indian regional languages.", hw: []},
-            {id: 26, t: "Personalized Educational Resource Recommendation", c: "SOFTWARE", desc: "Build an adaptive learning engine that tracks student quiz performance and suggests customized reading materials and video lectures.", hw: []},
-            {id: 27, t: "Interactive Al-Powered Quantum Learning", c: "SOFTWARE", desc: "Design a web-based educational simulator that uses AI to help undergraduate students visualize and manipulate quantum computing gates.", hw: []},
-            {id: 28, t: "Academic-Industry Collaboration Platform", c: "SOFTWARE", desc: "Develop a bridging portal where university researchers can pitch lab prototypes directly to registered corporate R&D scouts.", hw: []},
-            {id: 29, t: "Smart Handwriting Posture & Grip", c: "HARDWARE", desc: "Create a wearable IMU and FSR-based glove/pen grip system that provides tactile feedback to students with poor handwriting posture.", hw: [
+            {id: 23, d: "Electric Vehicles (EV) & Mobility", t: "Smart EV Fleet Routing & Charging", c: "SOFTWARE", desc: "Build an algorithmic dashboard that dispatches commercial EV fleets while factoring in live battery states and charging station queues.", hw: []},
+            {id: 24, d: "Electric Vehicles (EV) & Mobility", t: "EV Battery Degradation Analytics", c: "SOFTWARE", desc: "Create a machine learning model that parses historical charge-cycle telemetry data to predict the remaining useful life of Li-Ion packs.", hw: []},
+            {id: 25, d: "EdTech Hackathon", t: "Multilingual Academic Learning", c: "SOFTWARE", desc: "Develop an AI-assisted translation platform tailored specifically for complex engineering terminology across Indian regional languages.", hw: []},
+            {id: 26, d: "EdTech Hackathon", t: "Personalized Educational Resource Recommendation", c: "SOFTWARE", desc: "Build an adaptive learning engine that tracks student quiz performance and suggests customized reading materials and video lectures.", hw: []},
+            {id: 27, d: "EdTech Hackathon", t: "Interactive Al-Powered Quantum Learning", c: "SOFTWARE", desc: "Design a web-based educational simulator that uses AI to help undergraduate students visualize and manipulate quantum computing gates.", hw: []},
+            {id: 28, d: "EdTech Hackathon", t: "Academic-Industry Collaboration Platform", c: "SOFTWARE", desc: "Develop a bridging portal where university researchers can pitch lab prototypes directly to registered corporate R&D scouts.", hw: []},
+            {id: 29, d: "EdTech Hackathon", t: "Smart Handwriting Posture & Grip", c: "HARDWARE", desc: "Create a wearable IMU and FSR-based glove/pen grip system that provides tactile feedback to students with poor handwriting posture.", hw: [
                 ["Microcontroller", "ESP32-C3 SuperMini RISC-V", 1, "₹289"], ["Grip Sensing", "FSR402 Force Resistor", 2, "₹340"], ["Posture Sensing", "MPU-6050 Motion Sensor", 1, "₹170"], ["Haptic Alert", "3V Coin Vibration Motor", 1, "₹35"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power/Dock", "TP4056 + 300mAh LiPo + 5V SMPS", 1, "₹370"], ["Base/Wiring", "Breadboard, Transistor, Wiring", 1, "₹145"]
             ]},
-            {id: 30, t: "Visual Pronunciation Learning", c: "HARDWARE", desc: "Develop an embedded audio DSP tool with an ST7735 screen that visually plots student speech waveforms against native speaker templates.", hw: [
+            {id: 30, d: "EdTech Hackathon", t: "Visual Pronunciation Learning", c: "HARDWARE", desc: "Develop an embedded audio DSP tool with an ST7735 screen that visually plots student speech waveforms against native speaker templates.", hw: [
                 ["Microcontroller", "ESP32-S3 DevKit", 1, "₹650"], ["Microphone", "MAX9814 Electret Mic", 1, "₹220"], ["Display / UI", "1.8-inch ST7735 TFT", 1, "₹380"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "5V 2A Low-Noise SMPS", 1, "₹200"], ["Base/Wiring", "Breadboard, LDO, Wiring", 1, "₹235"]
             ]},
-            {id: 31, t: "AI-Driven Academic Integrity Detector", c: "SOFTWARE", desc: "Program a comprehensive plagiarism detection suite that specifically analyzes code structure and logic patterns to catch cheating in CS assignments.", hw: []},
-            {id: 32, t: "Solar Energy & Battery Management", c: "HARDWARE", desc: "Develop an energy-management controller that monitors solar generation and load demand, intelligently scheduling battery cycles.", hw: [
+            {id: 31, d: "EdTech Hackathon", t: "AI-Driven Academic Integrity Detector", c: "SOFTWARE", desc: "Program a comprehensive plagiarism detection suite that specifically analyzes code structure and logic patterns to catch cheating in CS assignments.", hw: []},
+            {id: 32, d: "Renewable Energy", t: "Solar Energy & Battery Management", c: "HARDWARE", desc: "Develop an energy-management controller that monitors solar generation and load demand, intelligently scheduling battery cycles.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Current/Voltage", "ACS712 (x2) + 0-25V Sensor (x2)", 4, "₹410"], ["Power Switching", "IRF3205 N-MOSFET", 2, "₹90"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A SMPS + Buck Module", 1, "₹945"], ["Solar Source", "6V 3W Mini Solar Panel", 1, "₹180"], ["Base/Wiring", "Breadboard, Gate Driver, Wiring", 1, "₹490"]
             ]},
-            {id: 33, t: "Power Quality & Harmonic Management", c: "HARDWARE", desc: "Build an inline AC monitoring tool that detects non-linear load harmonics and logs power quality anomalies to an edge dashboard.", hw: [
+            {id: 33, d: "Renewable Energy", t: "Power Quality & Harmonic Management", c: "HARDWARE", desc: "Build an inline AC monitoring tool that detects non-linear load harmonics and logs power quality anomalies to an edge dashboard.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["AC Sensors", "ZMPT101B Voltage + SCT-013 Clamp", 2, "₹525"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Simulation Load", "AC/DC Non-Linear Load Sim", 1, "₹200"], ["Base/Wiring", "Breadboard, Op-Amp, Passives", 1, "₹260"]
             ]},
-            {id: 34, t: "Solar Microgrid & Black-Start", c: "HARDWARE", desc: "Create an automated relay sequencer that safely isolates a microgrid during a blackout and initializes a controlled cold-start procedure.", hw: [
+            {id: 34, d: "Renewable Energy", t: "Solar Microgrid & Black-Start", c: "HARDWARE", desc: "Create an automated relay sequencer that safely isolates a microgrid during a blackout and initializes a controlled cold-start procedure.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensors", "ZMPT101B + ACS712", 3, "₹465"], ["Load Restoration", "4-Channel 5V Relay", 1, "₹240"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Solar Source", "6V 3W Mini Solar Panel", 1, "₹180"], ["Base/Wiring", "Breadboard, Transistor Array, Opto", 1, "₹392"]
             ]},
-            {id: 35, t: "Electric Vehicles & Vehicle-to-Grid Technology", c: "HARDWARE", desc: "Prototype a CAN bus integrated bidirectional controller that allows an EV to safely discharge stored power back into the local home grid.", hw: [
+            {id: 35, d: "Renewable Energy", t: "Electric Vehicles & Vehicle-to-Grid Technology", c: "HARDWARE", desc: "Prototype a CAN bus integrated bidirectional controller that allows an EV to safely discharge stored power back into the local home grid.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Current Sensing", "ACS712 30A Bidirectional", 2, "₹160"], ["Comms Interface", "MCP2515 CAN Bus Module", 1, "₹134"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Control", "IRF3205 N-MOSFET + 12V 10A SMPS", 1, "₹1030"], ["Base/Wiring", "Breadboard, Comparator, LDO", 1, "₹475"]
             ]},
-            {id: 36, t: "Urban Renewable Energy", c: "HARDWARE", desc: "Develop an ultra-low power harvesting node that utilizes piezoelectric discs and micro-wind dynamos to charge a supercapacitor bank.", hw: [
+            {id: 36, d: "Renewable Energy", t: "Urban Renewable Energy", c: "HARDWARE", desc: "Develop an ultra-low power harvesting node that utilizes piezoelectric discs and micro-wind dynamos to charge a supercapacitor bank.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Harvesters", "Piezo Discs + AC Wind Dynamo", 2, "₹400"], ["Storage/Power", "2.7V Supercaps + LTC3588 IC", 3, "₹660"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Base Power", "5V 2A SMPS", 1, "₹200"], ["Base/Wiring", "Breadboard, Schottky Diodes, Wiring", 1, "₹170"]
             ]},
-            {id: 37, t: "Railway Energy Harvesting", c: "HARDWARE", desc: "Build a rugged trackside piezoelectric harvesting array that powers local telemetry sensors from the mechanical vibration of passing trains.", hw: [
+            {id: 37, d: "Renewable Energy", t: "Railway Energy Harvesting", c: "HARDWARE", desc: "Build a rugged trackside piezoelectric harvesting array that powers local telemetry sensors from the mechanical vibration of passing trains.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Primary Harvester", "Piezoelectric Module", 1, "₹280"], ["Telemetry/Sense", "INA219 + SW-420 Sensor", 2, "₹265"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Base/Wiring", "Breadboard, Bridge Rectifier, Supercaps", 1, "₹265"]
             ]},
-            {id: 38, t: "Community Microgrid & Energy Sharing", c: "HARDWARE", desc: "Design a prepaid RFID-based energy dispensing meter that allows neighboring households to trade and route localized solar power.", hw: [
+            {id: 38, d: "Renewable Energy", t: "Community Microgrid & Energy Sharing", c: "HARDWARE", desc: "Design a prepaid RFID-based energy dispensing meter that allows neighboring households to trade and route localized solar power.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Energy Metering", "PZEM-004T Multi-Function", 1, "₹654"], ["Load Switching", "2-Channel 30A Relay", 1, "₹150"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display", "16x2 I2C LCD", 1, "₹220"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Optocoupler, Wiring", 1, "₹306"]
             ]},
-            {id: 39, t: "Wind Energy & Predictive Maintenance", c: "HARDWARE", desc: "Construct a multi-sensor tower utilizing accelerometers and optical RPM encoders to detect dangerous blade imbalances in wind turbines.", hw: [
+            {id: 39, d: "Renewable Energy", t: "Wind Energy & Predictive Maintenance", c: "HARDWARE", desc: "Construct a multi-sensor tower utilizing accelerometers and optical RPM encoders to detect dangerous blade imbalances in wind turbines.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensing Array", "ADXL345 + LM393 RPM + DS18B20", 3, "₹410"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Simulation Load", "12V DC Turbine Motor", 1, "₹150"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Trigger IC, Wiring", 1, "₹225"]
             ]},
-            {id: 40, t: "Regenerative Energy Recovery", c: "HARDWARE", desc: "Design a simulated elevator/crane system that efficiently captures descent-braking energy into a high-capacity supercapacitor array.", hw: [
+            {id: 40, d: "Renewable Energy", t: "Regenerative Energy Recovery", c: "HARDWARE", desc: "Design a simulated elevator/crane system that efficiently captures descent-braking energy into a high-capacity supercapacitor array.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Generator/Sense", "12V Dynamo Motor + INA219", 2, "₹610"], ["Storage/Switching", "Supercap Bank + IRFB3077", 4, "₹390"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Gate Driver, Optocoupler", 1, "₹365"]
             ]},
-            {id: 41, t: "Solar PV Predictive Maintenance & Soiling", c: "HARDWARE", desc: "Develop an array tracker that correlates drop in PV yield against lux meter data to accurately alert maintenance for panel dust cleaning.", hw: [
+            {id: 41, d: "Renewable Energy", t: "Solar PV Predictive Maintenance & Soiling", c: "HARDWARE", desc: "Develop an array tracker that correlates drop in PV yield against lux meter data to accurately alert maintenance for panel dust cleaning.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensing Array", "BH1750 + INA219 + DS18B20", 3, "₹460"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Solar Source", "6V 3W Mini Solar Panel", 1, "₹180"], ["Base/Wiring", "Breadboard, Op-Amp, LDO", 1, "₹245"]
             ]},
-            {id: 42, t: "Solar Farm Yield Forecasting", c: "SOFTWARE", desc: "Create an ML tool that ingests daily meteorological forecasts to accurately predict upcoming week generation yields for utility solar farms.", hw: []},
-            {id: 43, t: "Microgrid Load Balancing Algorithm", c: "SOFTWARE", desc: "Write a high-efficiency algorithm that dynamically shifts non-essential HVAC loads during peak demand hours in a self-sustained microgrid.", hw: []},
-            {id: 44, t: "UAV Safety & Autonomous Landing", c: "HARDWARE", desc: "Develop an autonomous emergency landing unit for drones that detects in-flight propulsion failure and guides descent to a safe landing zone.", hw: [
+            {id: 42, d: "Renewable Energy", t: "Solar Farm Yield Forecasting", c: "SOFTWARE", desc: "Create an ML tool that ingests daily meteorological forecasts to accurately predict upcoming week generation yields for utility solar farms.", hw: []},
+            {id: 43, d: "Renewable Energy", t: "Microgrid Load Balancing Algorithm", c: "SOFTWARE", desc: "Write a high-efficiency algorithm that dynamically shifts non-essential HVAC loads during peak demand hours in a self-sustained microgrid.", hw: []},
+            {id: 44, d: "Aerial Systems", t: "UAV Safety & Autonomous Landing", c: "HARDWARE", desc: "Develop an autonomous emergency landing unit for drones that detects in-flight propulsion failure and guides descent to a safe landing zone.", hw: [
                 ["Microcontroller", "ESP32-S3-DevKitC", 1, "₹650"], ["Flight Dynamics", "MPU-6050 + BMP280", 2, "₹310"], ["Actuator", "MG996R Servo", 1, "₹320"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Source", "12V Bench SMPS + TP4056 + LiPo", 1, "₹720"], ["Base/Wiring", "Breadboard, Optocoupler, Buzzer", 1, "₹151"]
             ]},
-            {id: 45, t: "Autonomous Navigation & Collision", c: "HARDWARE", desc: "Construct a multi-directional Time-of-Flight and Ultrasonic sensing rig for UAVs to perform high-speed obstacle avoidance in confined spaces.", hw: [
+            {id: 45, d: "Aerial Systems", t: "Autonomous Navigation & Collision", c: "HARDWARE", desc: "Construct a multi-directional Time-of-Flight and Ultrasonic sensing rig for UAVs to perform high-speed obstacle avoidance in confined spaces.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Primary Sensing", "VL53L0X Laser Distance", 3, "₹340"], ["Secondary Sensing", "HC-SR04 Ultrasonic", 2, "₹75"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹575"], ["Base/Wiring", "Breadboard, Schmitt Trigger, Logic Conv", 1, "₹305"]
             ]},
-            {id: 46, t: "Energy-Efficient UAV Operations", c: "HARDWARE", desc: "Build an active power profiling system that monitors multi-rotor current draw in real time to suggest optimal cruising speeds for max range.", hw: [
+            {id: 46, d: "Aerial Systems", t: "Energy-Efficient UAV Operations", c: "HARDWARE", desc: "Build an active power profiling system that monitors multi-rotor current draw in real time to suggest optimal cruising speeds for max range.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Telemetry/Auth", "INA219 (x2) + RC522", 3, "₹500"], ["Display", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹575"], ["Base/Wiring", "Breadboard, LDO, Shunts", 1, "₹235"]
             ]},
-            {id: 47, t: "Aircraft Electrical Systems & Fault", c: "HARDWARE", desc: "Design a fault-tolerant relay matrix that detects short circuits on primary aircraft buses and automatically switches to redundant lines.", hw: [
+            {id: 47, d: "Aerial Systems", t: "Aircraft Electrical Systems & Fault", c: "HARDWARE", desc: "Design a fault-tolerant relay matrix that detects short circuits on primary aircraft buses and automatically switches to redundant lines.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensors", "ACS712 (x3) + ZMPT101B (x3)", 6, "₹600"], ["Isolation", "4-Channel 5V Relay", 1, "₹240"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A 120W SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Transistor Driver, Op-Amp", 1, "₹290"]
             ]},
-            {id: 48, t: "Autonomous Search & Rescue", c: "HARDWARE", desc: "Create a camera-equipped Edge-AI drop mechanism that visually locks onto rescue targets and releases emergency medical supplies precisely.", hw: [
+            {id: 48, d: "Aerial Systems", t: "Autonomous Search & Rescue", c: "HARDWARE", desc: "Create a camera-equipped Edge-AI drop mechanism that visually locks onto rescue targets and releases emergency medical supplies precisely.", hw: [
                 ["Microcontroller", "ESP32-S3-WROOM-1 + Camera", 1, "₹790"], ["Positioning", "NEO-6M GPS Module", 1, "₹480"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Alert Beacon", "Siren + 3W LED", 1, "₹140"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Transistor, Passives", 1, "₹170"]
             ]},
-            {id: 49, t: "Spacecraft Power Management", c: "HARDWARE", desc: "Prototype a heavily redundant satellite power distribution board that uses I2C monitors and MOSFETs to shed non-critical loads during eclipse phases.", hw: [
+            {id: 49, d: "Aerial Systems", t: "Spacecraft Power Management", c: "HARDWARE", desc: "Prototype a heavily redundant satellite power distribution board that uses I2C monitors and MOSFETs to shed non-critical loads during eclipse phases.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Power Monitors", "INA226 I2C Modules", 3, "₹210"], ["Load Switching", "IRF540N MOSFET Modules", 4, "₹65"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A SMPS + Buck Regulators", 1, "₹1040"], ["Base/Wiring", "Breadboard, Op-Amp, Optocouplers", 1, "₹342"]
             ]},
-            {id: 50, t: "Space Safety & Debris Collision", c: "SOFTWARE", desc: "Develop a geospatial simulation tool that predicts orbital debris intersection points to trigger early warning maneuvers for active satellites.", hw: []},
-            {id: 51, t: "UAV Fleet Traffic Management (UTM)", c: "SOFTWARE", desc: "Create a central airspace coordination dashboard that manages delivery drone flight paths and automatically resolves mid-air conflict zones.", hw: []},
-            {id: 52, t: "Satellite Telemetry Anomaly Detection", c: "SOFTWARE", desc: "Build a deep-learning log analyzer that detects subtle deviations in satellite thermal and voltage telemetry to predict impending hardware failures.", hw: []},
-            {id: 53, t: "Wireless Network Security", c: "HARDWARE", desc: "Develop an edge intrusion monitor that detects 802.11 deauthentication attacks, rogue Wi-Fi clones, and maintains an offline alert log.", hw: [
+            {id: 50, d: "Aerial Systems", t: "Space Safety & Debris Collision", c: "SOFTWARE", desc: "Develop a geospatial simulation tool that predicts orbital debris intersection points to trigger early warning maneuvers for active satellites.", hw: []},
+            {id: 51, d: "Aerial Systems", t: "UAV Fleet Traffic Management (UTM)", c: "SOFTWARE", desc: "Create a central airspace coordination dashboard that manages delivery drone flight paths and automatically resolves mid-air conflict zones.", hw: []},
+            {id: 52, d: "Aerial Systems", t: "Satellite Telemetry Anomaly Detection", c: "SOFTWARE", desc: "Build a deep-learning log analyzer that detects subtle deviations in satellite thermal and voltage telemetry to predict impending hardware failures.", hw: []},
+            {id: 53, d: "Cybersecurity & Digital Forensics", t: "Wireless Network Security", c: "HARDWARE", desc: "Develop an edge intrusion monitor that detects 802.11 deauthentication attacks, rogue Wi-Fi clones, and maintains an offline alert log.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32U + Antenna", 1, "₹480"], ["Display / UI", "0.96-inch I2C OLED", 1, "₹210"], ["Storage", "MicroSD Module + 16GB", 1, "₹260"], ["Alert/Power", "Piezo Buzzer + 5V 2A SMPS", 1, "₹240"], ["Base/Wiring", "Breadboard, LDO, Passives", 1, "₹287"]
             ]},
-            {id: 54, t: "USB Security & Hardware-Based Cybersecurity", c: "HARDWARE", desc: "Create a hardware 'data condom' utilizing a MAX3421E controller to block malicious payload injections while allowing safe charging and data parsing.", hw: [
+            {id: 54, d: "Cybersecurity & Digital Forensics", t: "USB Security & Hardware-Based Cybersecurity", c: "HARDWARE", desc: "Create a hardware 'data condom' utilizing a MAX3421E controller to block malicious payload injections while allowing safe charging and data parsing.", hw: [
                 ["Microcontroller", "ESP32-S3-DevKitC (Dual USB)", 1, "₹650"], ["USB Host", "MAX3421E USB Controller", 1, "₹320"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display/Alert", "OLED Display + Buzzer", 1, "₹230"], ["Power/Protection", "5V 2A SMPS + TPD4E001 ESD", 1, "₹270"], ["Base/Wiring", "Breadboard, Data Resistors", 1, "₹205"]
             ]},
-            {id: 55, t: "Digital Forensics & Evidence Analysis", c: "SOFTWARE", desc: "Write a utility that rapidly carves hidden or deleted EXIF data and metadata footprints from bulk media dumps to assist law enforcement.", hw: []},
-            {id: 56, t: "Forensic Evidence Protection", c: "HARDWARE", desc: "Develop an RFID-secured read-only USB interface dock that strictly prevents write-back contamination when analyzing seized hard drives.", hw: [
+            {id: 55, d: "Cybersecurity & Digital Forensics", t: "Digital Forensics & Evidence Analysis", c: "SOFTWARE", desc: "Write a utility that rapidly carves hidden or deleted EXIF data and metadata footprints from bulk media dumps to assist law enforcement.", hw: []},
+            {id: 56, d: "Cybersecurity & Digital Forensics", t: "Forensic Evidence Protection", c: "HARDWARE", desc: "Develop an RFID-secured read-only USB interface dock that strictly prevents write-back contamination when analyzing seized hard drives.", hw: [
                 ["Microcontroller", "ESP32-S3-DevKitC", 1, "₹650"], ["USB Interface", "MAX3421E Shield", 1, "₹320"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display", "16x2 I2C LCD + Buzzer", 1, "₹240"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Power Switch IC, Wiring", 1, "₹290"]
             ]},
-            {id: 57, t: "Cyber Incident Response & Digital Evidence", c: "SOFTWARE", desc: "Create a highly automated script suite that rapidly takes a volatile memory (RAM) snapshot and isolates infected nodes upon detecting a breach.", hw: []},
-            {id: 58, t: "Secure Digital Forensics & Field Investigation", c: "HARDWARE", desc: "Build a tamper-evident, solenoid-locked Faraday transport box that logs vibrations and access attempts when transporting digital evidence.", hw: [
+            {id: 57, d: "Cybersecurity & Digital Forensics", t: "Cyber Incident Response & Digital Evidence", c: "SOFTWARE", desc: "Create a highly automated script suite that rapidly takes a volatile memory (RAM) snapshot and isolates infected nodes upon detecting a breach.", hw: []},
+            {id: 58, d: "Cybersecurity & Digital Forensics", t: "Secure Digital Forensics & Field Investigation", c: "HARDWARE", desc: "Build a tamper-evident, solenoid-locked Faraday transport box that logs vibrations and access attempts when transporting digital evidence.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Locking", "12V Solenoid Cabinet Lock", 1, "₹350"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Tamper Sensor", "SW-420 Vibration", 1, "₹75"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Driver IC, Reed Switch", 1, "₹273"]
             ]},
-            {id: 59, t: "Ransomware Behavior Isolation System", c: "SOFTWARE", desc: "Program a lightweight endpoint agent that uses honeypot files to instantly freeze network ports when unauthorized mass-encryption is detected.", hw: []},
-            {id: 60, t: "Automated Phishing Threat Intelligence", c: "SOFTWARE", desc: "Develop a Natural Language Processing engine that scans incoming corporate emails to score and flag sophisticated spear-phishing attempts.", hw: []},
-            {id: 61, t: "Water Management & Smart Irrigation", c: "HARDWARE", desc: "Develop an autonomous irrigation controller that evaluates localized soil moisture and temperature to govern multi-valve water delivery.", hw: [
+            {id: 59, d: "Cybersecurity & Digital Forensics", t: "Ransomware Behavior Isolation System", c: "SOFTWARE", desc: "Program a lightweight endpoint agent that uses honeypot files to instantly freeze network ports when unauthorized mass-encryption is detected.", hw: []},
+            {id: 60, d: "Cybersecurity & Digital Forensics", t: "Automated Phishing Threat Intelligence", c: "SOFTWARE", desc: "Develop a Natural Language Processing engine that scans incoming corporate emails to score and flag sophisticated spear-phishing attempts.", hw: []},
+            {id: 61, d: "Smart Agriculture & AgriTech", t: "Water Management & Smart Irrigation", c: "HARDWARE", desc: "Develop an autonomous irrigation controller that evaluates localized soil moisture and temperature to govern multi-valve water delivery.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Soil Sensing", "Capacitive Moisture Sensor", 3, "₹110"], ["Actuator", "12V Solenoid Water Valve", 1, "₹380"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck + Relay", 1, "₹740"], ["Water Pump", "12V Mini Submersible Pump", 1, "₹120"], ["Base/Wiring", "Breadboard, Flyback Diodes, Wire", 1, "₹288"]
             ]},
-            {id: 62, t: "Precision Agriculture - Crop Health Monitoring", c: "HARDWARE", desc: "Construct a drone-mountable camera payload that logs localized temp/humidity data while capturing overhead field images for NDVI analysis.", hw: [
+            {id: 62, d: "Smart Agriculture & AgriTech", t: "Precision Agriculture - Crop Health Monitoring", c: "HARDWARE", desc: "Construct a drone-mountable camera payload that logs localized temp/humidity data while capturing overhead field images for NDVI analysis.", hw: [
                 ["Microcontroller", "ESP32-S3-WROOM-1 + Camera", 1, "₹790"], ["Climate/Auth", "DHT22 Sensor + RC522", 2, "₹400"], ["Data/UI", "MicroSD Module + OLED", 2, "₹490"], ["Simulation", "Coreless Motor & Propeller", 1, "₹150"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, LDO, Passives", 1, "₹230"]
             ]},
-            {id: 63, t: "Energy Management & Predictive Maintenance", c: "HARDWARE", desc: "Build a monitoring array for heavy agricultural water pumps that uses vibration and thermal profiles to detect cavitation and bearing failure.", hw: [
+            {id: 63, d: "Smart Agriculture & AgriTech", t: "Energy Management & Predictive Maintenance", c: "HARDWARE", desc: "Build a monitoring array for heavy agricultural water pumps that uses vibration and thermal profiles to detect cavitation and bearing failure.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensing Array", "ACS712 + DS18B20 + SW-420", 4, "₹395"], ["Power Control", "30A Relay Module", 1, "₹260"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Simulation Load", "12V Mini Submersible Pump", 1, "₹120"], ["Base/Wiring", "Breadboard, Transistor, Passives", 1, "₹300"]
             ]},
-            {id: 64, t: "Climate Resilience & Crop Protection", c: "HARDWARE", desc: "Design an automated orchard defense system that triggers canopy misting or heating elements when dangerous frost or extreme heat is detected.", hw: [
+            {id: 64, d: "Smart Agriculture & AgriTech", t: "Climate Resilience & Crop Protection", c: "HARDWARE", desc: "Design an automated orchard defense system that triggers canopy misting or heating elements when dangerous frost or extreme heat is detected.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Climate/Pressure", "SHT31 + BMP280 Sensors", 2, "₹490"], ["Actuators", "2-Ch Relay + Heater + Mini Pump", 3, "₹400"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Optocoupler, Wiring", 1, "₹296"]
             ]},
-            {id: 65, t: "Soil Health Monitoring (Edge Al)", c: "HARDWARE", desc: "Create an Edge-AI probe that measures soil pH and Electrical Conductivity (EC) to output immediate, localized fertilizer dosage recommendations.", hw: [
+            {id: 65, d: "Smart Agriculture & AgriTech", t: "Soil Health Monitoring (Edge Al)", c: "HARDWARE", desc: "Create an Edge-AI probe that measures soil pH and Electrical Conductivity (EC) to output immediate, localized fertilizer dosage recommendations.", hw: [
                 ["Microcontroller", "ESP32-S3 DevKit", 1, "₹650"], ["Soil Analytics", "Analog pH Probe + EC Probe", 2, "₹1530"], ["Moisture/Auth", "Capacitive Sensor + RC522", 2, "₹290"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, OLED, Op-Amp, Passives", 1, "₹430"]
             ]},
-            {id: 66, t: "Aquaculture & Water Quality Management", c: "HARDWARE", desc: "Develop an integrated pond-monitoring buoy that tracks pH, turbidity, and temperature, automatically triggering aerators when oxygen proxies drop.", hw: [
+            {id: 66, d: "Smart Agriculture & AgriTech", t: "Aquaculture & Water Quality Management", c: "HARDWARE", desc: "Develop an integrated pond-monitoring buoy that tracks pH, turbidity, and temperature, automatically triggering aerators when oxygen proxies drop.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Water Sensors", "Industrial pH + DS18B20 + Turbidity", 3, "₹1390"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Actuators", "4-Ch Relay + 5V Pump + Servo", 3, "₹440"], ["Power Supply", "12V 10A SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Optocoupler, Wiring", 1, "₹352"]
             ]},
-            {id: 67, t: "Smart Greenhouse & Environmental Monitoring", c: "HARDWARE", desc: "Build a closed-loop greenhouse controller that balances ambient light, moisture, and temperature using integrated exhaust and misting relays.", hw: [
+            {id: 67, d: "Smart Agriculture & AgriTech", t: "Smart Greenhouse & Environmental Monitoring", c: "HARDWARE", desc: "Build a closed-loop greenhouse controller that balances ambient light, moisture, and temperature using integrated exhaust and misting relays.", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensors", "DHT22 + BH1750 + Moisture", 4, "₹470"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Actuators", "2-Ch Relay + Exhaust + Mist Maker", 3, "₹430"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Transistor, Wiring", 1, "₹300"]
             ]},
-            {id: 68, t: "Crop Yield & Market Analytics Platform", c: "SOFTWARE", desc: "Create a data visualization dashboard that correlates local mandi prices with regional crop yield estimates to advise farmers on selling times.", hw: []},
-            {id: 69, t: "Aquaculture Feeding Optimization", c: "SOFTWARE", desc: "Write an algorithm that uses historical fish growth rates and current water temperature data to calculate the exact daily feed volume required.", hw: []}
+            {id: 68, d: "Smart Agriculture & AgriTech", t: "Crop Yield & Market Analytics Platform", c: "SOFTWARE", desc: "Create a data visualization dashboard that correlates local mandi prices with regional crop yield estimates to advise farmers on selling times.", hw: []},
+            {id: 69, d: "Smart Agriculture & AgriTech", t: "Aquaculture Feeding Optimization", c: "SOFTWARE", desc: "Write an algorithm that uses historical fish growth rates and current water temperature data to calculate the exact daily feed volume required.", hw: []}
         ];
 
+        // Segregated Rules Array
         const rules = [
-            "Team Composition: Each team must comprise exactly 5 students, containing at least 1 girl. Mixed teams from different colleges are not permitted.",
-            "Eligibility: Participants must be undergraduate B.Tech students (2nd and 3rd year). PhD scholars and non-students are not eligible.",
-            "Problem Statement Selection: Teams must select exactly one problem statement from the catalog. Once confirmed, task assignment cannot be changed.",
-            "Fraudulent Activity: Any form of cheating, partial/fake payment entries, or using unapproved AI tools will result in immediate disqualification.",
-            "Evaluation & Jury: All team members must be present for the jury evaluation. The jury's decision is final and binding. No appeals will be entertained.",
-            "Refunds: No refunds will be provided once registration has been confirmed, even for voluntary withdrawal or failure to attend."
+            {
+                category: "Team Composition & Eligibility",
+                items: [
+                    "Each team must comprise exactly 5 students.",
+                    "Each team must consist of at least 1 girl. Teams containing 5 girls are not allowed; at least 1 boy is compulsory.",
+                    "Students must be enrolled in a recognized engineering college in India.",
+                    "Mixed teams from different colleges are not permitted (all members must be from the same institution).",
+                    "B.Tech students (2nd and 3rd year) from any engineering college are eligible.",
+                    "PhD research scholars and non-student professionals are NOT eligible."
+                ]
+            },
+            {
+                category: "Problem Statement Selection",
+                items: [
+                    "Each team must select exactly one problem statement from the catalog.",
+                    "Once confirmed (after payment verification), task assignment cannot be changed.",
+                    "Teams must work only on their assigned task for the duration of the event."
+                ]
+            },
+            {
+                category: "Registration & Payment",
+                items: [
+                    "Registration requires a valid UTR/transaction ID from UPI payment.",
+                    "Confirmation is issued only after organizer payment verification.",
+                    "Partial or fraudulent payment entries will result in immediate disqualification.",
+                    "Slots are provisionally reserved pending verification; confirmed on approval."
+                ]
+            },
+            {
+                category: "Evaluation & Jury",
+                items: [
+                    "All team members must be present for the jury evaluation on Friday.",
+                    "The jury's decision is final and binding. No appeals will be entertained.",
+                    "Jury evaluation is based on: experimental accuracy, methodology, report quality, and viva responses.",
+                    "Results and scores will be announced at the Friday prize distribution."
+                ]
+            },
+            {
+                category: "Refund & Cancellation Policy",
+                items: [
+                    "No refunds will be provided once registration has been confirmed.",
+                    "No refund will be provided if a registered participant/team fails to attend the event.",
+                    "No refund will be provided for voluntary withdrawal after registration confirmation.",
+                    "Registration cannot be cancelled after confirmation.",
+                    "If the event is rescheduled, the registration fee remains non-refundable under this policy."
+                ]
+            }
         ];
 
         const faqs = [
@@ -603,17 +645,25 @@
                         </div>
                     `;
                 } else {
-                    hardwareHTML = `<div class="mt-5 inline-block bg-blue-500/10 border border-blue-500/30 text-blue-300 px-3 py-1.5 rounded-lg text-xs font-mono tracking-widest">SOFTWARE TYPE - NO HARDWARE REQUIRED</div>`;
+                    hardwareHTML = '';
                 }
+
+                const typeColor = ps.c === 'HARDWARE' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-purple-500/20 text-purple-400 border-purple-500/30';
 
                 psContainer.innerHTML += `
                     <div class="glass-card">
                         <div class="accordion-header" onclick="toggleAccordion('ps-${ps.id}')">
-                            <span class="text-base md:text-lg font-semibold text-white">PS #${String(ps.id).padStart(2, '0')}: ${ps.t}</span>
-                            <span id="icon-ps-${ps.id}" class="text-blue-400 text-xl font-bold transition-transform transform">▼</span>
+                            <div class="flex flex-col gap-2">
+                                <span class="text-base md:text-lg font-semibold text-white">PS #${String(ps.id).padStart(2, '0')}: ${ps.t}</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-300 rounded text-xs tracking-wider">${ps.d}</span>
+                                    <span class="px-2 py-1 border rounded text-xs tracking-wider ${typeColor}">${ps.c}</span>
+                                </div>
+                            </div>
+                            <span id="icon-ps-${ps.id}" class="text-blue-400 text-xl font-bold transition-transform transform shrink-0">▼</span>
                         </div>
                         <div id="content-ps-${ps.id}" class="accordion-content">
-                            <p class="text-gray-300 text-sm mt-2 leading-relaxed border-l-2 border-blue-500 pl-3">${ps.desc}</p>
+                            <p class="text-gray-300 text-sm mt-3 leading-relaxed border-l-2 border-blue-500 pl-3 bg-white/5 py-2 rounded-r">${ps.desc}</p>
                             ${hardwareHTML}
                             <div class="mt-6 mb-2">
                                 <button onclick="document.getElementById('assigned_ps').value = 'PS #${String(ps.id).padStart(2, '0')}: ${ps.t}'; switchTab('register');" class="btn-primary px-6 py-2 rounded-lg text-sm font-semibold tracking-wider">
@@ -625,12 +675,13 @@
                 `;
             });
 
-            // Render Rules
-            rules.forEach((rule, idx) => {
+            // Render Segregated Rules
+            rules.forEach((section, idx) => {
+                let listItems = section.items.map(rule => `<li class="mb-2 text-sm text-gray-300 leading-relaxed">${rule}</li>`).join('');
                 rulesContainer.innerHTML += `
                     <div class="glass-card p-6 border-t-4 border-t-blue-500">
-                        <h4 class="text-blue-400 font-bold text-sm mb-3 border-b border-white/10 pb-2 uppercase tracking-wider">Rule ${idx + 1}</h4>
-                        <p class="text-sm text-gray-300 leading-relaxed">${rule}</p>
+                        <h4 class="text-blue-400 font-bold text-sm mb-4 border-b border-white/10 pb-2 uppercase tracking-wider">${section.category}</h4>
+                        <ul class="list-disc pl-5 marker:text-blue-500">${listItems}</ul>
                     </div>
                 `;
             });
@@ -651,9 +702,9 @@
             });
         };
 
-        // 7. Form Logic
+        // 7. Form Logic (Updated URLs)
         const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby0LHCO6xjqZyXBVOB2uJbtBkAuaMwERUPtNjNqU-IqdLVcryf4kRjm5mUiMBpkUje1/exec";
-        const KONFHUB_URL = "https://konfhub.com/wce-national-technical-hackathon"; // Replace with real KonfHub link
+        const KONFHUB_URL = "https://konfhub.com/wce-national-technical-hackathon";
 
         function handleRegistration(e) {
             e.preventDefault();
