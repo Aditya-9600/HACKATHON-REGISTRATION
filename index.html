@@ -1,625 +1,693 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aarambh WCE Hackathon 2026</title>
+    <title>AARAMBH WCE HACKATHON 2026</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SweetAlert -->
+    <!-- SweetAlert for elegant popups -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Google Fonts: Poppins & JetBrains Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Fonts: Orbitron (Headings), Inter (Body), JetBrains Mono (Terminal) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --bg-deep: #020617; /* Deep Slate */
+            --cyan: #00e5ff;
+            --magenta: #ff007f;
+            --cyan-dim: rgba(0, 229, 255, 0.15);
+            --magenta-dim: rgba(255, 0, 127, 0.15);
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --text-main: #f8fafc;
+        }
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #050b14;
-            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             margin: 0;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            /* Hexagon / Grid Tech Background */
+            background-image: 
+                radial-gradient(circle at 50% 0%, var(--cyan-dim), transparent 40%),
+                radial-gradient(circle at 100% 100%, var(--magenta-dim), transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+            background-attachment: fixed;
         }
-
-        /* Particle Background */
-        #particles-js {
-            position: fixed;
-            width: 100%; height: 100%;
-            background-image: radial-gradient(circle at 50% 50%, #0a192f 0%, #020c1b 100%);
-            z-index: -1;
-            top: 0; left: 0;
-        }
+        body.loading { overflow: hidden; }
+        .font-cyber { font-family: 'Orbitron', sans-serif; }
+        .font-term { font-family: 'JetBrains Mono', monospace; }
+        .text-cyan { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
+        .text-magenta { color: var(--magenta); text-shadow: 0 0 10px var(--magenta); }
         
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            overflow: hidden;
-        }
-        .glass-card:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 12px 40px 0 rgba(59, 130, 246, 0.15);
-        }
-
-        /* Vibrant Gradients */
-        .text-gradient {
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        .gradient-text {
+            background: linear-gradient(90deg, var(--cyan), var(--magenta));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: none;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            transition: all 0.3s ease;
-            color: white;
-            border: 1px solid transparent;
+        /* Splash Screen Animation */
+        #splash-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            background-color: #000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
         }
-        .btn-primary:hover {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            transform: scale(1.02);
-            border-color: #60a5fa;
+        .boot-text {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan);
+            font-size: 0.9rem;
+            text-align: left;
+            width: 300px;
+            height: 150px;
+            overflow: hidden;
         }
-
-        /* Accordion Animations */
+        .progress-bar {
+            width: 300px; height: 4px; background: rgba(255,255,255,0.1);
+            border-radius: 4px; overflow: hidden; margin-top: 20px;
+            box-shadow: 0 0 15px var(--cyan-dim);
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--cyan), var(--magenta));
+            width: 0%; animation: loadBar 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes loadBar { 0% { width: 0%; } 40% { width: 60%; } 80% { width: 80%; } 100% { width: 100%; } }
+        /* Hacker Cards with Animated Gradient Borders */
+        .cyber-card {
+            position: relative;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 1px; /* space for gradient border */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 1;
+        }
+        .cyber-card::before {
+            content: ""; position: absolute; inset: 0; border-radius: 12px;
+            padding: 1px; background: linear-gradient(45deg, rgba(0, 229, 255, 0.2), rgba(255, 0, 127, 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            pointer-events: none; transition: background 0.3s ease;
+        }
+        .cyber-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+        }
+        .cyber-card:hover::before {
+            background: linear-gradient(45deg, var(--cyan), var(--magenta));
+        }
+        .card-inner { background-color: var(--card-bg); border-radius: 11px; height: 100%; }
+        /* Tabs */
+        .tab-btn {
+            background: transparent; color: #64748b;
+            padding: 0.6rem 1.5rem; border-radius: 8px;
+            font-weight: 600; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 1px;
+            transition: all 0.3s; border: 1px solid transparent;
+        }
+        .tab-btn:hover { color: var(--cyan); text-shadow: 0 0 8px var(--cyan-dim); }
+        .tab-btn.active {
+            color: white; border-color: var(--cyan);
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: inset 0 0 10px var(--cyan-dim), 0 0 15px var(--cyan-dim);
+        }
+        .btn-register-tab {
+            background: linear-gradient(90deg, var(--cyan), var(--magenta));
+            color: white !important; border: none !important;
+        }
+        .btn-register-tab:hover { box-shadow: 0 0 20px var(--magenta-dim); transform: scale(1.05); }
+        /* Accordion */
         .accordion-header {
-            padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
-            cursor: pointer; font-weight: 600;
+            padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
         }
         .accordion-content {
-            max-height: 0; overflow: hidden;
-            transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
-            opacity: 0; padding: 0 1.5rem; background: rgba(0, 0, 0, 0.2);
+            max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 1.25rem; background: rgba(0,0,0,0.4); border-bottom-left-radius: 11px; border-bottom-right-radius: 11px;
         }
-        .accordion-content.open {
-            opacity: 1; padding-bottom: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05);
+        .accordion-content.open { padding-bottom: 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .toggle-icon { transition: transform 0.3s; color: var(--cyan); }
+        .toggle-icon.open { transform: rotate(45deg); color: var(--magenta); }
+        /* Hardware Table */
+        .hw-table th { background: rgba(0, 229, 255, 0.05); color: var(--cyan); font-weight: 600; padding: 0.75rem; text-align: left; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; letter-spacing: 1px; border-bottom: 1px solid var(--cyan-dim);}
+        .hw-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;}
+        .hw-table tr:hover td { background: rgba(255,255,255,0.02); }
+        /* Inputs */
+        .cyber-input {
+            width: 100%; background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1); color: white;
+            padding: 0.8rem 1rem; border-radius: 6px; transition: all 0.3s;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
         }
-
-        /* Hardware Table Styling */
-        .hw-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;}
-        .hw-table th { background: rgba(59, 130, 246, 0.15); color: #60a5fa; font-weight: 600; padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59, 130, 246, 0.3); font-family: 'Poppins', sans-serif;}
-        .hw-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
-        .hw-table tr:hover td { background: rgba(255,255,255,0.03); }
-
-        /* Custom Inputs */
-        input, select, textarea {
-            background: rgba(255, 255, 255, 0.05) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            color: white !important; border-radius: 8px; padding: 0.75rem 1rem; width: 100%;
-        }
-        input:focus, select:focus { border-color: #4facfe !important; box-shadow: 0 0 10px rgba(79, 172, 254, 0.5) !important; outline: none; }
-        option { background-color: #0a192f; color: white; }
-
-        /* TAB NAVIGATION PILLS */
-        .tab-menu {
-            display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem;
-            scrollbar-width: none; /* Firefox */
-        }
-        .tab-menu::-webkit-scrollbar { display: none; }
-        .tab-pill {
-            padding: 0.6rem 1.25rem; border-radius: 9999px; font-size: 0.9rem; font-weight: 500;
-            color: #94a3b8; transition: all 0.3s; cursor: pointer; border: 1px solid transparent; white-space: nowrap;
-        }
-        .tab-pill:hover { color: white; background: rgba(255,255,255,0.05); }
-        .tab-pill.active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.4); box-shadow: 0 0 15px rgba(59,130,246,0.2); }
-
+        .cyber-input:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 15px var(--cyan-dim); background: rgba(0, 0, 0, 0.6); }
+        select.cyber-input option { background-color: var(--bg-deep); color: white; }
         /* Section Visibility */
-        .view-section { display: none; animation: fadeIn 0.5s ease-out forwards; opacity: 0; transform: translateY(20px);}
+        .view-section { display: none; animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .view-section.active { display: block; }
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* 3D LAPTOP ANIMATION */
+        .laptop-wrapper { perspective: 1000px; width: 100%; height: 280px; display: flex; justify-content: center; align-items: center; margin-top: 1rem;}
+        .laptop-3d { position: relative; transform-style: preserve-3d; animation: floatLaptop 6s ease-in-out infinite alternate; }
+        .laptop-screen { position: absolute; bottom: 0; left: -160px; transform-origin: bottom center; transform: rotateX(0deg); }
+        .laptop-base { position: absolute; top: 0; left: -160px; transform-origin: top center; transform: rotateX(75deg); }
+        .ascii-panel {
+            white-space: pre; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; line-height: 1.2;
+            background: rgba(2, 6, 23, 0.9); border: 1px solid var(--cyan-dim);
+            padding: 10px 15px; border-radius: 6px;
+            box-shadow: inset 0 0 20px var(--cyan-dim), 0 0 30px rgba(0,0,0,0.8);
+        }
+        .screen-text { background: linear-gradient(to bottom, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .base-text { color: #475569; }
+        
+        @keyframes floatLaptop {
+            0% { transform: rotateX(-5deg) rotateY(-20deg) translateY(10px); }
+            100% { transform: rotateX(-15deg) rotateY(20deg) translateY(-10px); }
+        }
+        @media (min-width: 768px) { .ascii-panel { font-size: 0.75rem; left: -200px;} .laptop-screen { left: -200px;} .laptop-base { left: -200px;} }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
-
-    <!-- Background Particles -->
-    <div id="particles-js"></div>
-
-    <!-- Navigation Bar -->
-    <nav class="glass-card m-4 p-4 flex justify-between items-center sticky top-4 z-50">
-        <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center font-bold text-xl shadow-[0_0_15px_rgba(59,130,246,0.5)] text-white">A</div>
-            <div class="flex flex-col">
-                <span class="font-bold text-lg tracking-widest leading-tight">AARAMBH <span class="text-blue-400">2026</span></span>
-                <span class="text-[0.65rem] text-gray-400 tracking-widest uppercase">WCE Hackathon</span>
+<body class="antialiased min-h-screen flex flex-col loading">
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="mb-6">
+            <svg class="w-16 h-16 text-cyan animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <div class="boot-text" id="boot-text"></div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+    <!-- Top Navigation -->
+    <header class="flex justify-between items-center p-4 md:px-8 md:py-6 sticky top-0 bg-[#020617]/80 backdrop-blur-xl z-40 border-b border-white/5 shadow-lg">
+        <div class="flex items-center gap-4 cursor-pointer" onclick="switchTab('ps')">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00e5ff] to-[#ff007f] flex items-center justify-center font-cyber font-bold text-white shadow-lg">A</div>
+            <div class="hidden sm:flex flex-col">
+                <span class="font-cyber font-bold tracking-widest text-lg leading-none">AARAMBH 2026</span>
+                <span class="font-term text-[0.65rem] text-[#00e5ff] tracking-widest">WCE HACKATHON PROTOCOL</span>
             </div>
         </div>
-        <div class="flex gap-2">
-            <button onclick="switchTab('register')" class="btn-primary px-6 py-2 rounded-full font-bold text-sm shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                Register Team
+        <button onclick="toggleMenu()" class="text-gray-400 hover:text-white transition flex items-center gap-2 font-cyber text-sm tracking-widest">
+            <span class="hidden sm:inline text-magenta">MENU</span>
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+    </header>
+    <!-- Fullscreen Menu Overlay -->
+    <div id="nav-menu" class="fixed top-0 right-[-100%] w-full h-screen bg-[#020617]/95 backdrop-blur-2xl z-50 transition-all duration-500 ease-in-out flex flex-col p-8 border-l border-white/10">
+        <div class="flex justify-end mb-12">
+            <button onclick="toggleMenu()" class="text-gray-400 hover:text-white transition">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-4 z-10 w-full max-w-5xl" id="main-container">
-        
-        <!-- ================= TAB NAVIGATION MENU ================= -->
-        <div class="tab-menu" id="tab-container">
-            <button onclick="switchTab('home')" id="btn-home" class="tab-pill active">Home</button>
-            <button onclick="switchTab('ps')" id="btn-ps" class="tab-pill">Problem Statements</button>
-            <button onclick="switchTab('rules')" id="btn-rules" class="tab-pill">Rules & Guidelines</button>
-            <button onclick="switchTab('faqs')" id="btn-faqs" class="tab-pill">FAQs</button>
-            <button onclick="switchTab('register')" id="btn-register" class="tab-pill text-blue-400 border-blue-500/50 hover:bg-blue-600 hover:text-white">Register Now ➔</button>
+        <div class="flex flex-col gap-8 text-3xl md:text-5xl font-cyber tracking-widest">
+            <a href="#" onclick="switchTab('ps'); toggleMenu();" class="hover:text-cyan transition">01. HOME</a>
+            <a href="#" onclick="switchTab('register'); toggleMenu();" class="hover:text-cyan transition">02. REGISTER</a>
+            <a href="#" onclick="switchTab('rules'); toggleMenu();" class="hover:text-cyan transition">03. RULES</a>
+            <a href="#" onclick="switchTab('faqs'); toggleMenu();" class="hover:text-cyan transition">04. FAQS</a>
         </div>
-
-        <!-- ================= VIEW 1: HOME ================= -->
-        <section id="view-home" class="view-section active space-y-16">
-            <div class="text-center space-y-6 py-12">
-                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-                    Registrations Now Open
-                </span>
-                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
-                    Innovate The <br><span class="text-gradient">Future of Tech.</span>
+        <div class="mt-auto pt-6 border-t border-white/10">
+            <p class="font-term text-sm text-magenta">> INNOVATE_THE_FUTURE_OF_TECH</p>
+        </div>
+    </div>
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-8 relative">
+        <!-- HERO SECTION -->
+        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 mb-16">
+            <div class="flex-1 space-y-6">
+                <div class="inline-flex items-center gap-2 bg-cyan-dim border border-cyan/30 rounded-full px-4 py-1">
+                    <span class="w-2 h-2 rounded-full bg-cyan animate-pulse"></span>
+                    <span class="text-xs font-term text-cyan tracking-widest">LIVE EVENT</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-cyber font-black tracking-wider text-white leading-tight">
+                    <span class="gradient-text">HACK</span>ATHON
                 </h1>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-                    India's premier national technical hackathon, hosted by the Department of Electrical Engineering, Walchand College of Engineering, Sangli.
+                <p class="text-gray-400 text-base md:text-lg font-medium max-w-lg">
+                    Empowering builders to turn bold ideas into high-impact solutions through structured rounds and expert mentorship.
                 </p>
                 
-                <!-- Quick Stats Box -->
-                <div class="grid grid-cols-3 gap-4 border border-white/10 bg-white/5 rounded-xl p-4 shadow-lg backdrop-blur-sm max-w-xl mx-auto mt-8">
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-3 gap-4 border border-white/10 bg-white/5 rounded-xl p-4 shadow-lg backdrop-blur-sm">
                     <div class="text-center border-r border-white/10">
-                        <p class="text-[0.7rem] text-blue-400 font-bold tracking-widest mb-1 uppercase">Duration</p>
-                        <p class="font-bold font-mono text-xl">24 HRS</p>
+                        <p class="text-[0.65rem] text-cyan font-cyber tracking-widest mb-1">DURATION</p>
+                        <p class="font-bold font-term text-lg">24 HRS</p>
                     </div>
                     <div class="text-center border-r border-white/10">
-                        <p class="text-[0.7rem] text-blue-400 font-bold tracking-widest mb-1 uppercase">Team Size</p>
-                        <p class="font-bold font-mono text-xl">MAX 5</p>
+                        <p class="text-[0.65rem] text-cyan font-cyber tracking-widest mb-1">TEAM SIZE</p>
+                        <p class="font-bold font-term text-lg">MAX 5</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-[0.7rem] text-blue-400 font-bold tracking-widest mb-1 uppercase">Entry Fee</p>
-                        <p class="font-bold font-mono text-xl text-green-400">₹350</p>
+                        <p class="text-[0.65rem] text-cyan font-cyber tracking-widest mb-1">ENTRY FEE</p>
+                        <p class="font-bold font-term text-lg text-magenta">₹350</p>
                     </div>
                 </div>
-
-                <div class="flex justify-center gap-4 pt-8">
-                    <button onclick="switchTab('register')" class="btn-primary px-8 py-3 rounded-full font-bold text-lg">Register Now</button>
-                    <button onclick="switchTab('ps')" class="bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-3 rounded-full font-bold text-lg transition">Explore Tracks</button>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ================= VIEW 2: PROBLEM STATEMENTS ================= -->
-        <section id="view-ps" class="view-section">
-            <h2 class="text-3xl font-bold mb-6 text-gradient flex items-center gap-3">
-                <span class="bg-blue-500/20 p-2 rounded-lg">🎯</span> Problem Statements
-            </h2>
-            
-            <!-- Expandable Document Preview -->
-            <div class="glass-card mb-8">
-                <div class="accordion-header" onclick="toggleAccordion('doc-preview')">
-                    <span class="text-lg font-bold flex items-center gap-3">
-                        <span class="text-blue-400 text-xl">📄</span> View Official Compendium Document
-                    </span>
-                    <span id="icon-doc-preview" class="text-gray-400 text-xl transition-transform transform">▼</span>
-                </div>
-                <div id="content-doc-preview" class="accordion-content">
-                    <div class="pt-4 pb-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-white/10">
-                        <p class="text-sm text-gray-400">Preview the official problem statements document below.</p>
-                        <a href="Problem_Statements_Updated.docx" target="_blank" class="bg-white/10 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 px-5 py-2 rounded-lg transition shadow-lg font-semibold text-sm tracking-wider">
-                            ⬇️ Download .docx
-                        </a>
-                    </div>
-                    <div class="relative w-full rounded-lg overflow-hidden border border-white/10 bg-white mb-6 shadow-inner">
-                        <iframe id="doc-iframe" src="" width="100%" height="500px" frameborder="0"></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Problem Statements Grid Container -->
-            <div id="ps-container" class="grid grid-cols-1 gap-5">
-                <!-- Cards Injected via Javascript -->
-            </div>
-        </section>
-
-
-        <!-- ================= VIEW 3: RULES ================= -->
-        <section id="view-rules" class="view-section">
-            <h2 class="text-3xl font-bold mb-6 text-gradient flex items-center gap-3">
-                <span class="bg-blue-500/20 p-2 rounded-lg">⚖️</span> Rules & Guidelines
-            </h2>
-            <div class="bg-blue-900/20 border border-blue-500/30 rounded-xl p-4 mb-8 flex gap-4 items-start shadow-lg">
-                <span class="text-2xl">⚠️</span>
-                <p class="text-sm text-gray-300">Violating any of the rules below will result in immediate disqualification of the entire team. Decisions made by the organizing committee are final.</p>
             </div>
             
-            <div id="rules-container" class="space-y-6">
-                <!-- Segregated Rules Injected via JS -->
+            <!-- 3D CSS ROTATING ASCII LAPTOP -->
+            <div class="flex-1 w-full bg-[#040814] border border-cyan-dim rounded-xl overflow-hidden shadow-[0_0_40px_rgba(0,229,255,0.1)] hidden md:block relative h-[380px]">
+                <div class="absolute top-4 left-4 flex gap-2 z-10">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                
+                <div class="laptop-wrapper">
+                    <div class="laptop-3d">
+                        <div class="laptop-screen ascii-panel screen-text">
+.-------------------------------------------------.
+|                                                 |
+|  > AARAMBH_2026.EXE RUNNING                     |
+|  > INITIATING PROTOCOLS... [OK]                 |
+|  > ACCESSING DATABASE...   [OK]                 |
+
+| > SYNCING NEURAL NET...   [OK] |
+| :--- |
+| [ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ] 100% |
+| :--- |
+| SYSTEM READY. WAITING FOR USER INPUT_ |
+| :--- | <br> '-------------------------------------------------'</div> <br> <div class="laptop-base ascii-panel base-text"> <br> .-------------------------------------------------.
+| [ESC] [F1] [F2] [F3] [F4] [F5] [F6] [F7] [F8] |
+| [~] [1] [2] [3] [4] [5] [6] [7] [8] [9] [0] [-] |
+| [TAB] [Q] [W] [E] [R] [T] [Y] [U] [I] [O] [P] |
+| [CAPS] [A] [S] [D] [F] [G] [H] [J] [K] [L] [RET] |
+| [SHIFT] [Z] [X] [C] [V] [B] [N] [M] [,] [.] [/] |
+| [CTRL] [WIN] [ALT] [     SPACE     ] [ALT] [CTRL |
+| :--- |
+| [ TRACKPAD ] |
+
+'-------------------------------------------------'</div>
+                    </div>
+                </div>
             </div>
-        </section>
-
-
-        <!-- ================= VIEW 4: FAQS ================= -->
-        <section id="view-faqs" class="view-section">
-            <h2 class="text-3xl font-bold mb-6 text-gradient flex items-center gap-3">
-                <span class="bg-blue-500/20 p-2 rounded-lg">❓</span> Frequently Asked Questions
-            </h2>
-            <div id="faq-container" class="space-y-4">
-                <!-- FAQs Injected via Javascript -->
-            </div>
-        </section>
-
-
-        <!-- ================= VIEW 5: REGISTRATION ================= -->
-        <section id="view-register" class="view-section">
-            <div class="glass-card p-8 md:p-10 max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold mb-2">Team Registration</h2>
-                <p class="text-gray-400 mb-8 border-b border-white/10 pb-4">Secure your spot. Registration Fee: <span class="text-green-400 font-bold">₹350 per team</span></p>
-
-                <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-8">
-                    <!-- Team Info -->
-                    <div class="space-y-4">
-                        <h3 class="text-xl font-semibold text-gradient">1. Team Profile</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs text-gray-400 mb-1 uppercase tracking-widest">Select Track *</label>
-                                <select id="assigned_ps" required>
-                                    <option value="" disabled selected>-- Select a Problem Statement --</option>
-                                    <!-- Options injected via JS -->
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-gray-400 mb-1 uppercase tracking-widest">Team Name *</label>
-                                <input type="text" id="teamName" required placeholder="e.g. Cyber Squad">
-                            </div>
+        </div>
+        <!-- TAB NAVIGATION -->
+        <div class="flex gap-3 overflow-x-auto pb-4 mb-8 scrollbar-hide" id="tab-container">
+            <button onclick="switchTab('ps')" id="btn-ps" class="tab-btn active whitespace-nowrap">Problem Statements</button>
+            <button onclick="switchTab('rules')" id="btn-rules" class="tab-btn whitespace-nowrap">Rules & Info</button>
+            <button onclick="switchTab('faqs')" id="btn-faqs" class="tab-btn whitespace-nowrap">FAQs</button>
+            <button onclick="switchTab('register')" id="btn-register" class="tab-btn btn-register-tab whitespace-nowrap">Register Team ➔</button>
+        </div>
+        <!-- ================= PROBLEM STATEMENTS TAB ================= -->
+        <section id="tab-ps" class="view-section active">
+            
+            <div class="cyber-card mb-8">
+                <div class="card-inner">
+                    <div class="accordion-header" onclick="toggleAccordion('doc-preview')">
+                        <span class="font-cyber font-bold text-lg text-white flex items-center gap-3">
+                            <svg class="w-5 h-5 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            OFFICIAL COMPENDIUM
+                        </span>
+                        <span id="icon-doc-preview" class="toggle-icon text-2xl font-term">+</span>
+                    </div>
+                    <div id="content-doc-preview" class="accordion-content">
+                        <div class="pt-2 pb-4 flex flex-col sm:flex-row gap-4 justify-between items-center">
+                            <p class="text-sm text-gray-400 font-term">Preview the official document below.</p>
+                            <a href="Problem_Statements_Updated.docx" target="_blank" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded text-xs font-cyber tracking-widest transition">
+                                DOWNLOAD .DOCX
+                            </a>
+                        </div>
+                        <div class="relative w-full rounded border border-white/10 bg-white overflow-hidden mb-4 shadow-inner">
+                            <iframe id="doc-iframe" src="" width="100%" height="550px" frameborder="0"></iframe>
                         </div>
                     </div>
-
-                    <!-- Members Info -->
-                    <div class="space-y-4">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-white/5 pt-6">
-                            <h3 class="text-xl font-semibold text-gradient">2. Core Members</h3>
-                            <span class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-full">Exactly 5 members. Min 1 Girl & 1 Boy.</span>
+                </div>
+            </div>
+            <!-- PS Grid -->
+            <div id="ps-container" class="space-y-5"></div>
+        </section>
+        <!-- ================= RULES TAB ================= -->
+        <section id="tab-rules" class="view-section">
+            <div class="mb-8">
+                <h2 class="font-cyber text-3xl font-bold mb-4 gradient-text">RULES & REGULATIONS</h2>
+                <div class="bg-magenta-dim border border-magenta/50 rounded-lg p-4 flex gap-4 items-center shadow-[0_0_15px_rgba(255,0,127,0.1)]">
+                    <svg class="w-8 h-8 text-magenta shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    <p class="text-sm font-term text-gray-300 leading-relaxed">Violating any of the rules below will result in immediate disqualification of the entire team. Decisions made by the organizing committee are final.</p>
+                </div>
+            </div>
+            <div id="rules-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+        <!-- ================= FAQ TAB ================= -->
+        <section id="tab-faqs" class="view-section">
+            <h2 class="font-cyber text-3xl font-bold mb-8 gradient-text">FREQUENTLY ASKED QUESTIONS</h2>
+            <div id="faq-container" class="space-y-4 max-w-4xl mx-auto"></div>
+        </section>
+        <!-- ================= REGISTER TAB ================= -->
+        <section id="tab-register" class="view-section">
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Form Area -->
+                <div class="flex-1 cyber-card p-1">
+                    <div class="card-inner p-6 md:p-8">
+                        <div class="border-b border-white/10 pb-6 mb-6">
+                            <h2 class="font-cyber text-3xl font-bold text-white mb-2">TEAM REGISTRATION</h2>
+                            <p class="text-sm text-gray-400 font-term">All slots are provisionally reserved pending verification.</p>
                         </div>
                         
-                        <!-- Member 1 -->
-                        <div class="p-5 rounded-xl bg-blue-900/10 border border-blue-500/20 space-y-4 shadow-inner">
-                            <p class="font-bold text-xs text-blue-400 uppercase tracking-widest">Member 1 (Team Leader)</p>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <input type="text" id="l_name" placeholder="Full Name *" required>
-                                <input type="email" id="l_email" placeholder="Email Address *" required>
-                                <input type="tel" id="l_phone" placeholder="Phone Number *" required>
+                        <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-8">
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="w-6 h-6 rounded bg-cyan/20 text-cyan flex items-center justify-center font-bold text-xs font-term">1</span>
+                                    <h3 class="font-cyber text-lg tracking-wider">PROJECT DETAILS</h3>
+                                </div>
+                                <div>
+                                    <label class="font-term text-xs text-gray-400 mb-2 block">SELECT TRACK / STATEMENT *</label>
+                                    <select id="assigned_ps" required class="cyber-input text-sm"></select>
+                                </div>
+                                <div>
+                                    <label class="font-term text-xs text-gray-400 mb-2 block">TEAM NAME *</label>
+                                    <input type="text" id="teamName" required class="cyber-input" placeholder="e.g. Cyber Squad">
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- Member 2 -->
-                        <div class="p-5 rounded-xl bg-white/5 border border-white/5 space-y-4">
-                            <p class="font-semibold text-xs text-gray-400 uppercase tracking-widest">Member 2</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input type="text" id="m2_name" placeholder="Full Name *" required>
-                                <input type="tel" id="m2_phone" placeholder="Alternate Phone Number *" required>
+                            <div class="space-y-6 pt-6 border-t border-white/5">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-6 h-6 rounded bg-magenta/20 text-magenta flex items-center justify-center font-bold text-xs font-term">2</span>
+                                        <h3 class="font-cyber text-lg tracking-wider">CORE MEMBERS</h3>
+                                    </div>
+                                    <span class="text-[0.65rem] font-term text-magenta border border-magenta/30 px-2 py-1 rounded bg-magenta/10">5 REQUIRED. 1 GIRL, 1 BOY MINIMUM.</span>
+                                </div>
+                                
+                                <!-- Leader -->
+                                <div class="bg-white/5 p-5 rounded-lg border border-white/10 space-y-4">
+                                    <label class="font-cyber text-xs text-cyan tracking-widest">MEMBER 1 (TEAM LEADER)</label>
+                                    <input type="text" id="l_name" required class="cyber-input" placeholder="Full name">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <input type="email" id="l_email" required class="cyber-input" placeholder="Email address">
+                                        <input type="tel" id="l_phone" required class="cyber-input" placeholder="Phone number">
+                                    </div>
+                                </div>
+                                
+                                <!-- Member 2 -->
+                                <div class="bg-white/5 p-5 rounded-lg border border-white/10 space-y-4">
+                                    <label class="font-cyber text-xs text-gray-300 tracking-widest">MEMBER 2</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <input type="text" id="m2_name" required class="cyber-input" placeholder="Full name">
+                                        <input type="tel" id="m2_phone" required class="cyber-input" placeholder="Alternate phone number">
+                                    </div>
+                                </div>
+                                <!-- Members 3,4,5 -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                                        <label class="font-cyber text-[0.65rem] text-gray-400 tracking-widest block mb-2">MEMBER 3</label>
+                                        <input type="text" id="m3_name" required class="cyber-input text-sm">
+                                    </div>
+                                    <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                                        <label class="font-cyber text-[0.65rem] text-gray-400 tracking-widest block mb-2">MEMBER 4</label>
+                                        <input type="text" id="m4_name" required class="cyber-input text-sm">
+                                    </div>
+                                    <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                                        <label class="font-cyber text-[0.65rem] text-gray-400 tracking-widest block mb-2">MEMBER 5</label>
+                                        <input type="text" id="m5_name" required class="cyber-input text-sm">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- Members 3, 4, 5 -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-                                <label class="block text-[0.65rem] text-gray-400 mb-2 uppercase tracking-widest">Member 3</label>
-                                <input type="text" id="m3_name" placeholder="Full Name *" required>
+                            <div class="pt-6">
+                                <button type="submit" class="w-full bg-gradient-to-r from-[#00e5ff] to-[#ff007f] text-white font-cyber font-bold text-lg py-4 rounded-lg transition-transform hover:scale-[1.02] shadow-[0_0_20px_rgba(255,0,127,0.4)] tracking-wider">
+                                    PROCEED TO CHECKOUT (₹350)
+                                </button>
                             </div>
-                            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-                                <label class="block text-[0.65rem] text-gray-400 mb-2 uppercase tracking-widest">Member 4</label>
-                                <input type="text" id="m4_name" placeholder="Full Name *" required>
-                            </div>
-                            <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-                                <label class="block text-[0.65rem] text-gray-400 mb-2 uppercase tracking-widest">Member 5</label>
-                                <input type="text" id="m5_name" placeholder="Full Name *" required>
+                        </form>
+                    </div>
+                </div>
+                <!-- Info Sidebar -->
+                <div class="w-full lg:w-80 space-y-6">
+                    <div class="cyber-card">
+                        <div class="card-inner p-6">
+                            <h3 class="font-cyber font-bold text-lg border-b border-white/10 pb-3 mb-5 text-cyan">REGISTRATION INFO</h3>
+                            <div class="space-y-4 text-sm font-term text-gray-300">
+                                <div class="flex flex-col gap-1 border-b border-white/5 pb-3">
+                                    <span class="text-[0.65rem] text-gray-500 uppercase tracking-widest">Team Size</span>
+                                    <span class="text-white font-medium">Exactly 5 members</span>
+                                </div>
+                                <div class="flex flex-col gap-1 border-b border-white/5 pb-3">
+                                    <span class="text-[0.65rem] text-gray-500 uppercase tracking-widest">Entry Fee</span>
+                                    <span class="text-magenta font-bold text-base">₹350 / team</span>
+                                </div>
+                                <div class="flex flex-col gap-1 border-b border-white/5 pb-3">
+                                    <span class="text-[0.65rem] text-gray-500 uppercase tracking-widest">Eligibility</span>
+                                    <span class="text-white">UG Students (2nd/3rd Yr)</span>
+                                </div>
+                                <div class="flex items-center gap-2 pt-2 text-cyan">
+                                    <div class="w-2 h-2 bg-cyan rounded-full animate-pulse"></div>
+                                    <span class="font-bold tracking-widest text-xs">PORTAL OPEN</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn-primary w-full text-white font-bold text-lg py-4 rounded-xl shadow-lg mt-8">
-                        Proceed to Payment Checkout (₹350)
-                    </button>
-                </form>
+                </div>
             </div>
         </section>
-
     </main>
-
     <!-- Footer -->
-    <footer class="text-center py-10 border-t border-white/10 mt-12 bg-black/20 backdrop-blur-md">
-        <h2 class="text-2xl font-bold text-white mb-2 tracking-wider">AARAMBH <span class="text-blue-400">2026</span></h2>
-        <p class="text-gray-400 text-sm max-w-2xl mx-auto mb-6">
-            Department of Electrical Engineering, Walchand College Of Engineering, Sangli.
-        </p>
-        <div class="flex flex-col md:flex-row justify-center gap-6 text-sm text-gray-400">
-            <a href="tel:+919156071788" class="hover:text-blue-400 transition">📞 +91 91560 71788</a>
-            <a href="tel:+917498685760" class="hover:text-blue-400 transition">📞 +91 74986 85760</a>
-            <a href="mailto:arambh.hackathon@gmail.com" class="hover:text-blue-400 transition">✉️ arambh.hackathon@gmail.com</a>
+    <footer class="border-t border-white/10 bg-[#020617] mt-12 py-12 text-center font-term text-xs text-gray-500 relative overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-cyan/10 blur-[100px] rounded-full pointer-events-none"></div>
+        
+        <div class="relative z-10 space-y-4">
+            <h2 class="font-cyber text-white text-xl tracking-widest gradient-text font-bold">AARAMBH 2026</h2>
+            <p>Department of Electrical Engineering, Walchand College of Engineering, Sangli.</p>
+            <div class="flex justify-center gap-6 pt-2 text-gray-400">
+                <a href="tel:+919156071788" class="hover:text-cyan transition">📞 +91 91560 71788</a>
+                <a href="mailto:arambh.hackathon@gmail.com" class="hover:text-cyan transition">✉️ arambh.hackathon@gmail.com</a>
+            </div>
+            <p class="pt-8 border-t border-white/5 mt-8 max-w-sm mx-auto">© 2026 WCE SANGLI. ALL RIGHTS RESERVED.</p>
         </div>
-        <p class="mt-8 text-xs text-gray-600 tracking-widest">INNOVATE THE FUTURE OF TECH.</p>
     </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Database & Logic Script -->
     <script>
-        // 1. Initialize Particles Background
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 70, density: { enable: true, value_area: 800 } },
-                color: { value: ["#4facfe", "#00f2fe", "#ffffff"] },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: "#4facfe", opacity: 0.2, width: 1 },
-                move: { enable: true, speed: 1.5, direction: "none", random: true, out_mode: "out" }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: { onhover: { enable: true, mode: "grab" } },
-                modes: { grab: { distance: 180, line_linked: { opacity: 0.5 } } }
-            },
-            retina_detect: true
+        // 1. SPLASH SCREEN LOGIC
+        const bootLines = [
+            "Initializing kernel...",
+            "Loading security protocols...",
+            "Mounting file systems... [OK]",
+            "Establishing neural link...",
+            "Decrypting problem statements...",
+            "Welcome to AARAMBH 2026."
+        ];
+        
+        window.addEventListener('load', () => {
+            const bootTextEl = document.getElementById('boot-text');
+            let lineIndex = 0;
+            
+            const typeLine = () => {
+                if(lineIndex < bootLines.length) {
+                    bootTextEl.innerHTML += `> ${bootLines[lineIndex]}<br>`;
+                    lineIndex++;
+                    setTimeout(typeLine, 300); // speed of typing
+                }
+            };
+            typeLine();
+            // Fade out splash screen after 2.8 seconds
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+                document.body.classList.remove('loading');
+                
+                // Load iframe safely after splash to prevent blocking
+                const gitHubFileRawUrl = "https://github.com/Aditya-9600/hackathon-portal/raw/main/Problem_Statements_Updated.docx";
+                const iframe = document.getElementById('doc-iframe');
+                if (iframe) iframe.src = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(gitHubFileRawUrl);
+            }, 2800);
         });
-
-        // 2. Tab Switching Logic
+        // 2. Navigation Logic (Tabs)
+        function toggleMenu() { document.getElementById('nav-menu').classList.toggle('open'); }
+        
         function switchTab(tabId) {
-            // Update Tab Pills Active State
-            document.querySelectorAll('.tab-pill').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${tabId}`).classList.add('active');
             
-            // Hide all views, show targeted view
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            const targetView = document.getElementById(`view-${tabId}`);
-            targetView.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
         }
-
         // 3. Accordion Logic
         let activeAccordion = null;
         function toggleAccordion(id) {
             if (activeAccordion && activeAccordion !== id) {
                 const prevContent = document.getElementById(`content-${activeAccordion}`);
                 const prevIcon = document.getElementById(`icon-${activeAccordion}`);
-                if (prevContent) { 
-                    prevContent.style.maxHeight = null; 
-                    prevContent.classList.remove('open'); 
-                    prevIcon.style.transform = 'rotate(0deg)'; 
-                }
+                if (prevContent) { prevContent.style.maxHeight = null; prevContent.classList.remove('open'); prevIcon.classList.remove('open'); prevIcon.innerText = "+"; }
             }
             const content = document.getElementById(`content-${id}`);
             const icon = document.getElementById(`icon-${id}`);
             
             if (content.style.maxHeight) {
-                content.style.maxHeight = null; 
-                content.classList.remove('open'); 
-                icon.style.transform = 'rotate(0deg)'; 
-                activeAccordion = null;
+                content.style.maxHeight = null; content.classList.remove('open'); icon.classList.remove('open'); icon.innerText = "+"; activeAccordion = null;
             } else {
-                // Dynamically calculates the exact height required for the content so nothing is cut off
-                content.style.maxHeight = content.scrollHeight + 40 + "px"; 
-                content.classList.add('open'); 
-                icon.style.transform = 'rotate(180deg)'; 
-                activeAccordion = id;
+                content.style.maxHeight = content.scrollHeight + 150 + "px"; content.classList.add('open'); icon.classList.add('open'); icon.innerText = "+"; activeAccordion = id;
             }
         }
-
-        // 4. Database (Complete 69 PS with Domains, Hardware/Software types, Descriptions, and Hardware tables)
+        // 4. Complete 69 PS Database with Hardware Components
         const db = [
-            {id: 1, d: "Smart Cities & Urbanization", t: "Smart Street Environment & Noise Monitoring", c: "HARDWARE", desc: "Develop an IoT-based system that dynamically controls streetlight brightness based on real-time pedestrian/vehicle activity while continuously monitoring urban noise levels.", hw: [
+            {id: 1, t: "Smart Street Environment & Noise Monitoring", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Acoustic Sensor", "MAX9814 Electret Microphone", 1, "₹220"], ["Motion Sensing", "HC-SR501 PIR Motion Sensor", 1, "₹65"], ["Light Sensing", "LDR Photoresistor Module", 1, "₹45"], ["Lighting Actuator", "12V 5W High-Power LED Module", 1, "₹120"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 3A SMPS Enclosed", 1, "₹380"], ["Voltage Regulator", "LM2596 DC-DC Buck", 1, "₹95"], ["Discrete ICs", "IRF520 MOSFET Driver", 1, "₹40"], ["Base/Wiring", "Breadboard, Caps, Jumpers", 1, "₹205"]
             ]},
-            {id: 2, d: "Smart Cities & Urbanization", t: "Urban Flood Monitoring & Early Warning", c: "HARDWARE", desc: "Develop a waterproof monitoring system that detects rapidly rising water levels in urban drains and underpasses and provides early warnings to municipal authorities.", hw: [
+            {id: 2, t: "Urban Flood Monitoring & Early Warning", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32U", 1, "₹480"], ["Water Level", "JSN-SR04T Ultrasonic", 1, "₹420"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Alert System", "High-Decibel 12V Siren", 1, "₹180"], ["Power Supply", "12V 3A Weatherproof SMPS", 1, "₹420"], ["Voltage Regulator", "LM2596 Buck Module", 1, "₹95"], ["Discrete ICs", "PC817 Optocoupler & TIP122 Transistor", 1, "₹28"], ["Base/Wiring", "Breadboard & Jumpers", 1, "₹500"]
             ]},
-            {id: 3, d: "Smart Cities & Urbanization", t: "Urban Underground Water Leak", c: "HARDWARE", desc: "Build an acoustic and flow-sensing IoT array to identify and triangulate the exact location of underground pipeline leaks in smart city infrastructure.", hw: [
+            {id: 3, t: "Urban Underground Water Leak", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Acoustic Sensing", "Piezo Acoustic + LM358", 1, "₹240"], ["Flow Sensing", "YF-S201 Water Flow Sensor", 2, "₹160"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power/Regulator", "12V 2A SMPS + LM2596", 1, "₹415"], ["Discrete ICs", "74HC14 Schmitt Trigger", 1, "₹25"], ["Base/Wiring", "Breadboard & Passives", 1, "₹200"]
             ]},
-            {id: 4, d: "Smart Cities & Urbanization", t: "Underground Sewage Gas Safety", c: "HARDWARE", desc: "Create an automated venting and alert system that detects deadly accumulations of Methane and H2S gases to protect sanitation workers before manhole entry.", hw: [
+            {id: 4, t: "Underground Sewage Gas Safety", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Toxic Gas", "MQ-136 H2S Sensor", 1, "₹480"], ["Combustible Gas", "MQ-4 Methane Sensor", 1, "₹190"], ["Ventilation", "12V 1A Exhaust Fan + Relay", 1, "₹280"], ["Power Supply", "12V 5A Metal SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Optocoupler, Jumpers", 1, "₹248"]
             ]},
-            {id: 5, d: "Smart Cities & Urbanization", t: "Dynamic Digital Traffic Signage", c: "HARDWARE", desc: "Design a connected digital signage platform using dot matrix displays to stream real-time detour instructions and emergency vehicle approaching alerts.", hw: [
+            {id: 5, t: "Dynamic Digital Traffic Signage", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Matrix Display", "MAX7219 Dot Matrix Module", 2, "₹280"], ["Timekeeping", "DS3231 RTC Module", 1, "₹140"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "5V 4A SMPS Enclosed", 1, "₹380"], ["Base/Wiring", "Shift Register, Breadboard, Jumpers", 1, "₹270"]
             ]},
-            {id: 6, d: "Smart Cities & Urbanization", t: "Smart Waste Management", c: "HARDWARE", desc: "Develop an automated, tilt-sensing, and capacity-tracking smart bin prototype that optimizes collection routes and prevents overflow.", hw: [
+            {id: 6, t: "Smart Waste Management", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Fill Level Sensor", "HC-SR04 Ultrasonic", 2, "₹75"], ["Tamper/Tilt", "SW-520D Tilt Sensor", 1, "₹45"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Actuator", "SG90 Micro Servo", 1, "₹120"], ["Power Supply", "5V 2A SMPS", 1, "₹200"], ["Base/Wiring", "LDO IC, Breadboard, Jumpers", 1, "₹180"]
             ]},
-            {id: 7, d: "Smart Cities & Urbanization", t: "AI-Powered Traffic Flow Optimization", c: "SOFTWARE", desc: "Develop a centralized software platform that ingests real-time transit and ride-sharing GPS data to dynamically adjust traffic light timings.", hw: []},
-            {id: 8, d: "Smart Cities & Urbanization", t: "Civic Issue Crowdsourcing & Triage", c: "SOFTWARE", desc: "Create a mobile app for citizens to log infrastructure issues (potholes, broken lights) that auto-triages reports using image recognition.", hw: []},
-            {id: 9, d: "Healthcare & Medical Technology", t: "Elderly Care & Assistive Technology", c: "HARDWARE", desc: "Develop a wearable system that detects accidental falls in elderly individuals, provides medication reminders, and sends SOS alerts with GPS location.", hw: [
+            {id: 7, t: "AI-Powered Traffic Flow Optimization", c: "SOFTWARE", hw: []},
+            {id: 8, t: "Civic Issue Crowdsourcing & Triage", c: "SOFTWARE", hw: []},
+            {id: 9, t: "Elderly Care & Assistive Technology", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Motion Sensing", "MPU-6050 Accelerometer", 1, "₹170"], ["Location Tracking", "NEO-6M GPS Module", 1, "₹480"], ["Cellular Comms", "SIM800L GPRS/GSM Module", 1, "₹490"], ["Real-Time Clock", "DS3231 RTC Module", 1, "₹140"], ["Haptic Alert", "3V Coin Vibration Motor", 1, "₹35"], ["Power Subsystem", "TP4056 + 1200mAh Li-Po + SMPS", 1, "₹470"], ["Base/Wiring", "Breadboard, ICs, Jumpers", 1, "₹166"]
             ]},
-            {id: 10, d: "Healthcare & Medical Technology", t: "Hospital Patient Safety & Monitoring", c: "HARDWARE", desc: "Create a bed-integrated weight sensing and alert system that detects unassisted patient exits to prevent hospital falls.", hw: [
+            {id: 10, t: "Hospital Patient Safety & Monitoring", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Weight Sensing", "1kg Load Cell + HX711", 1, "₹310"], ["Display", "16x2 I2C LCD", 1, "₹220"], ["Alert Subsystem", "5V Buzzer + LED", 1, "₹30"], ["Power Supply", "12V 2A SMPS + Buck Module", 1, "₹415"], ["Base/Wiring", "Breadboard, Optocouplers, Passives", 1, "₹272"]
             ]},
-            {id: 11, d: "Healthcare & Medical Technology", t: "Blood Bank & Medical Inventory Management", c: "HARDWARE", desc: "Build an RFID-tagged inventory fridge with strict multi-zone temperature monitoring to prevent the spoilage of critical blood supplies.", hw: [
+            {id: 11, t: "Blood Bank & Medical Inventory Management", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["RFID Subsystem", "RC522 Module + 10x Transponders", 1, "₹330"], ["Temp Sensor", "DS18B20 Waterproof Probe", 2, "₹160"], ["Display", "20x4 I2C LCD", 1, "₹360"], ["Power Supply", "12V 3A SMPS + LM2596", 1, "₹475"], ["Base/Wiring", "Breadboard, Buffer IC, Passives", 1, "₹296"]
             ]},
-            {id: 12, d: "Healthcare & Medical Technology", t: "Neonatal & Maternal Healthcare", c: "HARDWARE", desc: "Design a low-cost, tightly regulated neonatal incubator control system featuring ceramic heating and ultrasonic mist generation.", hw: [
+            {id: 12, t: "Neonatal & Maternal Healthcare", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Climate Sensing", "SHT31 Temp & Humidity Sensor", 1, "₹350"], ["Surface Sensor", "DS18B20 Skin Probe", 1, "₹160"], ["Heating Actuator", "12V 50W PTC Ceramic Heater", 1, "₹380"], ["Air/Humidity", "12V Blower + 5V Mist Maker", 1, "₹310"], ["Power Supply", "12V 10A SMPS + Buck Regulators", 1, "₹1040"], ["Base/Wiring", "Breadboard, Drivers, Optocouplers", 1, "₹518"]
             ]},
-            {id: 13, d: "Healthcare & Medical Technology", t: "Preventive Healthcare & Wellness", c: "HARDWARE", desc: "Build a smart hydration and wellness tracking device utilizing capacitive liquid level sensing and OLED biometric feedback.", hw: [
+            {id: 13, t: "Preventive Healthcare & Wellness", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-C3 SuperMini RISC-V", 1, "₹289"], ["Water Level Sensor", "Capacitive Liquid Level", 1, "₹280"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display / UI", "0.42-inch OLED I2C", 1, "₹190"], ["Power Subsystem", "5V 2A SMPS + TP4056 + LiPo", 1, "₹440"], ["Base/Wiring", "Breadboard, LDO, Vibrator, Passives", 1, "₹175"]
             ]},
-            {id: 14, d: "Healthcare & Medical Technology", t: "Al-Based Disease Detection & Medical Diagnostics", c: "HARDWARE", desc: "Construct an automated, AI-driven microscopy stage that uses stepper motors and a 5MP camera to assist in edge-computed sample analysis.", hw: [
+            {id: 14, t: "Al-Based Disease Detection & Medical Diagnostics", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3-WROOM-1 + OV2640 Cam", 1, "₹750"], ["Optics", "OV5640 5MP Camera + Lens", 1, "₹380"], ["Illumination", "Adjustable LED Spotlight", 1, "₹140"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Focus Actuator", "NEMA 17 Stepper Motor", 1, "₹320"], ["Power Supply", "12V 3A SMPS + Buck Module", 1, "₹475"], ["Base/Wiring", "Breadboard, A4988 Driver, LDO", 1, "₹380"]
             ]},
-            {id: 15, d: "Healthcare & Medical Technology", t: "Digital Healthcare & Organ Transplant Management", c: "SOFTWARE", desc: "Develop a secure platform that enables hospitals to efficiently match organ donors with eligible recipients based on compatibility factors.", hw: []},
-            {id: 16, d: "Healthcare & Medical Technology", t: "Predictive Hospital Bed Management", c: "SOFTWARE", desc: "Create an ML-based software dashboard to predict hospital bed availability utilizing historical discharge rates and admission spikes.", hw: []},
-            {id: 17, d: "Electric Vehicles (EV) & Mobility", t: "EV Battery Safety & Thermal Runaway", c: "HARDWARE", desc: "Develop a low-cost battery monitoring system that detects early signs of thermal runaway at the cell level and isolates the affected module.", hw: [
+            {id: 15, t: "Digital Healthcare & Organ Transplant Management", c: "SOFTWARE", hw: []},
+            {id: 16, t: "Predictive Hospital Bed Management", c: "SOFTWARE", hw: []},
+            {id: 17, t: "EV Battery Safety & Thermal Runaway", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Thermal Probes", "NTC 10k Thermistors (5x)", 1, "₹120"], ["Gas Detection", "MQ-2 Smoke Sensor", 1, "₹150"], ["Fault Isolation", "4-Ch 5V Relay Module", 1, "₹260"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A 120W SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Comparator, Siren", 1, "₹390"]
             ]},
-            {id: 18, d: "Electric Vehicles (EV) & Mobility", t: "EV Motor Fault Detection & Predictive", c: "HARDWARE", desc: "Build a real-time current signature analysis tool for 3-phase BLDC motors to predict bearing wear and stator faults before failure.", hw: [
+            {id: 18, t: "EV Motor Fault Detection & Predictive", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Phase Monitoring", "ACS712 30A Current Sensor", 3, "₹90"], ["Signal Clamping", "LM358 Op-Amp", 2, "₹25"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display / UI", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹645"], ["Simulation Load", "BLDC Motor + ESC", 1, "₹450"], ["Base/Wiring", "Breadboard, Wire, Jumpers", 1, "₹230"]
             ]},
-            {id: 19, d: "Electric Vehicles (EV) & Mobility", t: "EV Charging Infrastructure Monitoring", c: "HARDWARE", desc: "Design a smart auditing station that logs real-time AC grid draw at EV charging nodes to detect cable degradation and energy theft.", hw: [
+            {id: 19, t: "EV Charging Infrastructure Monitoring", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Power Audit", "PZEM-004T AC Energy Meter", 1, "₹680"], ["Current Clamp", "SCT-013-000 100A Clamp", 1, "₹380"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display / UI", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 2A SMPS + Buck Module", 1, "₹415"], ["Simulation Load", "5V 2A USB Dummy Load", 1, "₹80"], ["Base/Wiring", "Breadboard, Terminals, Wire", 1, "₹290"]
             ]},
-            {id: 20, d: "Electric Vehicles (EV) & Mobility", t: "Regenerative Braking & Energy Recovery", c: "HARDWARE", desc: "Prototype a high-speed MOSFET switching circuit that effectively manages back-EMF current flows during regenerative braking simulations.", hw: [
+            {id: 20, t: "Regenerative Braking & Energy Recovery", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Current Sensing", "ACS712 30A Sensor", 1, "₹160"], ["Power Switching", "IRFB3077 N-MOSFET", 2, "₹85"], ["Gate Driver", "TC4427 Gate Driver IC", 1, "₹55"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Optocoupler, Resistors", 1, "₹446"]
             ]},
-            {id: 21, d: "Electric Vehicles (EV) & Mobility", t: "EV Traction Control & Vehicle Dynamics", c: "HARDWARE", desc: "Develop an electronic differential system using dual optical encoders and independent motor drivers to maintain vehicle stability during slip.", hw: [
+            {id: 21, t: "EV Traction Control & Vehicle", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Speed Sensors", "LM393 Optical Encoders", 2, "₹70"], ["Motor Driver", "L298N Dual H-Bridge", 1, "₹190"], ["Actuators", "Dual TT DC Motors", 2, "₹150"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Trigger IC, Wiring", 1, "₹235"]
             ]},
-            {id: 22, d: "Electric Vehicles (EV) & Mobility", t: "EV Structural Health & Predictive Maintenance", c: "HARDWARE", desc: "Construct a continuous vibration monitoring rig that attaches to EV battery trays to detect dangerous mechanical fatigue over time.", hw: [
+            {id: 22, t: "EV Structural Health & Predictive Maintenance", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Vibration Sensing", "ADXL345 Accelerometer", 1, "₹180"], ["Shock Sensing", "SW-420 Vibration Sensor", 1, "₹75"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Base/Wiring", "Breadboard, Comparator, LEDs", 1, "₹220"]
             ]},
-            {id: 23, d: "Electric Vehicles (EV) & Mobility", t: "Smart EV Fleet Routing & Charging", c: "SOFTWARE", desc: "Build an algorithmic dashboard that dispatches commercial EV fleets while factoring in live battery states and charging station queues.", hw: []},
-            {id: 24, d: "Electric Vehicles (EV) & Mobility", t: "EV Battery Degradation Analytics", c: "SOFTWARE", desc: "Create a machine learning model that parses historical charge-cycle telemetry data to predict the remaining useful life of Li-Ion packs.", hw: []},
-            {id: 25, d: "EdTech Hackathon", t: "Multilingual Academic Learning", c: "SOFTWARE", desc: "Develop an AI-assisted translation platform tailored specifically for complex engineering terminology across Indian regional languages.", hw: []},
-            {id: 26, d: "EdTech Hackathon", t: "Personalized Educational Resource Recommendation", c: "SOFTWARE", desc: "Build an adaptive learning engine that tracks student quiz performance and suggests customized reading materials and video lectures.", hw: []},
-            {id: 27, d: "EdTech Hackathon", t: "Interactive Al-Powered Quantum Learning", c: "SOFTWARE", desc: "Design a web-based educational simulator that uses AI to help undergraduate students visualize and manipulate quantum computing gates.", hw: []},
-            {id: 28, d: "EdTech Hackathon", t: "Academic-Industry Collaboration Platform", c: "SOFTWARE", desc: "Develop a bridging portal where university researchers can pitch lab prototypes directly to registered corporate R&D scouts.", hw: []},
-            {id: 29, d: "EdTech Hackathon", t: "Smart Handwriting Posture & Grip", c: "HARDWARE", desc: "Create a wearable IMU and FSR-based glove/pen grip system that provides tactile feedback to students with poor handwriting posture.", hw: [
+            {id: 23, t: "Smart EV Fleet Routing & Charging", c: "SOFTWARE", hw: []},
+            {id: 24, t: "EV Battery Degradation Analytics", c: "SOFTWARE", hw: []},
+            {id: 25, t: "Multilingual Academic Learning", c: "SOFTWARE", hw: []},
+            {id: 26, t: "Personalized Educational Resource Recommendation", c: "SOFTWARE", hw: []},
+            {id: 27, t: "Interactive Al-Powered Quantum Learning", c: "SOFTWARE", hw: []},
+            {id: 28, t: "Academic-Industry Collaboration Platform", c: "SOFTWARE", hw: []},
+            {id: 29, t: "Smart Handwriting Posture & Grip", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-C3 SuperMini RISC-V", 1, "₹289"], ["Grip Sensing", "FSR402 Force Resistor", 2, "₹340"], ["Posture Sensing", "MPU-6050 Motion Sensor", 1, "₹170"], ["Haptic Alert", "3V Coin Vibration Motor", 1, "₹35"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power/Dock", "TP4056 + 300mAh LiPo + 5V SMPS", 1, "₹370"], ["Base/Wiring", "Breadboard, Transistor, Wiring", 1, "₹145"]
             ]},
-            {id: 30, d: "EdTech Hackathon", t: "Visual Pronunciation Learning", c: "HARDWARE", desc: "Develop an embedded audio DSP tool with an ST7735 screen that visually plots student speech waveforms against native speaker templates.", hw: [
+            {id: 30, t: "Visual Pronunciation Learning", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3 DevKit", 1, "₹650"], ["Microphone", "MAX9814 Electret Mic", 1, "₹220"], ["Display / UI", "1.8-inch ST7735 TFT", 1, "₹380"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "5V 2A Low-Noise SMPS", 1, "₹200"], ["Base/Wiring", "Breadboard, LDO, Wiring", 1, "₹235"]
             ]},
-            {id: 31, d: "EdTech Hackathon", t: "AI-Driven Academic Integrity Detector", c: "SOFTWARE", desc: "Program a comprehensive plagiarism detection suite that specifically analyzes code structure and logic patterns to catch cheating in CS assignments.", hw: []},
-            {id: 32, d: "Renewable Energy", t: "Solar Energy & Battery Management", c: "HARDWARE", desc: "Develop an energy-management controller that monitors solar generation and load demand, intelligently scheduling battery cycles.", hw: [
+            {id: 31, t: "AI-Driven Academic Integrity Detector", c: "SOFTWARE", hw: []},
+            {id: 32, t: "Solar Energy & Battery Management", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Current/Voltage", "ACS712 (x2) + 0-25V Sensor (x2)", 4, "₹410"], ["Power Switching", "IRF3205 N-MOSFET", 2, "₹90"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A SMPS + Buck Module", 1, "₹945"], ["Solar Source", "6V 3W Mini Solar Panel", 1, "₹180"], ["Base/Wiring", "Breadboard, Gate Driver, Wiring", 1, "₹490"]
             ]},
-            {id: 33, d: "Renewable Energy", t: "Power Quality & Harmonic Management", c: "HARDWARE", desc: "Build an inline AC monitoring tool that detects non-linear load harmonics and logs power quality anomalies to an edge dashboard.", hw: [
+            {id: 33, t: "Power Quality & Harmonic Management", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["AC Sensors", "ZMPT101B Voltage + SCT-013 Clamp", 2, "₹525"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Simulation Load", "AC/DC Non-Linear Load Sim", 1, "₹200"], ["Base/Wiring", "Breadboard, Op-Amp, Passives", 1, "₹260"]
             ]},
-            {id: 34, d: "Renewable Energy", t: "Solar Microgrid & Black-Start", c: "HARDWARE", desc: "Create an automated relay sequencer that safely isolates a microgrid during a blackout and initializes a controlled cold-start procedure.", hw: [
+            {id: 34, t: "Solar Microgrid & Black-Start", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensors", "ZMPT101B + ACS712", 3, "₹465"], ["Load Restoration", "4-Channel 5V Relay", 1, "₹240"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Solar Source", "6V 3W Mini Solar Panel", 1, "₹180"], ["Base/Wiring", "Breadboard, Transistor Array, Opto", 1, "₹392"]
             ]},
-            {id: 35, d: "Renewable Energy", t: "Electric Vehicles & Vehicle-to-Grid Technology", c: "HARDWARE", desc: "Prototype a CAN bus integrated bidirectional controller that allows an EV to safely discharge stored power back into the local home grid.", hw: [
+            {id: 35, t: "Electric Vehicles & Vehicle-to-Grid Technology", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Current Sensing", "ACS712 30A Bidirectional", 2, "₹160"], ["Comms Interface", "MCP2515 CAN Bus Module", 1, "₹134"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Control", "IRF3205 N-MOSFET + 12V 10A SMPS", 1, "₹1030"], ["Base/Wiring", "Breadboard, Comparator, LDO", 1, "₹475"]
             ]},
-            {id: 36, d: "Renewable Energy", t: "Urban Renewable Energy", c: "HARDWARE", desc: "Develop an ultra-low power harvesting node that utilizes piezoelectric discs and micro-wind dynamos to charge a supercapacitor bank.", hw: [
+            {id: 36, t: "Urban Renewable Energy", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Harvesters", "Piezo Discs + AC Wind Dynamo", 2, "₹400"], ["Storage/Power", "2.7V Supercaps + LTC3588 IC", 3, "₹660"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Base Power", "5V 2A SMPS", 1, "₹200"], ["Base/Wiring", "Breadboard, Schottky Diodes, Wiring", 1, "₹170"]
             ]},
-            {id: 37, d: "Renewable Energy", t: "Railway Energy Harvesting", c: "HARDWARE", desc: "Build a rugged trackside piezoelectric harvesting array that powers local telemetry sensors from the mechanical vibration of passing trains.", hw: [
+            {id: 37, t: "Railway Energy Harvesting", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Primary Harvester", "Piezoelectric Module", 1, "₹280"], ["Telemetry/Sense", "INA219 + SW-420 Sensor", 2, "₹265"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Base/Wiring", "Breadboard, Bridge Rectifier, Supercaps", 1, "₹265"]
             ]},
-            {id: 38, d: "Renewable Energy", t: "Community Microgrid & Energy Sharing", c: "HARDWARE", desc: "Design a prepaid RFID-based energy dispensing meter that allows neighboring households to trade and route localized solar power.", hw: [
+            {id: 38, t: "Community Microgrid & Energy Sharing", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Energy Metering", "PZEM-004T Multi-Function", 1, "₹654"], ["Load Switching", "2-Channel 30A Relay", 1, "₹150"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display", "16x2 I2C LCD", 1, "₹220"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Optocoupler, Wiring", 1, "₹306"]
             ]},
-            {id: 39, d: "Renewable Energy", t: "Wind Energy & Predictive Maintenance", c: "HARDWARE", desc: "Construct a multi-sensor tower utilizing accelerometers and optical RPM encoders to detect dangerous blade imbalances in wind turbines.", hw: [
+            {id: 39, t: "Wind Energy & Predictive Maintenance", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensing Array", "ADXL345 + LM393 RPM + DS18B20", 3, "₹410"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Simulation Load", "12V DC Turbine Motor", 1, "₹150"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Trigger IC, Wiring", 1, "₹225"]
             ]},
-            {id: 40, d: "Renewable Energy", t: "Regenerative Energy Recovery", c: "HARDWARE", desc: "Design a simulated elevator/crane system that efficiently captures descent-braking energy into a high-capacity supercapacitor array.", hw: [
+            {id: 40, t: "Regenerative Energy Recovery", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Generator/Sense", "12V Dynamo Motor + INA219", 2, "₹610"], ["Storage/Switching", "Supercap Bank + IRFB3077", 4, "₹390"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Gate Driver, Optocoupler", 1, "₹365"]
             ]},
-            {id: 41, d: "Renewable Energy", t: "Solar PV Predictive Maintenance & Soiling", c: "HARDWARE", desc: "Develop an array tracker that correlates drop in PV yield against lux meter data to accurately alert maintenance for panel dust cleaning.", hw: [
+            {id: 41, t: "Solar PV Predictive Maintenance & Soiling", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensing Array", "BH1750 + INA219 + DS18B20", 3, "₹460"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 2A SMPS + Buck", 1, "₹415"], ["Solar Source", "6V 3W Mini Solar Panel", 1, "₹180"], ["Base/Wiring", "Breadboard, Op-Amp, LDO", 1, "₹245"]
             ]},
-            {id: 42, d: "Renewable Energy", t: "Solar Farm Yield Forecasting", c: "SOFTWARE", desc: "Create an ML tool that ingests daily meteorological forecasts to accurately predict upcoming week generation yields for utility solar farms.", hw: []},
-            {id: 43, d: "Renewable Energy", t: "Microgrid Load Balancing Algorithm", c: "SOFTWARE", desc: "Write a high-efficiency algorithm that dynamically shifts non-essential HVAC loads during peak demand hours in a self-sustained microgrid.", hw: []},
-            {id: 44, d: "Aerial Systems", t: "UAV Safety & Autonomous Landing", c: "HARDWARE", desc: "Develop an autonomous emergency landing unit for drones that detects in-flight propulsion failure and guides descent to a safe landing zone.", hw: [
+            {id: 42, t: "Solar Farm Yield Forecasting", c: "SOFTWARE", hw: []},
+            {id: 43, t: "Microgrid Load Balancing Algorithm", c: "SOFTWARE", hw: []},
+            {id: 44, t: "UAV Safety & Autonomous Landing", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3-DevKitC", 1, "₹650"], ["Flight Dynamics", "MPU-6050 + BMP280", 2, "₹310"], ["Actuator", "MG996R Servo", 1, "₹320"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Source", "12V Bench SMPS + TP4056 + LiPo", 1, "₹720"], ["Base/Wiring", "Breadboard, Optocoupler, Buzzer", 1, "₹151"]
             ]},
-            {id: 45, d: "Aerial Systems", t: "Autonomous Navigation & Collision", c: "HARDWARE", desc: "Construct a multi-directional Time-of-Flight and Ultrasonic sensing rig for UAVs to perform high-speed obstacle avoidance in confined spaces.", hw: [
+            {id: 45, t: "Autonomous Navigation & Collision", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Primary Sensing", "VL53L0X Laser Distance", 3, "₹340"], ["Secondary Sensing", "HC-SR04 Ultrasonic", 2, "₹75"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹575"], ["Base/Wiring", "Breadboard, Schmitt Trigger, Logic Conv", 1, "₹305"]
             ]},
-            {id: 46, d: "Aerial Systems", t: "Energy-Efficient UAV Operations", c: "HARDWARE", desc: "Build an active power profiling system that monitors multi-rotor current draw in real time to suggest optimal cruising speeds for max range.", hw: [
+            {id: 46, t: "Energy-Efficient UAV Operations", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Telemetry/Auth", "INA219 (x2) + RC522", 3, "₹500"], ["Display", "0.96-inch OLED", 1, "₹210"], ["Power Supply", "12V 5A Bench SMPS + Buck", 1, "₹575"], ["Base/Wiring", "Breadboard, LDO, Shunts", 1, "₹235"]
             ]},
-            {id: 47, d: "Aerial Systems", t: "Aircraft Electrical Systems & Fault", c: "HARDWARE", desc: "Design a fault-tolerant relay matrix that detects short circuits on primary aircraft buses and automatically switches to redundant lines.", hw: [
+            {id: 47, t: "Aircraft Electrical Systems & Fault", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensors", "ACS712 (x3) + ZMPT101B (x3)", 6, "₹600"], ["Isolation", "4-Channel 5V Relay", 1, "₹240"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A 120W SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Transistor Driver, Op-Amp", 1, "₹290"]
             ]},
-            {id: 48, d: "Aerial Systems", t: "Autonomous Search & Rescue", c: "HARDWARE", desc: "Create a camera-equipped Edge-AI drop mechanism that visually locks onto rescue targets and releases emergency medical supplies precisely.", hw: [
+            {id: 48, t: "Autonomous Search & Rescue", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3-WROOM-1 + Camera", 1, "₹790"], ["Positioning", "NEO-6M GPS Module", 1, "₹480"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Alert Beacon", "Siren + 3W LED", 1, "₹140"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Transistor, Passives", 1, "₹170"]
             ]},
-            {id: 49, d: "Aerial Systems", t: "Spacecraft Power Management", c: "HARDWARE", desc: "Prototype a heavily redundant satellite power distribution board that uses I2C monitors and MOSFETs to shed non-critical loads during eclipse phases.", hw: [
+            {id: 49, t: "Spacecraft Power Management", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Power Monitors", "INA226 I2C Modules", 3, "₹210"], ["Load Switching", "IRF540N MOSFET Modules", 4, "₹65"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 10A SMPS + Buck Regulators", 1, "₹1040"], ["Base/Wiring", "Breadboard, Op-Amp, Optocouplers", 1, "₹342"]
             ]},
-            {id: 50, d: "Aerial Systems", t: "Space Safety & Debris Collision", c: "SOFTWARE", desc: "Develop a geospatial simulation tool that predicts orbital debris intersection points to trigger early warning maneuvers for active satellites.", hw: []},
-            {id: 51, d: "Aerial Systems", t: "UAV Fleet Traffic Management (UTM)", c: "SOFTWARE", desc: "Create a central airspace coordination dashboard that manages delivery drone flight paths and automatically resolves mid-air conflict zones.", hw: []},
-            {id: 52, d: "Aerial Systems", t: "Satellite Telemetry Anomaly Detection", c: "SOFTWARE", desc: "Build a deep-learning log analyzer that detects subtle deviations in satellite thermal and voltage telemetry to predict impending hardware failures.", hw: []},
-            {id: 53, d: "Cybersecurity & Digital Forensics", t: "Wireless Network Security", c: "HARDWARE", desc: "Develop an edge intrusion monitor that detects 802.11 deauthentication attacks, rogue Wi-Fi clones, and maintains an offline alert log.", hw: [
+            {id: 50, t: "Space Safety & Debris Collision", c: "SOFTWARE", hw: []},
+            {id: 51, t: "UAV Fleet Traffic Management (UTM)", c: "SOFTWARE", hw: []},
+            {id: 52, t: "Satellite Telemetry Anomaly Detection", c: "SOFTWARE", hw: []},
+            {id: 53, t: "Wireless Network Security", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32U + Antenna", 1, "₹480"], ["Display / UI", "0.96-inch I2C OLED", 1, "₹210"], ["Storage", "MicroSD Module + 16GB", 1, "₹260"], ["Alert/Power", "Piezo Buzzer + 5V 2A SMPS", 1, "₹240"], ["Base/Wiring", "Breadboard, LDO, Passives", 1, "₹287"]
             ]},
-            {id: 54, d: "Cybersecurity & Digital Forensics", t: "USB Security & Hardware-Based Cybersecurity", c: "HARDWARE", desc: "Create a hardware 'data condom' utilizing a MAX3421E controller to block malicious payload injections while allowing safe charging and data parsing.", hw: [
+            {id: 54, t: "USB Security & Hardware-Based Cybersecurity", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3-DevKitC (Dual USB)", 1, "₹650"], ["USB Host", "MAX3421E USB Controller", 1, "₹320"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display/Alert", "OLED Display + Buzzer", 1, "₹230"], ["Power/Protection", "5V 2A SMPS + TPD4E001 ESD", 1, "₹270"], ["Base/Wiring", "Breadboard, Data Resistors", 1, "₹205"]
             ]},
-            {id: 55, d: "Cybersecurity & Digital Forensics", t: "Digital Forensics & Evidence Analysis", c: "SOFTWARE", desc: "Write a utility that rapidly carves hidden or deleted EXIF data and metadata footprints from bulk media dumps to assist law enforcement.", hw: []},
-            {id: 56, d: "Cybersecurity & Digital Forensics", t: "Forensic Evidence Protection", c: "HARDWARE", desc: "Develop an RFID-secured read-only USB interface dock that strictly prevents write-back contamination when analyzing seized hard drives.", hw: [
+            {id: 55, t: "Digital Forensics & Evidence Analysis", c: "SOFTWARE", hw: []},
+            {id: 56, t: "Forensic Evidence Protection", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3-DevKitC", 1, "₹650"], ["USB Interface", "MAX3421E Shield", 1, "₹320"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Display", "16x2 I2C LCD + Buzzer", 1, "₹240"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Power Switch IC, Wiring", 1, "₹290"]
             ]},
-            {id: 57, d: "Cybersecurity & Digital Forensics", t: "Cyber Incident Response & Digital Evidence", c: "SOFTWARE", desc: "Create a highly automated script suite that rapidly takes a volatile memory (RAM) snapshot and isolates infected nodes upon detecting a breach.", hw: []},
-            {id: 58, d: "Cybersecurity & Digital Forensics", t: "Secure Digital Forensics & Field Investigation", c: "HARDWARE", desc: "Build a tamper-evident, solenoid-locked Faraday transport box that logs vibrations and access attempts when transporting digital evidence.", hw: [
+            {id: 57, t: "Cyber Incident Response & Digital Evidence", c: "SOFTWARE", hw: []},
+            {id: 58, t: "Secure Digital Forensics & Field Investigation", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Locking", "12V Solenoid Cabinet Lock", 1, "₹350"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Tamper Sensor", "SW-420 Vibration", 1, "₹75"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, Driver IC, Reed Switch", 1, "₹273"]
             ]},
-            {id: 59, d: "Cybersecurity & Digital Forensics", t: "Ransomware Behavior Isolation System", c: "SOFTWARE", desc: "Program a lightweight endpoint agent that uses honeypot files to instantly freeze network ports when unauthorized mass-encryption is detected.", hw: []},
-            {id: 60, d: "Cybersecurity & Digital Forensics", t: "Automated Phishing Threat Intelligence", c: "SOFTWARE", desc: "Develop a Natural Language Processing engine that scans incoming corporate emails to score and flag sophisticated spear-phishing attempts.", hw: []},
-            {id: 61, d: "Smart Agriculture & AgriTech", t: "Water Management & Smart Irrigation", c: "HARDWARE", desc: "Develop an autonomous irrigation controller that evaluates localized soil moisture and temperature to govern multi-valve water delivery.", hw: [
+            {id: 59, t: "Ransomware Behavior Isolation System", c: "SOFTWARE", hw: []},
+            {id: 60, t: "Automated Phishing Threat Intelligence", c: "SOFTWARE", hw: []},
+            {id: 61, t: "Water Management & Smart Irrigation", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Soil Sensing", "Capacitive Moisture Sensor", 3, "₹110"], ["Actuator", "12V Solenoid Water Valve", 1, "₹380"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck + Relay", 1, "₹740"], ["Water Pump", "12V Mini Submersible Pump", 1, "₹120"], ["Base/Wiring", "Breadboard, Flyback Diodes, Wire", 1, "₹288"]
             ]},
-            {id: 62, d: "Smart Agriculture & AgriTech", t: "Precision Agriculture - Crop Health Monitoring", c: "HARDWARE", desc: "Construct a drone-mountable camera payload that logs localized temp/humidity data while capturing overhead field images for NDVI analysis.", hw: [
+            {id: 62, t: "Precision Agriculture - Crop Health Monitoring", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3-WROOM-1 + Camera", 1, "₹790"], ["Climate/Auth", "DHT22 Sensor + RC522", 2, "₹400"], ["Data/UI", "MicroSD Module + OLED", 2, "₹490"], ["Simulation", "Coreless Motor & Propeller", 1, "₹150"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, LDO, Passives", 1, "₹230"]
             ]},
-            {id: 63, d: "Smart Agriculture & AgriTech", t: "Energy Management & Predictive Maintenance", c: "HARDWARE", desc: "Build a monitoring array for heavy agricultural water pumps that uses vibration and thermal profiles to detect cavitation and bearing failure.", hw: [
+            {id: 63, t: "Energy Management & Predictive Maintenance", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensing Array", "ACS712 + DS18B20 + SW-420", 4, "₹395"], ["Power Control", "30A Relay Module", 1, "₹260"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Simulation Load", "12V Mini Submersible Pump", 1, "₹120"], ["Base/Wiring", "Breadboard, Transistor, Passives", 1, "₹300"]
             ]},
-            {id: 64, d: "Smart Agriculture & AgriTech", t: "Climate Resilience & Crop Protection", c: "HARDWARE", desc: "Design an automated orchard defense system that triggers canopy misting or heating elements when dangerous frost or extreme heat is detected.", hw: [
+            {id: 64, t: "Climate Resilience & Crop Protection", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Climate/Pressure", "SHT31 + BMP280 Sensors", 2, "₹490"], ["Actuators", "2-Ch Relay + Heater + Mini Pump", 3, "₹400"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Optocoupler, Wiring", 1, "₹296"]
             ]},
-            {id: 65, d: "Smart Agriculture & AgriTech", t: "Soil Health Monitoring (Edge Al)", c: "HARDWARE", desc: "Create an Edge-AI probe that measures soil pH and Electrical Conductivity (EC) to output immediate, localized fertilizer dosage recommendations.", hw: [
+            {id: 65, t: "Soil Health Monitoring (Edge Al)", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-S3 DevKit", 1, "₹650"], ["Soil Analytics", "Analog pH Probe + EC Probe", 2, "₹1530"], ["Moisture/Auth", "Capacitive Sensor + RC522", 2, "₹290"], ["Power Supply", "12V 3A SMPS + Buck", 1, "₹475"], ["Base/Wiring", "Breadboard, OLED, Op-Amp, Passives", 1, "₹430"]
             ]},
-            {id: 66, d: "Smart Agriculture & AgriTech", t: "Aquaculture & Water Quality Management", c: "HARDWARE", desc: "Develop an integrated pond-monitoring buoy that tracks pH, turbidity, and temperature, automatically triggering aerators when oxygen proxies drop.", hw: [
+            {id: 66, t: "Aquaculture & Water Quality Management", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Water Sensors", "Industrial pH + DS18B20 + Turbidity", 3, "₹1390"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Actuators", "4-Ch Relay + 5V Pump + Servo", 3, "₹440"], ["Power Supply", "12V 10A SMPS + Buck", 1, "₹945"], ["Base/Wiring", "Breadboard, Optocoupler, Wiring", 1, "₹352"]
             ]},
-            {id: 67, d: "Smart Agriculture & AgriTech", t: "Smart Greenhouse & Environmental Monitoring", c: "HARDWARE", desc: "Build a closed-loop greenhouse controller that balances ambient light, moisture, and temperature using integrated exhaust and misting relays.", hw: [
+            {id: 67, t: "Smart Greenhouse & Environmental Monitoring", c: "HARDWARE", hw: [
                 ["Microcontroller", "ESP32-WROOM-32 Dev Board", 1, "₹420"], ["Sensors", "DHT22 + BH1750 + Moisture", 4, "₹470"], ["Auth/Security", "RC522 RFID Module", 1, "₹180"], ["Actuators", "2-Ch Relay + Exhaust + Mist Maker", 3, "₹430"], ["Power Supply", "12V 5A SMPS + Buck", 1, "₹645"], ["Base/Wiring", "Breadboard, Transistor, Wiring", 1, "₹300"]
             ]},
-            {id: 68, d: "Smart Agriculture & AgriTech", t: "Crop Yield & Market Analytics Platform", c: "SOFTWARE", desc: "Create a data visualization dashboard that correlates local mandi prices with regional crop yield estimates to advise farmers on selling times.", hw: []},
-            {id: 69, d: "Smart Agriculture & AgriTech", t: "Aquaculture Feeding Optimization", c: "SOFTWARE", desc: "Write an algorithm that uses historical fish growth rates and current water temperature data to calculate the exact daily feed volume required.", hw: []}
+            {id: 68, t: "Crop Yield & Market Analytics Platform", c: "SOFTWARE", hw: []},
+            {id: 69, t: "Aquaculture Feeding Optimization", c: "SOFTWARE", hw: []}
         ];
-
-        // Segregated Rules Array
         const rules = [
-            {
-                category: "Team Composition & Eligibility",
-                items: [
-                    "Each team must comprise exactly 5 students.",
-                    "Each team must consist of at least 1 girl. Teams containing 5 girls are not allowed; at least 1 boy is compulsory.",
-                    "Students must be enrolled in a recognized engineering college in India.",
-                    "Mixed teams from different colleges are not permitted (all members must be from the same institution).",
-                    "B.Tech students (2nd and 3rd year) from any engineering college are eligible.",
-                    "PhD research scholars and non-student professionals are NOT eligible."
-                ]
-            },
-            {
-                category: "Problem Statement Selection",
-                items: [
-                    "Each team must select exactly one problem statement from the catalog.",
-                    "Once confirmed (after payment verification), task assignment cannot be changed.",
-                    "Teams must work only on their assigned task for the duration of the event."
-                ]
-            },
-            {
-                category: "Registration & Payment",
-                items: [
-                    "Registration requires a valid UTR/transaction ID from UPI payment.",
-                    "Confirmation is issued only after organizer payment verification.",
-                    "Partial or fraudulent payment entries will result in immediate disqualification.",
-                    "Slots are provisionally reserved pending verification; confirmed on approval."
-                ]
-            },
-            {
-                category: "Evaluation & Jury",
-                items: [
-                    "All team members must be present for the jury evaluation on Friday.",
-                    "The jury's decision is final and binding. No appeals will be entertained.",
-                    "Jury evaluation is based on: experimental accuracy, methodology, report quality, and viva responses.",
-                    "Results and scores will be announced at the Friday prize distribution."
-                ]
-            },
-            {
-                category: "Refund & Cancellation Policy",
-                items: [
-                    "No refunds will be provided once registration has been confirmed.",
-                    "No refund will be provided if a registered participant/team fails to attend the event.",
-                    "No refund will be provided for voluntary withdrawal after registration confirmation.",
-                    "Registration cannot be cancelled after confirmation.",
-                    "If the event is rescheduled, the registration fee remains non-refundable under this policy."
-                ]
-            }
+            "Rule 1: Team Composition. Each team must comprise exactly 5 students, containing at least 1 girl. Mixed teams from different colleges are not permitted.",
+            "Rule 2: Eligibility. Participants must be undergraduate B.Tech students (2nd and 3rd year). PhD scholars and non-students are not eligible.",
+            "Rule 3: Problem Statement Selection. Teams must select exactly one problem statement from the catalog. Once confirmed, task assignment cannot be changed.",
+            "Rule 4: Fraudulent Activity. Any form of cheating, partial/fake payment entries, or using unapproved AI tools will result in immediate disqualification.",
+            "Rule 5: Evaluation & Jury. All team members must be present for the jury evaluation. The jury's decision is final and binding. No appeals will be entertained.",
+            "Rule 6: Refunds. No refunds will be provided once registration has been confirmed, even for voluntary withdrawal or failure to attend."
         ];
-
         const faqs = [
             { q: "Is there a registration deadline?", a: "Registrations remain open until all slots are filled. Watch the announcements ticker for updates." },
             { q: "Can a student be part of multiple teams?", a: "No. Each student may register in only one team for Aarambh WCE Hackathon 2026." },
@@ -627,15 +695,12 @@
             { q: "What payment methods are accepted?", a: "UPI is the accepted payment method. You will be redirected to KonfHub for checkout." },
             { q: "What if my preferred task is already full?", a: "You'll need to select a different task. We recommend registering early to secure your preferred problem statement." }
         ];
-
-        // 6. Render Data
-        window.addEventListener('DOMContentLoaded', () => {
-            
+        // 5. Render Content
+        window.onload = () => {
             const selectEl = document.getElementById("assigned_ps");
             const psContainer = document.getElementById('ps-container');
             const rulesContainer = document.getElementById('rules-container');
             const faqContainer = document.getElementById('faq-container');
-
             // Render Tracks & Hardware
             db.forEach(ps => {
                 selectEl.innerHTML += `<option value="PS #${String(ps.id).padStart(2, '0')}: ${ps.t}">PS #${String(ps.id).padStart(2, '0')}: ${ps.t}</option>`;
@@ -644,78 +709,67 @@
                 if(ps.c === 'HARDWARE') {
                     let rows = ps.hw.map(item => `<tr><td>${item[0]}</td><td>${item[1]}</td><td class="text-center">${item[2]}</td></tr>`).join('');
                     hardwareHTML = `
-                        <div class="mt-5 border border-blue-500/30 rounded-lg overflow-hidden bg-black/20">
-                            <table class="hw-table text-left w-full border-collapse">
-                                <thead><tr><th>Category</th><th>Component</th><th class="text-center">Qty</th></tr></thead>
+                        <div class="mt-4 border border-cyan/20 rounded overflow-hidden shadow-[0_0_15px_rgba(0,229,255,0.05)]">
+                            <table class="w-full text-left hw-table border-collapse">
+                                <thead><tr><th>CATEGORY</th><th>COMPONENT</th><th class="text-center">QTY</th></tr></thead>
                                 <tbody>${rows}</tbody>
                             </table>
                         </div>
                     `;
                 } else {
-                    hardwareHTML = '';
+                    hardwareHTML = `<div class="mt-4 inline-block bg-magenta/10 border border-magenta/30 text-magenta px-3 py-1.5 rounded font-term text-xs tracking-widest shadow-[inset_0_0_10px_rgba(255,0,127,0.1)]">> TYPE: SOFTWARE_ONLY_NO_HARDWARE</div>`;
                 }
-
-                const typeColor = ps.c === 'HARDWARE' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-
                 psContainer.innerHTML += `
-                    <div class="glass-card">
-                        <div class="accordion-header" onclick="toggleAccordion('ps-${ps.id}')">
-                            <div class="flex flex-col gap-2">
-                                <span class="text-base md:text-lg font-semibold text-white">PS #${String(ps.id).padStart(2, '0')}: ${ps.t}</span>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-300 rounded text-xs tracking-wider">${ps.d}</span>
-                                    <span class="px-2 py-1 border rounded text-xs tracking-wider ${typeColor}">${ps.c}</span>
-                                </div>
+                    <div class="cyber-card">
+                        <div class="card-inner">
+                            <div class="accordion-header" onclick="toggleAccordion('ps-${ps.id}')">
+                                <span class="font-cyber font-bold text-sm md:text-base text-white hover:text-cyan transition">PS #${String(ps.id).padStart(2, '0')}: ${ps.t}</span>
+                                <span id="icon-ps-${ps.id}" class="toggle-icon text-xl font-bold">+</span>
                             </div>
-                            <span id="icon-ps-${ps.id}" class="text-blue-400 text-xl font-bold transition-transform transform shrink-0">▼</span>
-                        </div>
-                        <div id="content-ps-${ps.id}" class="accordion-content">
-                            <p class="text-gray-300 text-sm mt-3 leading-relaxed border-l-2 border-blue-500 pl-3 bg-white/5 py-2 rounded-r">${ps.desc}</p>
-                            ${hardwareHTML}
-                            <div class="mt-6 mb-2">
-                                <button onclick="document.getElementById('assigned_ps').value = 'PS #${String(ps.id).padStart(2, '0')}: ${ps.t}'; switchTab('register');" class="btn-primary px-6 py-2 rounded-lg text-sm font-semibold tracking-wider">
-                                    Register for this Track
+                            <div id="content-ps-${ps.id}" class="accordion-content">
+                                ${hardwareHTML}
+                                <button onclick="document.getElementById('assigned_ps').value = 'PS #${String(ps.id).padStart(2, '0')}: ${ps.t}'; switchTab('register');" class="mt-6 mb-2 border border-cyan text-cyan hover:bg-cyan hover:text-black px-6 py-2 font-cyber rounded text-sm transition tracking-widest font-bold shadow-[0_0_10px_rgba(0,229,255,0.2)]">
+                                    PROCEED TO REGISTRATION ➔
                                 </button>
                             </div>
                         </div>
                     </div>
                 `;
             });
-
-            // Render Segregated Rules
-            rules.forEach((section, idx) => {
-                let listItems = section.items.map(rule => `<li class="mb-2 text-sm text-gray-300 leading-relaxed">${rule}</li>`).join('');
+            // Render Rules as Grid Cards
+            rules.forEach((rule, idx) => {
                 rulesContainer.innerHTML += `
-                    <div class="glass-card p-6 border-t-4 border-t-blue-500">
-                        <h4 class="text-blue-400 font-bold text-sm mb-4 border-b border-white/10 pb-2 uppercase tracking-wider">${section.category}</h4>
-                        <ul class="list-disc pl-5 marker:text-blue-500">${listItems}</ul>
+                    <div class="cyber-card">
+                        <div class="card-inner p-5 border-t-2 border-t-cyan">
+                            <h4 class="font-cyber text-cyan font-bold text-sm mb-3 border-b border-white/10 pb-2">Rule ${idx + 1}</h4>
+                            <p class="font-term text-xs text-gray-300 leading-relaxed">${rule}</p>
+                        </div>
                     </div>
                 `;
             });
-
-            // Render FAQs
+            // Render FAQs as Accordions
             faqs.forEach((faq, idx) => {
                 faqContainer.innerHTML += `
-                    <div class="glass-card">
-                        <div class="accordion-header" onclick="toggleAccordion('faq-${idx}')">
-                            <span class="font-semibold text-white text-sm md:text-base">Q. ${faq.q}</span>
-                            <span id="icon-faq-${idx}" class="text-blue-400 text-xl font-bold transition-transform transform">▼</span>
-                        </div>
-                        <div id="content-faq-${idx}" class="accordion-content">
-                            <p class="text-sm text-gray-400 mt-2">${faq.a}</p>
+                    <div class="cyber-card">
+                        <div class="card-inner">
+                            <div class="accordion-header" onclick="toggleAccordion('faq-${idx}')">
+                                <span class="font-cyber font-bold text-sm text-white">Q. ${faq.q}</span>
+                                <span id="icon-faq-${idx}" class="toggle-icon text-xl font-bold">+</span>
+                            </div>
+                            <div id="content-faq-${idx}" class="accordion-content">
+                                <p class="font-term text-xs text-cyan mt-2">> ${faq.a}</p>
+                            </div>
                         </div>
                     </div>
                 `;
             });
-        });
-
-        // 7. Form Logic (Updated URLs)
-        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby0LHCO6xjqZyXBVOB2uJbtBkAuaMwERUPtNjNqU-IqdLVcryf4kRjm5mUiMBpkUje1/exec";
-        const KONFHUB_URL = "https://konfhub.com/wce-national-technical-hackathon";
-
+        };
+        // 6. Form Submission Logic
+        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxbWrJmLBm5CIN73fBu8zFai-9FcQna18w0SwGpPJ6tzlJZYLJEw4WGubcFbnpB6eUZ/exec";
+        const KONFHUB_URL = "https://events.konfhub.com/YOUR_EVENT_LINK_HERE"; // Replace with your real KonfHub link
         function handleRegistration(e) {
             e.preventDefault();
-            Swal.fire({ title: 'Securing Slot...', allowOutsideClick: false, background: '#0a192f', color: '#60a5fa', didOpen: () => { Swal.showLoading() } });
+            Swal.fire({ title: 'INITIALIZING SUBMISSION...', allowOutsideClick: false, background: '#020617', color: '#00e5ff', didOpen: () => { Swal.showLoading() } });
             
             const registrationData = {
                 order_id: "WCE_" + Math.random().toString(36).substring(2, 8).toUpperCase(),
@@ -726,14 +780,13 @@
                 m4_name: document.getElementById('m4_name').value, m5_name: document.getElementById('m5_name').value,
                 custom_components: "Not Applicable", amount: 350.00, utr: "Pending Gateway Checkout", timestamp: new Date().toISOString()
             };
-
             fetch(WEBHOOK_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(registrationData) })
             .then(() => {
                 Swal.fire({
-                    icon: 'success', title: 'Details Verified', text: 'Routing to payment gateway...', background: '#0a192f', color: '#fff', confirmButtonColor: '#3b82f6',
-                    confirmButtonText: 'Proceed to Payment 💳'
+                    icon: 'success', title: 'ACCESS GRANTED', text: 'Routing to secure payment gateway...', background: '#020617', color: '#f8fafc', confirmButtonColor: '#ff007f',
+                    confirmButtonText: '<span style="font-family: Orbitron, sans-serif; font-weight:bold; letter-spacing: 1px;">PROCEED</span>'
                 }).then(() => { window.location.href = KONFHUB_URL; });
-            }).catch(error => { Swal.fire({ icon: 'error', title: 'Network Error', background: '#0a192f', color: '#fff' }); });
+            }).catch(error => { Swal.fire({ icon: 'error', title: 'SYSTEM ERROR', background: '#020617', color: '#f8fafc' }); });
         }
     </script>
 </body>
