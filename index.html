@@ -358,10 +358,28 @@
                         <div class="gateway-scanner">
                             <p class="text-sm text-gray-300 text-center mb-4">Scan using any UPI app (GPay, PhonePe, Paytm)</p>
                             
-                            <!-- UPLOAD THIS EXACT IMAGE TO YOUR GITHUB REPO -->
+                            <!-- AUTO-GENERATED 350 RS QR CODE -->
+
                             <div class="bg-white p-2 rounded-lg shadow-lg mb-4 relative">
-                                <img src="upi-qr.png" alt="UPI QR Code" class="w-48 h-48 object-cover rounded">
+    
+                                <img id="dynamic-qr" alt="UPI QR Code" class="w-48 h-48 object-cover rounded">
+
                             </div>
+
+                            <script>
+    // ⚠️ REPLACE THIS WITH YOUR ACTUAL UPI ID
+    
+                                const myUpiID = "9322753587@ptyes"; 
+    
+    // This creates a UPI link fixed at 350 Rs
+    
+                                const upiLink = `upi://pay?pa=${myUpiID}&pn=Aarambh Hackathon&am=350.00&cu=INR`;
+    
+    // This generates the QR code image automatically
+    
+                                document.getElementById("dynamic-qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(upiLink);
+
+                            </script>
                             
                             <p class="text-xs text-blue-300 tracking-wider">AARAMBH WCE HACKATHON</p>
                         </div>
