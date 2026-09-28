@@ -21,6 +21,7 @@
             scroll-behavior: smooth;
         }
 
+        /* Particle Background */
         #particles-js {
             position: fixed;
             width: 100%; height: 100%;
@@ -29,6 +30,7 @@
             top: 0; left: 0;
         }
         
+        /* Glassmorphism Cards */
         .glass-card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(12px);
@@ -44,6 +46,7 @@
             box-shadow: 0 12px 40px 0 rgba(59, 130, 246, 0.15);
         }
 
+        /* Vibrant Gradients */
         .text-gradient {
             background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
             -webkit-background-clip: text;
@@ -61,6 +64,7 @@
             border-color: #60a5fa;
         }
 
+        /* Accordion Animations */
         .accordion-header {
             padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
             cursor: pointer; font-weight: 600;
@@ -74,11 +78,13 @@
             opacity: 1; padding-bottom: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05);
         }
 
+        /* Hardware Table Styling */
         .hw-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;}
         .hw-table th { background: rgba(59, 130, 246, 0.15); color: #60a5fa; font-weight: 600; padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(59, 130, 246, 0.3); font-family: 'Poppins', sans-serif;}
         .hw-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
         .hw-table tr:hover td { background: rgba(255,255,255,0.03); }
 
+        /* Custom Inputs */
         input, select, textarea {
             background: rgba(255, 255, 255, 0.05) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important;
             color: white !important; border-radius: 8px; padding: 0.75rem 1rem; width: 100%;
@@ -86,10 +92,11 @@
         input:focus, select:focus { border-color: #4facfe !important; box-shadow: 0 0 10px rgba(79, 172, 254, 0.5) !important; outline: none; }
         option { background-color: #0a192f; color: white; }
 
+        /* TAB NAVIGATION PILLS */
         .tab-menu {
             display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem;
             border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem;
-            scrollbar-width: none; 
+            scrollbar-width: none; /* Firefox */
         }
         .tab-menu::-webkit-scrollbar { display: none; }
         .tab-pill {
@@ -99,15 +106,29 @@
         .tab-pill:hover { color: white; background: rgba(255,255,255,0.05); }
         .tab-pill.active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.4); box-shadow: 0 0 15px rgba(59,130,246,0.2); }
 
+        /* Section Visibility */
         .view-section { display: none; animation: fadeIn 0.5s ease-out forwards; opacity: 0; transform: translateY(20px);}
         .view-section.active { display: block; }
         @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        /* Payment Gateway Specific UI */
+        .gateway-scanner {
+            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2) 10px, rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 20px);
+            border: 2px dashed rgba(59, 130, 246, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 
+    <!-- Background Particles -->
     <div id="particles-js"></div>
 
+    <!-- Navigation Bar -->
     <nav class="glass-card m-4 p-4 flex justify-between items-center sticky top-4 z-50">
         <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
             <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center font-bold text-xl shadow-[0_0_15px_rgba(59,130,246,0.5)] text-white">A</div>
@@ -123,8 +144,10 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-4 z-10 w-full max-w-5xl" id="main-container">
         
+        <!-- ================= TAB NAVIGATION MENU ================= -->
         <div class="tab-menu" id="tab-container">
             <button onclick="switchTab('home')" id="btn-home" class="tab-pill active">Home / Discovery</button>
             <button onclick="switchTab('ps')" id="btn-ps" class="tab-pill">Problem Statements</button>
@@ -223,13 +246,13 @@
         </section>
 
 
-        <!-- ================= VIEW 5: REGISTRATION ================= -->
+        <!-- ================= VIEW 5: REGISTRATION (STEP 1) ================= -->
         <section id="view-register" class="view-section">
             <div class="glass-card p-8 md:p-10 max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold mb-2">Team Registration</h2>
-                <p class="text-gray-400 mb-8 border-b border-white/10 pb-4">Secure your spot. Registration Fee: <span class="text-green-400 font-bold">₹350 per team</span></p>
+                <p class="text-gray-400 mb-8 border-b border-white/10 pb-4">Step 1 of 2: Fill out your team details.</p>
 
-                <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-8">
+                <form id="regForm" onsubmit="proceedToCheckout(event)" class="space-y-8">
                     
                     <!-- Team Info -->
                     <div class="space-y-4">
@@ -289,28 +312,72 @@
                         </div>
                     </div>
 
-                    <!-- Payment Instruction & UTR -->
-                    <div class="space-y-4 border-t border-white/5 pt-6">
-                        <h3 class="text-xl font-semibold text-gradient">3. Payment Verification</h3>
-                        <div class="p-6 rounded-xl bg-blue-900/20 border border-blue-500/30 text-center space-y-4 shadow-[inset_0_0_20px_rgba(59,130,246,0.1)]">
-                            <p class="text-sm text-gray-300">Scan the QR code below using any UPI app (GPay, PhonePe, Paytm) and pay exactly <span class="text-green-400 font-bold">₹350</span>.</p>
-                            
-                            <!-- MAKE SURE YOUR IMAGE IS NAMED EXACTLY upi-qr.png AND UPLOADED TO GITHUB -->
-                            <img src="upi-qr.png" alt="UPI QR Code" class="mx-auto w-48 h-48 rounded-lg border-2 border-blue-500/50 shadow-lg object-cover bg-white">
-                            
-                            <p class="text-xs text-gray-400">After successful payment, locate the 12-digit UTR/Transaction ID in your app and enter it below.</p>
-                            
-                            <div class="max-w-xs mx-auto text-left mt-4">
-                                <label class="block text-[0.65rem] text-gray-300 mb-2 uppercase tracking-widest font-bold">12-Digit UTR Number *</label>
-                                <input type="text" id="utr_number" required placeholder="e.g. 312345678901" pattern="[0-9]{12}" title="Must be exactly 12 digits" class="font-mono tracking-widest text-center">
-                            </div>
-                        </div>
-                    </div>
-
                     <button type="submit" class="btn-primary w-full text-white font-bold text-lg py-4 rounded-xl shadow-lg mt-8">
-                        Submit Registration & UTR
+                        Proceed to Payment Gateway ➔
                     </button>
                 </form>
+            </div>
+        </section>
+
+        <!-- ================= VIEW 6: CHECKOUT (STEP 2) ================= -->
+        <section id="view-checkout" class="view-section">
+            <div class="max-w-2xl mx-auto">
+                <button onclick="switchTab('register')" class="mb-6 text-gray-400 hover:text-white flex items-center gap-2 transition">
+                    <span>←</span> Back to Edit Details
+                </button>
+                
+                <div class="glass-card overflow-hidden">
+                    <!-- Secure Header -->
+                    <div class="bg-gradient-to-r from-blue-900/50 to-indigo-900/50 p-6 flex justify-between items-center border-b border-white/10">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <h2 class="text-xl font-bold text-white">Secure Checkout</h2>
+                        </div>
+                        <span class="text-xs font-mono text-blue-300 bg-blue-500/20 px-3 py-1 rounded-full border border-blue-500/30">End-to-End Encrypted</span>
+                    </div>
+
+                    <div class="p-8 space-y-8">
+                        <!-- Order Summary -->
+                        <div class="bg-white/5 rounded-xl p-5 border border-white/5 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-400">Team Name:</span>
+                                <span class="font-semibold text-white" id="summary-team">Loading...</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-white/5 pt-3">
+                                <span class="text-sm text-gray-400">Registration Fee:</span>
+                                <span class="font-bold text-xl text-green-400" id="summary-amount">₹350.00</span>
+                            </div>
+                        </div>
+
+                        <!-- QR Scanner Container -->
+                        <div class="gateway-scanner">
+                            <p class="text-sm text-gray-300 text-center mb-4">Scan using any UPI app (GPay, PhonePe, Paytm)</p>
+                            
+                            <!-- UPLOAD THIS EXACT IMAGE TO YOUR GITHUB REPO -->
+                            <div class="bg-white p-2 rounded-lg shadow-lg mb-4 relative">
+                                <img src="upi-qr.png" alt="UPI QR Code" class="w-48 h-48 object-cover rounded">
+                            </div>
+                            
+                            <p class="text-xs text-blue-300 tracking-wider">AARAMBH WCE HACKATHON</p>
+                        </div>
+
+                        <!-- Final Submission Form -->
+                        <form id="checkoutForm" onsubmit="submitFinalRegistration(event)">
+                            <div class="bg-blue-900/10 border border-blue-500/20 rounded-xl p-5 space-y-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-blue-400 mb-2">Step 2: Enter Transaction ID</label>
+                                    <p class="text-xs text-gray-400 mb-3">After successful payment, locate the 12-digit UTR/Transaction ID in your UPI app and paste it below.</p>
+                                    <input type="text" id="utr_number" required placeholder="e.g. 312345678901" pattern="[0-9]{12}" title="Must be exactly 12 digits" class="font-mono tracking-widest text-center text-lg py-3">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary w-full text-white font-bold text-lg py-4 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)] mt-6 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Confirm Payment & Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -364,7 +431,10 @@
         // 3. Tab Switching Logic
         function switchTab(tabId) {
             document.querySelectorAll('.tab-pill').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${tabId}`).classList.add('active');
+            
+            // Highlight the corresponding pill if it exists
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if(activeBtn) activeBtn.classList.add('active');
             
             document.querySelectorAll('.view-section').forEach(el => { el.classList.remove('active'); });
             
@@ -380,15 +450,25 @@
             if (activeAccordion && activeAccordion !== id) {
                 const prevContent = document.getElementById(`content-${activeAccordion}`);
                 const prevIcon = document.getElementById(`icon-${activeAccordion}`);
-                if (prevContent) { prevContent.style.maxHeight = null; prevContent.classList.remove('open'); prevIcon.style.transform = 'rotate(0deg)'; }
+                if (prevContent) { 
+                    prevContent.style.maxHeight = null; 
+                    prevContent.classList.remove('open'); 
+                    prevIcon.style.transform = 'rotate(0deg)'; 
+                }
             }
             const content = document.getElementById(`content-${id}`);
             const icon = document.getElementById(`icon-${id}`);
             
             if (content.style.maxHeight) {
-                content.style.maxHeight = null; content.classList.remove('open'); icon.style.transform = 'rotate(0deg)'; activeAccordion = null;
+                content.style.maxHeight = null; 
+                content.classList.remove('open'); 
+                icon.style.transform = 'rotate(0deg)'; 
+                activeAccordion = null;
             } else {
-                content.style.maxHeight = content.scrollHeight + 40 + "px"; content.classList.add('open'); icon.style.transform = 'rotate(180deg)'; activeAccordion = id;
+                content.style.maxHeight = content.scrollHeight + 40 + "px"; 
+                content.classList.add('open'); 
+                icon.style.transform = 'rotate(180deg)'; 
+                activeAccordion = id;
             }
         }
 
@@ -559,7 +639,6 @@
             {id: 69, d: "Smart Agriculture & AgriTech", t: "Aquaculture Feeding Optimization", c: "SOFTWARE", desc: "Write an algorithm that uses historical fish growth rates and current water temperature data to calculate the exact daily feed volume required.", hw: []}
         ];
 
-        // Segregated Rules Array
         const rules = [
             {
                 category: "Team Composition",
@@ -645,6 +724,7 @@
                 
                 let hardwareHTML = '';
                 if(ps.c === 'HARDWARE') {
+                    // Extract only Category (item[0]) and Component Name (item[1]). Quantity is excluded entirely.
                     let rows = ps.hw.map(item => `<tr><td>${item[0]}</td><td>${item[1]}</td></tr>`).join('');
                     hardwareHTML = `
                         <div class="mt-5 border border-blue-500/30 rounded-lg overflow-hidden bg-black/20">
@@ -654,8 +734,6 @@
                             </table>
                         </div>
                     `;
-                } else {
-                    hardwareHTML = '';
                 }
 
                 const typeColor = ps.c === 'HARDWARE' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-purple-500/20 text-purple-400 border-purple-500/30';
@@ -712,13 +790,28 @@
             });
         });
 
-        // 7. Form Submission Logic
-        // PASTE YOUR NEW GOOGLE APPS SCRIPT URL HERE
+        // 7. Payment Flow & Form Submission
+        
+        // INTERCEPT STEP 1: Route to Checkout "Page"
+        function proceedToCheckout(e) {
+            e.preventDefault();
+            
+            // Populate the summary screen
+            document.getElementById('summary-team').innerText = document.getElementById('teamName').value;
+
+            // Switch to checkout view
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-checkout').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // STEP 2: Final Submit to Google Sheets
+        // UPDATE THIS URL WITH YOUR NEW GOOGLE APPS SCRIPT WEB APP URL
         const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby0LHCO6xjqZyXBVOB2uJbtBkAuaMwERUPtNjNqU-IqdLVcryf4kRjm5mUiMBpkUje1/exec";
 
-        function handleRegistration(e) {
+        function submitFinalRegistration(e) {
             e.preventDefault();
-            Swal.fire({ title: 'Submitting Registration...', allowOutsideClick: false, background: '#0a192f', color: '#60a5fa', didOpen: () => { Swal.showLoading() } });
+            Swal.fire({ title: 'Processing Payment...', text:'Logging your UTR and team details securely.', allowOutsideClick: false, background: '#0a192f', color: '#60a5fa', didOpen: () => { Swal.showLoading() } });
             
             const registrationData = {
                 order_id: "WCE_" + Math.random().toString(36).substring(2, 8).toUpperCase(),
@@ -735,20 +828,20 @@
                 utr: document.getElementById('utr_number').value.trim(),
                 custom_components: "Not Applicable", 
                 amount: "₹350.00", 
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
             };
 
             fetch(WEBHOOK_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(registrationData) })
             .then(() => {
                 Swal.fire({
                     icon: 'success', 
-                    title: 'Submission Received!', 
-                    text: 'We have received your registration details and UTR number. Your slot will be officially confirmed via email once our team verifies the transaction.', 
-                    background: '#0a192f', 
-                    color: '#fff', 
-                    confirmButtonColor: '#3b82f6'
+                    title: 'Payment Under Verification!', 
+                    text: 'Your registration and UTR have been logged successfully. You will receive an official confirmation email once our team verifies the transaction.', 
+                    background: '#0a192f', color: '#fff', confirmButtonColor: '#3b82f6'
                 }).then(() => { 
+                    // Clear the forms and send back to home
                     document.getElementById("regForm").reset();
+                    document.getElementById("checkoutForm").reset();
                     switchTab('home'); 
                 });
             }).catch(error => { 
