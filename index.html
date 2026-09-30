@@ -6,8 +6,8 @@
     <title>Aarambh 2026 | WCE Hackathon | Walchand College of Engineering</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Register for Aarambh 2026, the premier national-level hackathon organized by the Electrical Engineering Students Association (EESA) at Walchand College of Engineering (WCE), Sangli.">
-    <meta name="keywords" content="WCE Hackathon, Aarambh 2026, Walchand College of Engineering Hackathon, WCE Sangli, Hackathon 2026, EESA WCE, Engineering Hackathon India, Electrical Engineering WCE">
+    <meta name="description" content="Register for Aarambh 2026, the premier national-level hackathon organized by the Department of Electrical Engineering at Walchand College of Engineering (WCE), Sangli.">
+    <meta name="keywords" content="WCE Hackathon, Aarambh 2026, Walchand College of Engineering Hackathon, WCE Sangli, Hackathon 2026,EESA WCE, Engineering Hackathon India, Electrical Engineering WCE">
     <meta name="author" content="Electrical Engineering Students Association (EESA) - WCE">
     <meta name="robots" content="index, follow">
     
@@ -236,6 +236,27 @@
                 </div>
             </div>
 
+            <!-- DOMAIN & TYPE FILTERS -->
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <select id="domainFilter" onchange="filterProblems()" class="bg-[#050b14] text-white border border-gray-600 rounded-lg p-3 w-full focus:outline-none focus:border-blue-500 shadow-md cursor-pointer">
+                    <option value="all">🌐 All Domains</option>
+                    <option value="Smart Cities & Urbanization">Smart Cities & Urbanization</option>
+                    <option value="Healthcare & Medical Technology">Healthcare & Medical Technology</option>
+                    <option value="Electric Vehicles (EV) & Mobility">Electric Vehicles (EV) & Mobility</option>
+                    <option value="EdTech Hackathon">EdTech Hackathon</option>
+                    <option value="Renewable Energy">Renewable Energy</option>
+                    <option value="Aerial Systems">Aerial Systems</option>
+                    <option value="Cybersecurity & Digital Forensics">Cybersecurity & Digital Forensics</option>
+                    <option value="Smart Agriculture & AgriTech">Smart Agriculture & AgriTech</option>
+                </select>
+
+                <select id="typeFilter" onchange="filterProblems()" class="bg-[#050b14] text-white border border-gray-600 rounded-lg p-3 w-full md:w-64 focus:outline-none focus:border-blue-500 shadow-md cursor-pointer">
+                    <option value="all">⚙️ All Types (Hardware/Software)</option>
+                    <option value="HARDWARE">Hardware</option>
+                    <option value="SOFTWARE">Software</option>
+                </select>
+            </div>
+
             <div id="ps-container" class="grid grid-cols-1 gap-5"></div>
         </section>
 
@@ -371,26 +392,19 @@
                             <p class="text-sm text-gray-300 text-center mb-4">Scan using any UPI app (GPay, PhonePe, Paytm)</p>
                             
                             <!-- AUTO-GENERATED 350 RS QR CODE -->
-
                             <div class="bg-white p-2 rounded-lg shadow-lg mb-4 relative">
-    
                                 <img id="dynamic-qr" alt="UPI QR Code" class="w-48 h-48 object-cover rounded">
-
                             </div>
 
                             <script>
-    // ⚠️ REPLACE THIS WITH YOUR ACTUAL UPI ID
-    
+                                // ⚠️ REPLACE THIS WITH YOUR ACTUAL UPI ID
                                 const myUpiID = "9322753587@ptyes"; 
-    
-    // This creates a UPI link fixed at 350 Rs
-    
+                                
+                                // This creates a UPI link fixed at 350 Rs
                                 const upiLink = `upi://pay?pa=${myUpiID}&pn=Aarambh Hackathon&am=350.00&cu=INR`;
-    
-    // This generates the QR code image automatically
-    
+                                
+                                // This generates the QR code image automatically
                                 document.getElementById("dynamic-qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(upiLink);
-
                             </script>
                             
                             <p class="text-xs text-blue-300 tracking-wider">AARAMBH WCE HACKATHON</p>
@@ -791,8 +805,9 @@
 
                 const typeColor = ps.c === 'HARDWARE' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-purple-500/20 text-purple-400 border-purple-500/30';
 
+                // NOTE THE ADDED data-domain AND data-type ATTRIBUTES HERE
                 psContainer.innerHTML += `
-                    <div class="glass-card">
+                    <div class="glass-card ps-card" data-domain="${ps.d}" data-type="${ps.c}">
                         <div class="accordion-header" onclick="toggleAccordion('ps-${ps.id}')">
                             <div class="flex flex-col gap-2">
                                 <span class="text-base md:text-lg font-semibold text-white hover:text-blue-400 transition">PS #${String(ps.id).padStart(2, '0')}: ${ps.t}</span>
@@ -909,6 +924,29 @@
                 });
             }).catch(error => { 
                 Swal.fire({ icon: 'error', title: 'Network Error', text: 'Please check your connection and try again.', background: '#0a192f', color: '#fff' }); 
+            });
+        }
+
+        // ==========================================
+        // NEW ADDITION: PROBLEM STATEMENT FILTERING
+        // ==========================================
+        function filterProblems() {
+            const selectedDomain = document.getElementById('domainFilter').value;
+            const selectedType = document.getElementById('typeFilter').value;
+            const allCards = document.querySelectorAll('.ps-card');
+
+            allCards.forEach(card => {
+                const cardDomain = card.getAttribute('data-domain');
+                const cardType = card.getAttribute('data-type');
+                
+                const matchesDomain = (selectedDomain === 'all' || cardDomain === selectedDomain);
+                const matchesType = (selectedType === 'all' || cardType === selectedType);
+
+                if (matchesDomain && matchesType) {
+                    card.style.display = 'block'; 
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
     </script>
