@@ -6,8 +6,8 @@
     <title>Aarambh 2026 | WCE Hackathon | Walchand College of Engineering</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Register for Aarambh 2026, the premier national-level hackathon organized by the Department of Electrical Engineering at Walchand College of Engineering (WCE), Sangli.">
-    <meta name="keywords" content="WCE Hackathon, Aarambh 2026, Walchand College of Engineering Hackathon, WCE Sangli, Hackathon 2026,EESA WCE, Engineering Hackathon India, Electrical Engineering WCE">
+    <meta name="description" content="Register for Aarambh 2026, the premier national-level hackathon organized by the Electrical Engineering Students Association (EESA) at Walchand College of Engineering (WCE), Sangli.">
+    <meta name="keywords" content="WCE Hackathon, Aarambh 2026, Walchand College of Engineering Hackathon, WCE Sangli, Hackathon 2026, EESA WCE, Engineering Hackathon India, Electrical Engineering WCE">
     <meta name="author" content="Electrical Engineering Students Association (EESA) - WCE">
     <meta name="robots" content="index, follow">
     
@@ -205,11 +205,37 @@
         </section>
 
 
-        <!-- ================= VIEW 2: PROBLEM STATEMENTS ================= -->
+        <!-- ================= VIEW 2: PROBLEM STATEMENTS & RESOURCES ================= -->
         <section id="view-ps" class="view-section">
             <h2 class="text-3xl font-bold mb-6 text-gradient flex items-center gap-3">
                 <span class="bg-blue-500/20 p-2 rounded-lg">🎯</span> Problem Statements
             </h2>
+
+            <!-- ================= NEW MANDATORY PPT RESOURCE CARD ================= -->
+            <div class="glass-card mb-8 border border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.15)] relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[0.65rem] font-bold px-4 py-1.5 rounded-bl-lg tracking-widest uppercase shadow-md">
+                    Mandatory Requirement
+                </div>
+                <div class="p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-white flex items-center gap-3 mb-2">
+                        <span class="bg-orange-500/20 text-orange-400 p-2 rounded-lg text-xl">📊</span> Official PPT Template
+                    </h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        It is <strong>compulsory</strong> for all registered teams to use this exact presentation format for the final evaluation round. You can download the .pptx file to edit locally, or duplicate the Canva template.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <!-- ⚠️ REPLACE THIS LINK WITH YOUR .PPTX FILE NAME ON GITHUB -->
+                        <a href="Hackathon Presentation Template.pptx" download class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg flex items-center justify-center gap-2 transition transform hover:scale-[1.02] border border-white/10">
+                            <span class="text-lg">⬇️</span> Download .PPTX Template
+                        </a>
+                        <!-- ⚠️ REPLACE THIS LINK WITH YOUR CANVA LINK -->
+                        <a href="YOUR_CANVA_LINK_HERE" target="_blank" class="bg-white/5 hover:bg-white/10 border border-white/20 text-white font-bold py-3 px-6 rounded-lg shadow-lg flex items-center justify-center gap-2 transition transform hover:scale-[1.02]">
+                            <span class="text-lg">🖌️</span> Edit on Canva
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- =================================================================== -->
             
             <!-- Expandable PDF Preview -->
             <div class="glass-card mb-8">
@@ -223,7 +249,7 @@
                     <div class="pt-4 pb-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-white/10">
                         <p class="text-sm text-gray-400">Preview the official PDF compendium below.</p>
                         <a href="Problem_Statements_Updated.pdf" target="_blank" class="bg-white/10 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 px-5 py-2 rounded-lg transition shadow-lg font-semibold text-sm tracking-wider">
-                            ⬇️ Download .PDF
+                            ⬇️️ Download .PDF
                         </a>
                     </div>
                     
@@ -396,18 +422,47 @@
                                 <img id="dynamic-qr" alt="UPI QR Code" class="w-48 h-48 object-cover rounded">
                             </div>
 
+                            <!-- VISIBLE UPI ID BOX -->
+                            <div class="flex items-center justify-between gap-4 mb-4 bg-white/10 px-4 py-2 rounded-lg border border-white/20 shadow-inner w-full max-w-xs">
+                                <div class="flex flex-col">
+                                    <span class="text-[0.65rem] text-gray-400 uppercase tracking-widest">Official UPI ID</span>
+                                    <span id="display-upi" class="font-mono text-lg text-blue-400 font-bold tracking-wider"></span>
+                                </div>
+                                <button type="button" onclick="copyUpi()" class="text-gray-300 hover:text-white hover:bg-white/10 p-2 rounded transition" title="Copy UPI ID">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                </button>
+                            </div>
+
                             <script>
                                 // ⚠️ REPLACE THIS WITH YOUR ACTUAL UPI ID
                                 const myUpiID = "9322753587@ptyes"; 
+                                
+                                // Set the visible text for the UPI ID
+                                document.getElementById("display-upi").innerText = myUpiID;
                                 
                                 // This creates a UPI link fixed at 350 Rs
                                 const upiLink = `upi://pay?pa=${myUpiID}&pn=Aarambh Hackathon&am=350.00&cu=INR`;
                                 
                                 // This generates the QR code image automatically
                                 document.getElementById("dynamic-qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(upiLink);
+
+                                // Copy to clipboard function
+                                function copyUpi() {
+                                    navigator.clipboard.writeText(myUpiID);
+                                    Swal.fire({
+                                        toast: true,
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'UPI ID Copied!',
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                        background: '#0a192f',
+                                        color: '#fff'
+                                    });
+                                }
                             </script>
                             
-                            <p class="text-xs text-blue-300 tracking-wider">AARAMBH WCE HACKATHON</p>
+                            <p class="text-xs text-blue-300 tracking-wider mt-2">AARAMBH WCE HACKATHON</p>
                         </div>
 
                         <!-- Final Submission Form -->
@@ -734,21 +789,22 @@
                 ]
             },
             {
+                category: "Evaluation & Jury (NEW)",
+                items: [
+                    "Teams must compulsorily use the official presentation template provided in the Problem Statements tab for their final pitch.",
+                    "All team members must be present for the jury evaluation on Friday.",
+                    "The jury's decision is final and binding. No appeals will be entertained.",
+                    "Jury evaluation is based on: experimental accuracy, methodology, report quality, and viva responses.",
+                    "Results and scores will be announced at the Friday prize distribution."
+                ]
+            },
+            {
                 category: "Registration & Payment",
                 items: [
                     "Registration requires a valid UTR/transaction ID from UPI payment.",
                     "Confirmation is issued only after organizer payment verification.",
                     "Partial or fraudulent payment entries will result in immediate disqualification.",
                     "Slots are provisionally reserved pending verification; confirmed on approval."
-                ]
-            },
-            {
-                category: "Evaluation & Jury",
-                items: [
-                    "All team members must be present for the jury evaluation on Friday.",
-                    "The jury's decision is final and binding. No appeals will be entertained.",
-                    "Jury evaluation is based on: experimental accuracy, methodology, report quality, and viva responses.",
-                    "Results and scores will be announced at the Friday prize distribution."
                 ]
             },
             {
@@ -805,7 +861,6 @@
 
                 const typeColor = ps.c === 'HARDWARE' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-purple-500/20 text-purple-400 border-purple-500/30';
 
-                // NOTE THE ADDED data-domain AND data-type ATTRIBUTES HERE
                 psContainer.innerHTML += `
                     <div class="glass-card ps-card" data-domain="${ps.d}" data-type="${ps.c}">
                         <div class="accordion-header" onclick="toggleAccordion('ps-${ps.id}')">
@@ -928,7 +983,7 @@
         }
 
         // ==========================================
-        // NEW ADDITION: PROBLEM STATEMENT FILTERING
+        // PROBLEM STATEMENT FILTERING
         // ==========================================
         function filterProblems() {
             const selectedDomain = document.getElementById('domainFilter').value;
