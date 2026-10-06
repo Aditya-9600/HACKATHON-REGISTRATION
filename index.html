@@ -165,6 +165,7 @@
             <button onclick="switchTab('ps')" id="btn-ps" class="tab-pill">Problem Statements</button>
             <button onclick="switchTab('rules')" id="btn-rules" class="tab-pill">Rules & Guidelines</button>
             <button onclick="switchTab('faqs')" id="btn-faqs" class="tab-pill">FAQs</button>
+            <button onclick="switchTab('accommodation')" id="btn-accommodation" class="tab-pill">Accommodation</button>
             <button onclick="openStandardRegistration()" id="btn-register" class="tab-pill text-blue-400 border-blue-500/50 hover:bg-blue-600 hover:text-white">Register Now ➔</button>
         </div>
 
@@ -310,6 +311,86 @@
                 <span class="bg-blue-500/20 p-2 rounded-lg">❓</span> Frequently Asked Questions
             </h2>
             <div id="faq-container" class="space-y-4"></div>
+        </section>
+
+        <!-- ================= VIEW 5: ACCOMMODATION ================= -->
+        <section id="view-accommodation" class="view-section">
+            <h2 class="text-3xl font-bold mb-6 text-gradient flex items-center gap-3">
+                <span class="bg-blue-500/20 p-2 rounded-lg">🏨</span> Accommodation
+            </h2>
+            
+            <!-- Strict Disclaimer Box -->
+            <div class="bg-red-900/20 border border-red-500/50 rounded-xl p-6 mb-8 flex gap-4 items-start shadow-[0_0_20px_rgba(239,68,68,0.15)]">
+                <span class="text-3xl mt-1">🚫</span>
+                <div>
+                    <h4 class="text-red-400 font-bold text-lg mb-2 uppercase tracking-wide">Important Disclaimer</h4>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
+                        <strong>No On-Site Facilities:</strong> Please note that accommodation and freshening-up facilities will NOT be provided at the venue during the hackathon.
+                    </p>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        <strong>Self-Funded & Personal Responsibility:</strong> All participants are entirely responsible for arranging and financing their own accommodation. The organizing team and Walchand College of Engineering will <strong>NOT</strong> cover any lodging bills, travel expenses, or related costs.
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-gray-400 mb-6 font-medium">To assist you, the organizing team has compiled a few references for nearby hotels that you can contact for your convenience:</p>
+
+            <!-- Hotels Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Hotel 1 -->
+                <div class="glass-card p-6 flex flex-col justify-between border border-white/10 hover:border-blue-500/50 transition">
+                    <div class="mb-5">
+                        <h3 class="text-xl font-bold text-white mb-2">Hotel Season Four</h3>
+                        <a href="tel:02332671791" class="text-blue-300 hover:text-blue-400 flex items-center gap-2 w-max transition">
+                            <span>📞</span> 0233-2671791
+                        </a>
+                    </div>
+                    <a href="https://www.google.com/maps/search/Hotel+Season+Four+Sangli" target="_blank" class="bg-white/5 hover:bg-blue-600 border border-white/20 hover:border-blue-500 text-white text-sm font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition">
+                        <span>📍</span> View on Google Maps
+                    </a>
+                </div>
+
+                <!-- Hotel 2 -->
+                <div class="glass-card p-6 flex flex-col justify-between border border-white/10 hover:border-blue-500/50 transition">
+                    <div class="mb-5">
+                        <h3 class="text-xl font-bold text-white mb-2">Hotel Ambassador</h3>
+                        <a href="tel:02332672555" class="text-blue-300 hover:text-blue-400 flex items-center gap-2 w-max transition">
+                            <span>📞</span> 0233-2672555
+                        </a>
+                    </div>
+                    <a href="https://www.google.com/maps/search/Hotel+Ambassador+Sangli" target="_blank" class="bg-white/5 hover:bg-blue-600 border border-white/20 hover:border-blue-500 text-white text-sm font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition">
+                        <span>📍</span> View on Google Maps
+                    </a>
+                </div>
+
+                <!-- Hotel 3 -->
+                <div class="glass-card p-6 flex flex-col justify-between border border-white/10 hover:border-blue-500/50 transition">
+                    <div class="mb-5">
+                        <h3 class="text-xl font-bold text-white mb-2">Hotel Pai Prakash</h3>
+                        <a href="tel:02332300334" class="text-blue-300 hover:text-blue-400 flex items-center gap-2 w-max transition">
+                            <span>📞</span> 0233-2300334
+                        </a>
+                    </div>
+                    <a href="https://www.google.com/maps/search/Hotel+Pai+Prakash+Sangli" target="_blank" class="bg-white/5 hover:bg-blue-600 border border-white/20 hover:border-blue-500 text-white text-sm font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition">
+                        <span>📍</span> View on Google Maps
+                    </a>
+                </div>
+
+                <!-- Hotel 4 -->
+                <div class="glass-card p-6 flex flex-col justify-between border border-white/10 hover:border-blue-500/50 transition">
+                    <div class="mb-5">
+                        <h3 class="text-xl font-bold text-white mb-2">Hotel Icon Inn</h3>
+                        <a href="tel:02332675333" class="text-blue-300 hover:text-blue-400 flex items-center gap-2 w-max transition">
+                            <span>📞</span> 0233-2675333
+                        </a>
+                    </div>
+                    <a href="https://www.google.com/maps/search/Hotel+Icon+Inn+Sangli" target="_blank" class="bg-white/5 hover:bg-blue-600 border border-white/20 hover:border-blue-500 text-white text-sm font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition">
+                        <span>📍</span> View on Google Maps
+                    </a>
+                </div>
+
+            </div>
         </section>
 
 
